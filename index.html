@@ -4,13 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Atlanta Police Department - Tactical Dispatch Academy</title>
+    <!-- Favicon link pointing directly to your root file -->
     <link rel="icon" type="image/png" href="favicon.png">
+    <!-- Clean link pulling all styles directly from styles.css -->
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+
     <div class="dashboard-container">
+        <!-- Main Application Header Component Grid Layout -->
         <header class="app-header">
             <div class="header-left">
+                <!-- Dual-image tracking setup pointing to your root assets repository -->
                 <img src="site-logo.png" alt="Logo" class="logo-img" onerror="this.style.display='none'; document.getElementById('fallback-hdr').style.display='block';">
                 <div id="fallback-hdr" class="fallback-logo" style="display:none;">Site Logo</div>
                 <div class="title-block">
@@ -21,6 +26,7 @@
             <div class="status-value">Zone Terminal: Online</div>
         </header>
 
+        <!-- Dark Sonar Radar Area Panel Visualizer Screen View -->
         <section class="radar-section">
             <div class="canvas-wrapper">
                 <canvas id="radarCanvas" width="312" height="312"></canvas>
@@ -32,6 +38,7 @@
             </div>
         </section>
 
+        <!-- Dynamic Density Target Chance Matrix Configurator System Sliders -->
         <section class="probability-matrix">
             <div class="slider-node">
                 <label style="color:var(--easy);">Easy (Green) <span id="val-easy">25%</span></label>
@@ -50,7 +57,7 @@
                 <input type="range" id="rate-officer" min="0" max="100" value="25" oninput="balanceProbabilities('officer')">
             </div>
         </section>
-
+        <!-- Live Telemetry Status Tracking Row Modules -->
         <section class="analytics-strip">
             <div class="analytics-node">
                 <div class="node-title">Active Registry</div>
@@ -66,6 +73,7 @@
             </div>
         </section>
 
+        <!-- Main Workspace Tabs & Navigation View Controls Block -->
         <section class="operations-panel">
             <div class="console-tabs">
                 <button class="console-tab-item active" onclick="toggleView(event, 'practice-deck')">
@@ -78,11 +86,13 @@
                 </button>
             </div>
 
+            <!-- Panel Container Module: APD Textbook Search Deck -->
             <div id="practice-deck" class="view-content-block active">
                 <input type="text" id="codeSearch" class="search-filter" placeholder="Search codes, explanations, or sentence examples...">
                 <div class="list-container" id="codebook-list"></div>
             </div>
 
+            <!-- Panel Container Module: 20 Scenario Officer Testing Field Arena -->
             <div id="assessment-deck" class="view-content-block">
                 <div class="interactive-quiz-space">
                     <div id="prompt-textbox" class="quiz-prompt">Click an active blip on the spinning radar tracking system above to initialize your 20-question Officer Assessment!</div>
@@ -94,6 +104,8 @@
             </div>
         </section>
     </div>
+
+    <!-- Hidden Dialog Layout Backdrop Container Block Window Element Module -->
     <div id="settingsModal" class="settings-modal-overlay">
         <div class="settings-dialog-card">
             <h3>Terminal Operational Parameters</h3>
@@ -111,8 +123,9 @@
         </div>
     </div>
 
-    <!-- Script assets sourced directly from the root environment directory -->
+    <!-- Framework Boot Loading Array Pipeline Protocol Execution Scripts -->
     <script src="codebook.js"></script>
     <script src="radar.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>
