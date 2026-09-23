@@ -125,24 +125,15 @@ function filterCodebook() {
     });
 }
 
-function balanceProbabilities(changedTier) {
-    let sliders = ['easy', 'medium', 'hard', 'officer'];
-    let changedVal = parseFloat(document.getElementById(`rate-${changedTier}`).value) || 0;
-    document.getElementById(`val-${changedTier}`).innerText = `${changedVal}%`;
-    let remainder = 100 - changedVal;
-    let otherSliders = sliders.filter(s => s !== changedTier);
-    let sumOthers = otherSliders.reduce((sum, s) => sum + (parseFloat(document.getElementById(`rate-${s}`).value) || 0), 0);
-    otherSliders.forEach(s => {
-        let curVal = parseFloat(document.getElementById(`rate-${s}`).value) || 0;
-        let scaled = sumOthers > 0 ? Math.round((curVal / sumOthers) * remainder) : Math.round(remainder / 3);
-        document.getElementById(`rate-${s}`).value = scaled; document.getElementById(`val-${s}`).innerText = `${scaled}%`;
+function populateSituationDropdown() {
+    const sitSelect = document.getElementById('situationSelect');
+    if (!sitSelect || !window.masterDatabase) return;
+    window.masterDatabase.forEach(item => {
+        let opt = document.createElement('option');
+        opt.value = item.id;
+        opt.innerText = `${item.id} - ${item.desc.substring(0, 35)}`;
+        sitSelect.appendChild(opt);
     });
-    window.radarConfig = {
-        easyRate: parseFloat(document.getElementById('rate-easy').value) || 0,
-        mediumRate: parseFloat(document.getElementById('rate-medium').value) || 0,
-        hardRate: parseFloat(document.getElementById('rate-hard').value) || 0,
-        officerRate: parseFloat(document.getElementById('rate-officer').value) || 0
-    };
 }
 
 function toggleSettingsModal(open) { document.getElementById('settingsModal').classList.toggle('active', open); }
