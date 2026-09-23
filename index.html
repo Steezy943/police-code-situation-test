@@ -6,18 +6,18 @@
     <title>Atlanta Police Department - Tactical Dispatch Academy</title>
     <style>
         :root {
-            --bg-light: #f4f6f9;
-            --panel-bg: #ffffff;
-            --radar-grid-bg: #f8fafc;
-            --primary-blue: #1e3a8a;
-            --accent-blue: #3b82f6;
-            --text-main: #0f172a;
-            --text-muted: #475569;
-            --border-color: #cbd5e1;
-            --easy: #16a34a;
-            --medium: #ca8a04;
-            --hard: #dc2626;
-            --officer: #2563eb;
+            --bg-dark: #0a0f1d;
+            --panel-bg: #131a2e;
+            --radar-grid-bg: #090d16;
+            --primary-blue: #3b82f6;
+            --accent-blue: #60a5fa;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #1e293b;
+            --easy: #22c55e;
+            --medium: #eab308;
+            --hard: #ef4444;
+            --officer: #3b82f6;
         }
 
         * {
@@ -28,7 +28,7 @@
         }
 
         body {
-            background-color: var(--bg-light);
+            background-color: var(--bg-dark);
             color: var(--text-main);
             padding: 20px;
             display: flex;
@@ -41,7 +41,7 @@
             max-width: 900px;
             background-color: var(--panel-bg);
             border-radius: 16px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             overflow: hidden;
             border: 1px solid var(--border-color);
         }
@@ -75,7 +75,7 @@
         .title-block h1 {
             font-size: 18px;
             font-weight: 700;
-            color: var(--primary-blue);
+            color: var(--accent-blue);
         }
 
         .title-block p {
@@ -88,14 +88,14 @@
             font-size: 13px;
             color: var(--easy);
             font-weight: 600;
-            background-color: #f0fdf4;
+            background-color: rgba(34, 197, 94, 0.1);
             padding: 4px 10px;
             border-radius: 20px;
-            border: 1px solid #bbf7d0;
+            border: 1px solid rgba(34, 197, 94, 0.3);
         }
 
         .radar-section {
-            background-color: #f8fafc;
+            background-color: var(--radar-grid-bg);
             padding: 24px;
             border-bottom: 1px solid var(--border-color);
             display: flex;
@@ -107,11 +107,11 @@
             position: relative;
             width: 320px;
             height: 320px;
-            background-color: #ffffff;
+            background-color: #05070f;
             border-radius: 50%;
             padding: 4px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
-            border: 1px solid var(--border-color);
+            box-shadow: inset 0 4px 20px rgba(0,0,0,0.8);
+            border: 2px solid var(--border-color);
         }
 
         canvas {
@@ -128,9 +128,9 @@
         }
 
         .clear-btn {
-            background-color: #ffffff;
-            color: #b91c1c;
-            border: 1px solid #fca5a5;
+            background-color: rgba(220, 38, 38, 0.1);
+            color: #f87171;
+            border: 1px solid rgba(220, 38, 38, 0.4);
             padding: 6px 16px;
             font-size: 12px;
             font-weight: 600;
@@ -140,8 +140,8 @@
         }
 
         .clear-btn:hover {
-            background-color: #fef2f2;
-            border-color: #ef4444;
+            background-color: rgba(220, 38, 38, 0.3);
+            color: white;
         }
 
         .telemetry-readout {
@@ -151,7 +151,7 @@
         }
 
         .probability-matrix {
-            background-color: #ffffff;
+            background-color: var(--panel-bg);
             padding: 16px 24px;
             border-bottom: 1px solid var(--border-color);
             display: grid;
@@ -183,7 +183,7 @@
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             border-bottom: 1px solid var(--border-color);
-            background-color: #f8fafc;
+            background-color: rgba(255,255,255,0.02);
         }
 
         .analytics-node {
@@ -220,14 +220,16 @@
         .search-filter {
             width: 100%;
             padding: 10px 14px;
+            background-color: var(--bg-dark);
             border: 1px solid var(--border-color);
+            color: var(--text-main);
             border-radius: 8px;
             font-size: 13px;
             margin-bottom: 16px;
             outline: none;
         }
 
-        .search-filter:focus { border-color: var(--accent-blue); box-shadow: 0 0 0 2px rgba(59,130,246,0.1); }
+        .search-filter:focus { border-color: var(--accent-blue); }
 
         .list-container {
             display: flex;
@@ -239,7 +241,7 @@
         }
 
         .extended-card {
-            background-color: #ffffff;
+            background-color: rgba(255, 255, 255, 0.02);
             border: 1px solid var(--border-color);
             padding: 14px;
             border-radius: 8px;
@@ -256,9 +258,9 @@
 
         .card-badge {
             font-weight: 700;
-            color: var(--primary-blue);
+            color: var(--accent-blue);
             font-size: 13px;
-            background-color: #eff6ff;
+            background-color: rgba(59, 130, 246, 0.1);
             padding: 2px 8px;
             border-radius: 4px;
         }
@@ -271,16 +273,16 @@
 
         .sentence-instruction {
             font-size: 12px;
-            color: #334155;
-            background-color: #f8fafc;
+            color: var(--text-muted);
+            background-color: rgba(0,0,0,0.2);
             padding: 8px 12px;
             border-radius: 6px;
-            border-left: 3px solid #64748b;
+            border-left: 3px solid var(--border-color);
             font-style: italic;
         }
 
         .interactive-quiz-space {
-            background-color: #f8fafc;
+            background-color: rgba(0,0,0,0.15);
             border: 1px dashed var(--border-color);
             border-radius: 10px;
             padding: 20px;
@@ -290,8 +292,9 @@
         .quiz-options-stack { display: flex; flex-direction: column; gap: 8px; }
         
         .quiz-option-row {
-            background: white;
+            background: var(--panel-bg);
             border: 1px solid var(--border-color);
+            color: var(--text-main);
             padding: 10px 14px;
             border-radius: 6px;
             cursor: pointer;
@@ -299,15 +302,23 @@
             transition: all 0.15s ease;
         }
 
-        .quiz-option-row:hover { background-color: #f1f5f9; border-color: var(--border-color); }
-        .quiz-option-row.matched-correct { background-color: #dcfce7; border-color: #bbf7d0; color: #166534; font-weight: 600; }
-        .quiz-option-row.matched-error { background-color: #fee2e2; border-color: #fca5a5; color: #991b1b; font-weight: 600; }
+        .quiz-option-row:hover { background-color: var(--border-color); }
+        .quiz-option-row.matched-correct { background-color: rgba(22, 163, 74, 0.2); border-color: #22c55e; color: #48bb78; font-weight: 600; }
+        .quiz-option-row.matched-error { background-color: rgba(220, 38, 38, 0.2); border-color: #ef4444; color: #f87171; font-weight: 600; }
         .action-footer { margin-top: 14px; display: flex; justify-content: flex-end; }
         .next-stage-btn { background-color: var(--primary-blue); color: white; border: none; padding: 8px 16px; font-size: 12px; font-weight: 600; border-radius: 4px; cursor: pointer; }
+        
+        .final-score-card {
+            text-align: center;
+            padding: 30px;
+            background: rgba(59, 130, 246, 0.05);
+            border-radius: 10px;
+            border: 1px solid var(--primary-blue);
+        }
+        .score-pct { font-size: 48px; font-weight: 800; color: var(--accent-blue); margin: 15px 0; }
     </style>
 </head>
 <body>
-
     <div class="dashboard-container">
         <header class="app-header">
             <div class="header-left">
@@ -319,7 +330,7 @@
             </div>
             <div class="status-value">Zone Terminal: Online</div>
         </header>
-        <!-- Refreshed Non-Eye Hurting Clean White Sonar Radar Setup -->
+
         <section class="radar-section">
             <div class="canvas-wrapper">
                 <canvas id="radarCanvas" width="312" height="312"></canvas>
@@ -330,37 +341,36 @@
             </div>
         </section>
 
-        <!-- Balance Density Setting Sliders -->
         <section class="probability-matrix">
             <div class="slider-node">
-                <label style="color:var(--easy);">Easy (Green) <span id="val-easy">25%</span></label>
-                <input type="range" id="rate-easy" min="0" max="100" value="25" oninput="balanceProbabilities('easy')">
+                <label style="color:var(--easy);">Easy (Green) <span id="val-easy">0%</span></label>
+                <input type="range" id="rate-easy" min="0" max="100" value="0" oninput="balanceProbabilities('easy')">
             </div>
             <div class="slider-node">
-                <label style="color:var(--medium);">Medium (Yellow) <span id="val-medium">25%</span></label>
-                <input type="range" id="rate-medium" min="0" max="100" value="25" oninput="balanceProbabilities('medium')">
+                <label style="color:var(--medium);">Medium (Yellow) <span id="val-medium">0%</span></label>
+                <input type="range" id="rate-medium" min="0" max="100" value="0" oninput="balanceProbabilities('medium')">
             </div>
             <div class="slider-node">
-                <label style="color:var(--hard);">Hard (Red) <span id="val-hard">25%</span></label>
-                <input type="range" id="rate-hard" min="0" max="100" value="25" oninput="balanceProbabilities('hard')">
+                <label style="color:var(--hard);">Hard (Red) <span id="val-hard">0%</span></label>
+                <input type="range" id="rate-hard" min="0" max="100" value="0" oninput="balanceProbabilities('hard')">
             </div>
             <div class="slider-node">
-                <label style="color:var(--officer);">Officer (Blue) <span id="val-officer">25%</span></label>
-                <input type="range" id="rate-officer" min="0" max="100" value="25" oninput="balanceProbabilities('officer')">
+                <label style="color:var(--officer);">Officer (Blue) <span id="val-officer">100%</span></label>
+                <input type="range" id="rate-officer" min="0" max="100" value="100" oninput="balanceProbabilities('officer')">
             </div>
         </section>
 
         <section class="analytics-strip">
             <div class="analytics-node">
                 <div class="node-title">Active Registry</div>
-                <div class="node-value" id="registry-count">36 APD Records</div>
+                <div class="node-value" id="registry-count">0 APD Codes</div>
             </div>
             <div class="analytics-node">
                 <div class="node-title">Test Progress</div>
                 <div class="node-value" id="stat-progress">0 Active</div>
             </div>
             <div class="analytics-node">
-                <div class="node-title">Accuracy Rate</div>
+                <div class="node-title">Live Performance</div>
                 <div class="node-value" id="stat-accuracy" style="color: var(--accent-blue);">100%</div>
             </div>
         </section>
@@ -368,17 +378,17 @@
         <section class="operations-panel">
             <div class="console-tabs">
                 <button class="console-tab-item active" onclick="toggleView(event, 'practice-deck')">Practice Reference Sheet</button>
-                <button class="console-tab-item" onclick="toggleView(event, 'assessment-deck')">Start Knowledge Test</button>
+                <button class="console-tab-item" onclick="toggleView(event, 'assessment-deck')">Start Officer Marathon Test</button>
             </div>
 
             <div id="practice-deck" class="view-content-block active">
-                <input type="text" id="codeSearch" class="search-filter" placeholder="Search codes, descriptions, or sentence examples...">
+                <input type="text" id="codeSearch" class="search-filter" placeholder="Search codes, explanations, or sentence examples...">
                 <div class="list-container" id="codebook-list"></div>
             </div>
 
             <div id="assessment-deck" class="view-content-block">
                 <div class="interactive-quiz-space">
-                    <div id="prompt-textbox" class="quiz-prompt">Click an active blip revealed by the spinning sonar sweep to begin a localized incident evaluation.</div>
+                    <div id="prompt-textbox" class="quiz-prompt">Click an active blue blip on the spinning radar tracking system above to initialize your 20-question Officer Assessment!</div>
                     <div id="options-stack" class="quiz-options-stack"></div>
                     <div class="action-footer">
                         <button id="forward-btn" class="next-stage-btn" style="display: none;" onclick="advanceQuizSession()">Next Scenario</button>
@@ -389,62 +399,183 @@
     </div>
     <script>
         const apdDatabase = [
-            { id: "Signal 1", type: "Signal", desc: "Abandoned Auto", sentence: "Zone 1, we have a Signal 1 blocking the dynamic lane on North Avenue." },
-            { id: "Signal 2A", type: "Signal", desc: "Audible Alarm", sentence: "Dispatch to Sector 2, handle a Signal 2A hitting at the local bank storefront." },
-            { id: "Signal 2S", type: "Signal", desc: "Silent Alarm", sentence: "Units clear the frequency, a Signal 2S tripped at the commercial registry." },
-            { id: "Signal 6R", type: "Signal", desc: "Burglary (Residence)", sentence: "En route to a Signal 6R on Cascade Road, backdoor forced open." },
-            { id: "Signal 6B", type: "Signal", desc: "Burglary (Business)", sentence: "Respond to a Signal 6B at the convenience depot on Piedmont." },
-            { id: "Signal 7", type: "Signal", desc: "Criminal Trespass", sentence: "Property owner wants an individual removed for a verified Signal 7." },
-            { id: "Signal 15", type: "Signal", desc: "Welfare Check", sentence: "Check the area of Peachtree St for a welfare safety Signal 15 check." },
-            { id: "Signal 21", type: "Signal", desc: "Kidnapping", sentence: "All units stand by for critical amber tracking info on a Signal 21 call." },
-            { id: "Signal 25", type: "Signal", desc: "Shots Fired", sentence: "Complainant reports multiple rounds heard, register a Signal 25 near the park." },
-            { id: "Signal 27", type: "Signal", desc: "Intoxicated Driver", sentence: "Be on the lookout for a chaotic vehicle driving pattern, suspected Signal 27." },
-            { id: "Signal 29", type: "Signal", desc: "Fight in Progress", sentence: "Units step up your response, a large Signal 29 reported in the parking structure." },
-            { id: "Signal 33", type: "Signal", desc: "Structure Fire", sentence: "Assisting Atlanta Fire Department rescue teams with a Signal 33 incident." },
-            { id: "Signal 36B", type: "Signal", desc: "Robbery (In-Progress Business)", sentence: "Code 3 units respond to a Signal 36B at the retail junction." },
-            { id: "Signal 41I", type: "Signal", desc: "Auto Accident-Injuries", sentence: "Dispatched to a 10-50 vehicle collision confirmed as a Signal 41I." },
-            { id: "Signal 42R", type: "Signal", desc: "Residential Burglary", sentence: "Perimeter units established on a Signal 42R sweep inside Zone 6." },
-            { id: "Signal 43", type: "Signal", desc: "Hit and Run", sentence: "Looking for a fleeing black sedan following a severe Signal 43 accident." },
-            { id: "Signal 44B", type: "Signal", desc: "Business Robbery", sentence: "Investigating a past-occurred Signal 44B at the fuel terminal." },
-            { id: "Signal 45", type: "Signal", desc: "Larceny / Theft", sentence: "Shoplifter detained on scene, we have a minor Signal 45 incident handled." },
-            { id: "Signal 48", type: "Signal", desc: "Person Dead", sentence: "Supervisor requested on scene to confirm coordinates for a Signal 48 tracking call." },
-            { id: "Signal 50", type: "Signal", desc: "Person Shot", sentence: "Emergency units rolling Code 3 to an active Signal 50 trauma notification." },
-            { id: "Signal 51", type: "Signal", desc: "Person Stabbed", sentence: "Medics cleared to enter for a confirmed Signal 51 wound victim." },
-            { id: "Signal 54", type: "Signal", desc: "Suspicious Person", sentence: "Caller states an unknown individual is checking door handles, clear a Signal 54." },
-            { id: "Signal 58", type: "Signal", desc: "Domestic Disturbance", sentence: "Dispatched verbal argument between family structures, logged as Signal 58." },
-            { id: "Signal 59", type: "Signal", desc: "Meet Officer", sentence: "Unit 301, make your way to the district station to Signal 59 with the Captain." },
-            { id: "Signal 63", type: "Signal", desc: "Officer Needs Help", sentence: "Signal 63! Tone alert on all local tactical monitoring configurations!" },
-            { id: "Signal 66", type: "Signal", desc: "Peeping Tom", sentence: "Suspicious suspect looking through glass panes, logged as a Signal 66." },
-            { id: "Signal 69", type: "Signal", desc: "Person Armed", sentence: "Be advised, individual matching the lookout is holding a weapon, Signal 69." },
-            { id: "Signal 72", type: "Signal", desc: "Traffic Stop", sentence: "Unit 402 out on a Signal 72 with a temporary vehicle registration tag." },
-            { id: "Signal 72P", type: "Signal", desc: "Vehicle Pursuit", sentence: "We are actively engaging in a Signal 72P moving northbound on the interstate." },
-            { id: "Code 1", type: "Response", desc: "Routine Response", sentence: "Handle that minor parking complaint as a standard Code 1 response configuration." },
-            { id: "Code 2", type: "Response", desc: "Urgent Response (No Siren)", sentence: "Proceed Code 2 to the dynamic property tracking assignment." },
-            { id: "Code 3", type: "Response", desc: "Critical Emergency (Lights/Siren)", sentence: "All units step up Code 3 to the location of the threat notification." },
-            { id: "Code 4", type: "Response", desc: "Scene Secure / Under Control", sentence: "The situation on Peachtree is Code 4, cancel all secondary units." },
-            { id: "10-4", type: "10-Code", desc: "Acknowledgment (OK)", sentence: "10-4 copy that transmission, changing my tracking zone pattern now." },
-            { id: "10-20", type: "10-Code", desc: "Current Location", sentence: "Dispatch, request your current 10-20 for a priority support assignment." },
-            { id: "10-97", type: "10-Code", desc: "Arrived at Assignment", sentence: "Unit 205 is 10-97 at the location, executing immediate foot patrol." }
+            { id: "Signal 1", type: "Signal", desc: "Abandon Auto", sentence: "We have an unmonitored block on North Ave matching a Signal 1 log." },
+            { id: "Signal 1R", type: "Signal", desc: "Recovered Auto", sentence: "Direct units to check the back lot for a verified Signal 1R tracking record." },
+            { id: "Signal 2S", type: "Signal", desc: "Silent Alarm", sentence: "Tripped monitoring relays at the jeweler storefront report a Signal 2S line." },
+            { id: "Signal 2A", type: "Signal", desc: "Audible Alarm", sentence: "Zone 5, respond to a loud Signal 2A sound cycle at the depot warehouse." },
+            { id: "Signal 3", type: "Signal", desc: "Fire Alarm", sentence: "Clear the frequency, routing support units for an active Signal 3 junction." },
+            { id: "Signal 4", type: "Signal", desc: "Carbon Monoxide", sentence: "Hazmat parameters initiated on scene following an environment Signal 4 breach." },
+            { id: "Signal 6B", type: "Signal", desc: "Burglary (business)", sentence: "Commercial security doors broken on scene, log as a Signal 6B dispatch." },
+            { id: "Signal 6R", type: "Signal", desc: "Burglary (residence)", sentence: "En route to a residential perimeter check regarding a suspicious Signal 6R entry." },
+            { id: "Signal 7", type: "Signal", desc: "Criminal Trespass", sentence: "Individual refuses to leave the terminal footprint, dispatch for a Signal 7." },
+            { id: "Signal 10", type: "Signal", desc: "Wash Down", sentence: "Send sanitation and engine support crews to handle a roadside Signal 10 clear." },
+            { id: "Signal 15", type: "Signal", desc: "Check Welfare", sentence: "Conduct a physical Signal 15 audit on an elderly individual missing check-ins." },
+            { id: "Signal 16", type: "Signal", desc: "Emergency Message", sentence: "Standby for a high-priority Signal 16 broadcast direct from Command." },
+            { id: "Signal 17", type: "Signal", desc: "Lockout", sentence: "Vehicle running with minor child inside, units assist on a priority Signal 17." },
+            { id: "Signal 18", type: "Signal", desc: "Tree Down", sentence: "Peachtree road blocked completely by power lines and a Signal 18 incident." },
+            { id: "Signal 19", type: "Signal", desc: "Water Problem", sentence: "Main valve rupture causing structural shifts, tag as an absolute Signal 19." },
+            { id: "Signal 20A", type: "Signal", desc: "Cont. Disease-HIV", sentence: "Medical dispatch updates unit parameters to observe Signal 20A guidelines." },
+            { id: "Signal 20H", type: "Signal", desc: "Cont. Disease-Hep", sentence: "Exercise contact clean mechanics under specialized Signal 20H conditions." },
+            { id: "Signal 20T", type: "Signal", desc: "Cont. Disease-TB", sentence: "Airborn containment protection systems verified for a known Signal 20T." },
+            { id: "Signal 21", type: "Signal", desc: "Kidnapping", sentence: "Initiate interstate roadblocks immediately to isolate a suspect Signal 21 vehicle." },
+            { id: "Signal 22", type: "Signal", desc: "Against Dept. Policy", sentence: "Actions monitored on channel 2 are flagged under standard Signal 22 review." },
+            { id: "Signal 23", type: "Signal", desc: "Disorderly Children", sentence: "Large juvenile group causing business terminal disruption, clear a Signal 23." },
+            { id: "Signal 24", type: "Signal", desc: "Demented Person", sentence: "Individual running into active traffic flows, handle under a safe Signal 24 loop." },
+            { id: "Signal 25", type: "Signal", desc: "Shots Fired", sentence: "Ballistic acoustic locators detect three discharges, dispatch a Signal 25." },
+            { id: "Signal 26", type: "Signal", desc: "Fireworks", sentence: "Holiday celebration crowds causing localized sound reports, verified Signal 26." },
+            { id: "Signal 27", type: "Signal", desc: "Intoxicated Driver", sentence: "Vehicle swerving aggressively across highway partitions, call a Signal 27." },
+            { id: "Signal 28", type: "Signal", desc: "Intoxicated Person", sentence: "Unresponsive citizen resting on public stairs, handle under a routine Signal 28." },
+            { id: "Signal 29", type: "Signal", desc: "Fight in Progress", sentence: "Active physical combat involving multiple subjects, roll units Code 3 for a Signal 29." },
+            { id: "Signal 30", type: "Signal", desc: "Explosion (any type)", sentence: "Structural failure reports matching a violent shockwave, clear a Signal 30." },
+            { id: "Signal 31", type: "Signal", desc: "Wire Down/Electrical Short", sentence: "Live components throwing active arcs onto sidewalks, mark a Signal 31." },
+            { id: "Signal 32", type: "Signal", desc: "Open door/window", sentence: "Night patrol finds a commercial entry unlatched after hours, log a Signal 32." },
+            { id: "Signal 33", type: "Signal", desc: "Structure Fire", sentence: "Engaging secondary defensive barriers alongside fire teams on a Signal 33." },
+            { id: "Signal 34", type: "Signal", desc: "Vehicle Fire", sentence: "Engine block fully engulfed on the expressway shoulder, dispatch a Signal 34." },
+            { id: "Signal 35", type: "Signal", desc: "Wood/grass Fire", sentence: "Brush fire threatening perimeter fences along transit paths, mark as a Signal 35." },
+            { id: "Signal 36B", type: "Signal", desc: "Robbery In progress Business", sentence: "Panic buttons activated during a retail holdup, route all Code 3 for a Signal 36B." },
+            { id: "Signal 36P", type: "Signal", desc: "Robbery In progress Pedestrian", sentence: "Foot patrol intercepts a strongarm theft on the pathway, active Signal 36P." },
+            { id: "Signal 36R", type: "Signal", desc: "Robbery In progress Residential", sentence: "Home invaders inside the floor plan, tracking active Signal 36R elements." },
+            { id: "Signal 35C", type: "Signal", desc: "Carjacking (In progress)", sentence: "Suspect taking a vehicle by physical force, signal a Signal 35C call." },
+            { id: "Signal 37", type: "Signal", desc: "Illegal Parking", sentence: "Vehicle left in a fire access zone, handle as a routine Signal 37 layout." },
+            { id: "Signal 38", type: "Signal", desc: "Illegal Drugs/Alcohol", sentence: "Contraband items recovered inside a vehicle sweep, log a Signal 38 record." },
+            { id: "Signal 39", type: "Signal", desc: "Information to Officer", sentence: "Standby for incoming tracking updates via a Signal 39 dispatch data node." },
+            { id: "Signal 40", type: "Signal", desc: "Animal Call", sentence: "Stray vicious guard breed blocking sidewalk access routes, call a Signal 40." },
+            { id: "Signal 41I", type: "Signal", desc: "Auto Accident/Injuries", sentence: "Two cars collided with active driver entrapment, route a Signal 41I." },
+            { id: "Signal 41IT", type: "Signal", desc: "Auto Accident/Trapped", sentence: "Extrication machinery required on the roadway to clear a severe Signal 41IT." },
+            { id: "Signal 41F", type: "Signal", desc: "Auto Accident/Fire", sentence: "Impact split fuel infrastructure, engine area on fire, dispatch a Signal 41F." },
+            { id: "Signal 41P", type: "Signal", desc: "Auto Accident/Police", sentence: "A precinct patrol car was clipped at an intersection, note a Signal 41P." },
+            { id: "Signal 42B", type: "Signal", desc: "Commercial Burglary", sentence: "Past occurred safe break at a pharmacy vault, dispatch for a Signal 42B report." },
+            { id: "Signal 42R", type: "Signal", desc: "Residential Burglary", sentence: "Homeowners returned to find electronic packages missing, file a Signal 42R." },
+            { id: "Signal 43", type: "Signal", desc: "Hit and Run", sentence: "Fleeing vehicle left front bumper on scene, tracking a Signal 43 asset." },
+            { id: "Signal 44B", type: "Signal", desc: "Business Robbery", sentence: "Past robbery occurred at a check cashing counter, log a Signal 44B." },
+            { id: "Signal 44P", type: "Signal", desc: "Pedestrian Robbery", sentence: "Victim approached on a transit path, wallet taken, register a Signal 44P." }
+        ];
+        const masterDatabase = [
+            ...apdDatabase,
+            { id: "Signal 44R", type: "Signal", desc: "Residential Robbery", sentence: "Armed suspect entered garage area to take belongings, report a Signal 44R." },
+            { id: "Signal 44C", type: "Signal", desc: "Carjacking", sentence: "Past occurred vehicle theft accomplished by dynamic threat, log a Signal 44C." },
+            { id: "Signal 45", type: "Signal", desc: "Larceny", sentence: "Shoplifter walked past register banks without clearing payments, a Signal 45." },
+            { id: "Signal 46", type: "Signal", desc: "Ped. Struck by Auto", sentence: "Pedestrian stepped into path of a vehicle, rolling medics to a Signal 46." },
+            { id: "Signal 47", type: "Signal", desc: "Person Injured", sentence: "Industrial construction equipment error led to a bad fall, log a Signal 47." },
+            { id: "Signal 48", type: "Signal", desc: "Person Dead", sentence: "Precinct coroner and detectives called out to confirm a Signal 48 case." },
+            { id: "Signal 49", type: "Signal", desc: "Rape", sentence: "Specialized investigators take over primary processing on a Signal 49." },
+            { id: "Signal 50", type: "Signal", desc: "Person Shot", sentence: "Trauma assets requested immediate flight path cleared for a Signal 50." },
+            { id: "Signal 51", type: "Signal", desc: "Person Stabbed", sentence: "Altercation led to severe puncture lacerations, mark a Signal 51 dispatch." },
+            { id: "Signal 52", type: "Signal", desc: "Found Property", sentence: "Unclaimed dynamic luggage left at terminal desks processed under Signal 52." },
+            { id: "Signal 53", type: "Signal", desc: "Suicide", sentence: "Crisis negotiations hand off to scene command blocks on a Signal 53." },
+            { id: "Signal 54", type: "Signal", desc: "Suspicious Person", sentence: "Individual wearing dark gear inspecting backyard tree lines, code as Signal 54." },
+            { id: "Signal 55", type: "Signal", desc: "911 Hang-up", sentence: "Emergency lines drop mid-transmission, sector cars verify a Signal 55 loop." },
+            { id: "Signal 56", type: "Signal", desc: "Missing Person", sentence: "Juvenile has failed to return from school grounds, activate a Signal 56 file." },
+            { id: "Signal 57", type: "Signal", desc: "Noise Complaint", sentence: "Peachtree apartments report loud audio output past midnight, log a Signal 57." },
+            { id: "Signal 58", type: "Signal", desc: "Domestic Disturbance", sentence: "Intense argument heard between residents across shared partitions, a Signal 58." },
+            { id: "Signal 59", type: "Signal", desc: "Meet Officer", sentence: "Units make your way to the municipal fuel rack to Signal 59 with sector lines." },
+            { id: "Signal 60", type: "Signal", desc: "Molesting woman/child", sentence: "Priority investigative protocols initiated following a dynamic Signal 60 alert." },
+            { id: "Signal 60A", type: "Signal", desc: "Child Abuse", sentence: "Child services teams coordinate scene containment for a severe Signal 60A." },
+            { id: "Signal 61", type: "Signal", desc: "Non Police Help Call", sentence: "Public assistance request outside standard operational mandates, a Signal 61." },
+            { id: "Signal 62", type: "Signal", desc: "Switch Radio Channel", sentence: "Tactical teams command all sector tracking units to Signal 62 to Channel B." },
+            { id: "Signal 63", type: "Signal", desc: "OFFICER NEEDS HELP", sentence: "Emergency tones activate! Signal 63 broadcasted near the zone boundary!" },
+            { id: "Signal 64", type: "Signal", desc: "Person Soliciting Sex", sentence: "Plainclothes monitoring initiatives result in a localized Signal 64 sweep." },
+            { id: "Signal 65", type: "Signal", desc: "Gambling", sentence: "Unlawful card tracking operations busted at an empty business, Signal 65." },
+            { id: "Signal 66", type: "Signal", desc: "Peeping Tom", sentence: "Subject standing outside bedroom blinds caught on video, log a Signal 66." },
+            { id: "Signal 67", type: "Signal", desc: "Hold Radio Traffic", sentence: "Emergency air protocol active, all standard stations hold for a Signal 67." },
+            { id: "Signal 68", type: "Signal", desc: "Person Screaming", sentence: "Neighbors report loud structural vocal duress calls, verify a Signal 68 line." },
+            { id: "Signal 69", type: "Signal", desc: "Person Armed", sentence: "Individual walking near train terminals carrying an unholstered rifle, Signal 69." },
+            { id: "Signal 70", type: "Signal", desc: "Prowler", sentence: "Footsteps heard along side driveway areas, monitor for an active Signal 70." },
+            { id: "Signal 71", type: "Signal", desc: "Public Indecency", sentence: "Exhibitionist behavior tracking underway inside public parks, a Signal 71." },
+            { id: "Signal 72", type: "Signal", desc: "Traffic Stop", sentence: "Unit 305 out on a Signal 72 with a red motorcycle missing tag items." },
+            { id: "Signal 72B", type: "Signal", desc: "Checkpoint", sentence: "Dynamic roadblock systems initialized for an evening security Signal 72B sweep." },
+            { id: "Signal 72P", type: "Signal", desc: "Pursuit", sentence: "High speed flight tracking initiated on a felony car, signal a Signal 72P." },
+            { id: "Signal 73", type: "Signal", desc: "Bomb Threat", sentence: "Threat protocols execute, clear the target building under Signal 73 codes." },
+            { id: "Signal 73P", type: "Signal", desc: "Explosive/Incendiary", sentence: "Improvised items located on scene, bomb squads rolling to a Signal 73P call." },
+            { id: "Signal 73H", type: "Signal", desc: "Haz Mat Chem or Bio", sentence: "Industrial pipeline failure emitting green vapor layers, log a Signal 73H." },
+            { id: "Signal 74", type: "Signal", desc: "Terrorist Incident", sentence: "Federal interface networks override sector frequencies for a Signal 74 event." },
+            { id: "Signal 75", type: "Signal", desc: "Air Rifle", sentence: "Complainant reports window damaged by a projectile projectile, log Signal 75." },
+            { id: "Signal 76", type: "Signal", desc: "Abandoned Children", sentence: "Juveniles found alone inside an empty apartment property, start a Signal 76." },
+            { id: "Signal 77", type: "Signal", desc: "Snatch Thief", sentence: "Suspect ran past outdoor diner to rip jewelry item away, record Signal 77." },
+            { id: "Signal 78", type: "Signal", desc: "Lookout", sentence: "Copy that broadcast, updating dispatch lookup records for a Signal 78 match." },
+            { id: "Signal 79", type: "Signal", desc: "Stolen Vehicle - In Progress", sentence: "LoJack tracking equipment marks an active moving Signal 79 vehicle target." },
+            { id: "Signal 80", type: "Signal", desc: "Gas Leak", sentence: "Pungent aromatic pressure signatures track back to a basement Signal 80 fault." },
+            { id: "Signal 81", type: "Signal", desc: "Street Hazard", sentence: "Debris scattered across middle highway boundaries creates a serious Signal 81." },
+            { id: "Signal 81W", type: "Signal", desc: "Weather Hazard", sentence: "Flash floods making low bridges unsafe, activate localized Signal 81W notes." },
+            { id: "Signal 82", type: "Signal", desc: "Prisoner Transport", sentence: "Unit 102 transport unit moving two suspects under a secure Signal 82 card." },
+            { id: "Signal 83", type: "Signal", desc: "Escaped Person", sentence: "Correctional facility breakout parameters alert area units for a Signal 83 search." },
+            { id: "Signal 84", type: "Signal", desc: "Aircraft Incident", sentence: "Emergency runway systems track a private plane showing system failure, Signal 84." },
+            { id: "Signal 85", type: "Signal", desc: "Wrecker Request", sentence: "Immobilized vehicle requires mechanical lift removal, submit a Signal 85 format." }
+        ];
+        const apdCodes = [
+            { id: "Signal 86", type: "Signal", desc: "Vandalism", sentence: "Graffiti tagging crew caught painting brick infrastructure, file a Signal 86." },
+            { id: "Signal 87", type: "Signal", desc: "Person Trapped", sentence: "Freight elevator failure has multiple citizens locked inside, log a Signal 87." },
+            { id: "Signal 88", type: "Signal", desc: "Extra Job", sentence: "Off duty security coordination registry items cataloged under Signal 88 terms." },
+            { id: "Signal 89", type: "Signal", desc: "Direct Patrol", sentence: "Sector cars maintain visible presence along high risk storefronts for a Signal 89." },
+            { id: "Signal 90", type: "Signal", desc: "Obscene Phone Calls", sentence: "Harassing digital communication patterns logged as an official Signal 90 file." },
+            { id: "Signal 91", type: "Signal", desc: "Community Policing", sentence: "Interactive public outreach assemblies managed under standard Signal 91 targets." },
+            { id: "Signal 92", type: "Signal", desc: "Rescue Person(s)", sentence: "Swift water current extraction profiles underway for a dynamic Signal 92 mission." },
+            { id: "Signal 93", type: "Signal", desc: "Odor of Smoke", sentence: "Vague structural haze detected inside air ventilation channels, register a Signal 93." },
+            { id: "Signal 95", type: "Signal", desc: "Check and Advise", sentence: "Verify parking validation status at the courthouse lot, check and advise, Signal 95." },
+            { id: "Code 1", type: "Code", desc: "Non-Emergency", sentence: "Handle that missing property checklist document on a standard Code 1 track." },
+            { id: "Code 2", type: "Code", desc: "Emergency Lights/Siren NOT Required", sentence: "Respond to the minor domestic dispute under a priority Code 2 response." },
+            { id: "Code 3", type: "Code", desc: "Emergency Lights & Siren Required", sentence: "Roll emergency assets immediately Code 3 to the location of the violent threat." },
+            { id: "Code 4", type: "Code", desc: "Cancel Call", sentence: "Threat resolved before arrival, Code 4 the dispatch request." },
+            { id: "Code 5A", type: "Code", desc: "Domestic - Report Needed", sentence: "File comprehensive field cards following a Code 5A incident trace." },
+            { id: "Code 5B", type: "Code", desc: "Domestic - Report/Arrest", sentence: "Suspect taken into physical custody on a confirmed Code 5B assault resolution." },
+            { id: "Code 6", type: "Code", desc: "False Alarm", sentence: "Commercial sensor triggered by system tests, log a clear Code 6." },
+            { id: "Code 7", type: "Code", desc: "Available For Service", sentence: "Unit 204 has resolved all prior processing, mark us Code 7 on air." },
+            { id: "Code 8", type: "Code", desc: "Person Gone", sentence: "Suspect cleared the area before units established a line, tag a Code 8." },
+            { id: "Code 9", type: "Code", desc: "Transfer Responsibility", sentence: "Passing structural command blocks to arriving field support, clear Code 9." },
+            { id: "Code 10", type: "Code", desc: "Vehicle Impound", sentence: "Towing a vehicle abandoned inside intersection lanes, file a Code 10 log." },
+            { id: "Code 11", type: "Code", desc: "Information", sentence: "Updating database indexes to capture dynamic local Code 11 material." },
+            { id: "Code 12", type: "Code", desc: "No Arrest/Report", sentence: "Field resolution completed cleanly, closing out the card as a Code 12." },
+            { id: "Code 13", type: "Code", desc: "No Valid Address", sentence: "Complainant tracking information cannot be localized, mark as Code 13." },
+            { id: "Code 14A", type: "Code", desc: "Alarm Refused - Alarm Out", sentence: "Commercial business profile marked under Code 14A status records." },
+            { id: "Code 14B", type: "Code", desc: "Alarm Refused - Alarm Reset", sentence: "Alarm reset executed during monitoring tracking operations, close as Code 14B." },
+            { id: "Code 15A", type: "Code", desc: "Alarm Owner On Way - Alarm Out", sentence: "Keyholder responding to site location under active Code 15A metrics." },
+            { id: "Code 15B", type: "Code", desc: "Alarm Owner On Way - Alarm Reset", sentence: "System reset completed by arriving management, close clear as Code 15B." },
+            { id: "Code 16", type: "Code", desc: "Release Stolen Property To Owner", sentence: "Recovered electronics handed directly back to citizens under Code 16 logs." },
+            { id: "Code 17", type: "Code", desc: "Report Made", sentence: "Field documentation files pushed to digital repositories, mark a Code 17." },
+            { id: "Code 19", type: "Code", desc: "Stolen Article", sentence: "Securing inventory tracking parameters for a recovered Code 19 item." },
+            { id: "Code 20", type: "Code", desc: "O.C. Used", sentence: "Pepper spray deployed during subject non-compliance, enter a Code 20 log." },
+            { id: "Code 21", type: "Code", desc: "Kidnapping - Officer", sentence: "High priority rescue alarms activate for an abducted team under Code 21." },
+            { id: "Code 22", type: "Code", desc: "Can't Locate Address", sentence: "Physical building designations do not match the environment, clear Code 22." },
+            { id: "Code 23", type: "Code", desc: "Arrest/Copy of Charges", sentence: "Paperwork copies delivered to booking desks under clear Code 23 parameters." },
+            { id: "Code 24", type: "Code", desc: "Nothing To Call", sentence: "Area inspection reveals regular structural patterns, register a Code 24." },
+            { id: "Code 25", type: "Code", desc: "Located/Suspected Explosive Device", sentence: "Bomb crews confirm an explosive artifact footprint, flag a Code 25." },
+            { id: "Code 26", type: "Code", desc: "Arrive On Call", sentence: "Units log immediate environmental timestamps marking their Code 26 arrival." },
+            { id: "Code 28A", type: "Code", desc: "Wanted Check - Wanted", sentence: "System check returns an active felony arrest block, confirm a Code 28A." },
+            { id: "Code 28B", type: "Code", desc: "Wanted Check - No Wants", sentence: "Individual cleared across all regional lookup networks, logged as Code 28B." },
+            { id: "Code 30", type: "Code", desc: "Mayor or Mayor's Family Injured", sentence: "High level priority notice sounds across the command layer, alert Code 30." },
+            { id: "Code 31", type: "Code", desc: "Remove Shotgun", sentence: "Securing heavier tactical hardware components back into cruiser racks, Code 31." },
+            { id: "Code 32", type: "Code", desc: "Alarm Out Of Service", sentence: "Malfunctioning sensor array taken offline at the facility, mark Code 32." }
         ];
 
-        const quizScenarios = {
-            easy: [
-                { question: "A property owner calls to report a vehicle parked on their private lot without authorization. What code applies?", options: ["Signal 7", "Signal 1", "Signal 45", "10-97"], matchIndex: 1 },
-                { question: "You are acknowledging a routine message from dispatch safely. What standard string applies?", options: ["10-20", "Code 3", "10-4", "Signal 59"], matchIndex: 2 }
-            ],
-            medium: [
-                { question: "An individual is spotted jumping over a fence into a storage lot after hours. What tracking metric fits?", options: ["Signal 7", "Signal 2A", "Signal 45", "Code 4"], matchIndex: 0 },
-                { question: "A retail department store reports a suspect has filled a bag with merchandise and run out the back exit.", options: ["Signal 6B", "Signal 45", "Signal 43", "Signal 21"], matchIndex: 1 }
-            ],
-            hard: [
-                { question: "Dispatch contacts you regarding a family verbal dispute turning physical inside a residence. What code applies?", options: ["Signal 29", "Signal 58", "Signal 6R", "10-4"], matchIndex: 1 },
-                { question: "Witnesses report hearing five consecutive discharge bursts near an alleyway. What signal profiles the incident?", options: ["Signal 50", "Signal 25", "Signal 69", "Signal 33"], matchIndex: 1 }
-            ],
-            officer: [
-                { question: "A perimeter unit initiates an emergency pursuit of an armed carjacking vehicle traveling northbound.", options: ["Signal 72P", "Signal 72", "Code 2", "Signal 36B"], matchIndex: 0 },
-                { question: "An active distress transmission broadcast across the dispatch net calls for immediate aid to a cornered team.", options: ["Signal 29", "Signal 59", "Signal 63", "Code 3"], matchIndex: 2 }
-            ]
-        };
+        masterDatabase.push(...apdCodes);
+
+        const officerMarathonQuestions = [
+            { question: "An emergency tone sounds across the zone. A unit under immediate threat requests emergency backup near downtown. Identify the code.", options: ["Signal 29", "Signal 59", "Signal 63", "Code 21"], matchIndex: 2 },
+            { question: "A perimeter unit initiates an immediate tactical pursuit against a fleeing felony car down I-20. What signal applies?", options: ["Signal 72", "Signal 72P", "Code 3", "Signal 79"], matchIndex: 1 },
+            { question: "Units respond Code 3 to an ongoing armed hijacking of a commercial vehicle. What signal classifies this active event?", options: ["Signal 35C", "Signal 44C", "Signal 36B", "Signal 21"], matchIndex: 0 },
+            { question: "Dispatch transmits an alert regarding an armed individual carrying an unholstered rifle near a transit station. What signal applies?", options: ["Signal 54", "Signal 69", "Signal 78", "Code 25"], matchIndex: 1 },
+            { question: "A priority dispatch logs an active armed robbery inside a retail storefront right now. Identify the signal.", options: ["Signal 44B", "Signal 36B", "Signal 36P", "Code 5B"], matchIndex: 1 },
+            { question: "A suspect violently rips a purse away from a pedestrian on a public pathway and runs. What signal describes this event?", options: ["Signal 45", "Signal 77", "Signal 44P", "Signal 36P"], matchIndex: 1 },
+            { question: "A residential call involving a dynamic family physical alteration is reported to dispatch. Identify the signal.", options: ["Signal 29", "Signal 58", "Signal 23", "Code 5A"], matchIndex: 1 },
+            { question: "Units handle a dynamic traffic stop and discover an active felony arrest warrant on the operator during verification. What disposition code is used?", options: ["Code 23", "Code 28A", "Code 28B", "Code 17"], matchIndex: 1 }
+        ];
+        const additionalQuestions = [
+            { question: "A supervisor requests an emergency assignment execution utilizing full assets (Emergency lights and sound siren arrays). What response mode applies?", options: ["Code 1", "Code 2", "Code 3", "Code 7"], matchIndex: 2 },
+            { question: "A major collision is verified on the highway where a split fuel line has caused the vehicle engine to fully ignite. What signal is logged?", options: ["Signal 34", "Signal 41F", "Signal 41IT", "Signal 30"], matchIndex: 1 },
+            { question: "Bomb detection squads locate an active improvised explosive artifact package under a municipal bridge. Identify the code profile.", options: ["Signal 73P", "Code 25", "Signal 73", "Code 30"], matchIndex: 1 },
+            { question: "An emergency unit drops off the radio grid mid-call, and tracking operators verify a dynamic 911 drop loop. What signal tracks this?", options: ["Signal 16", "Signal 39", "Signal 55", "Code 22"], matchIndex: 2 },
+            { question: "A field unit deploys an oleoresin capsicum (pepper spray) canister to handle a combative, non-compliant subject. What code must be recorded?", options: ["Code 20", "Code 23", "Code 31", "Signal 47"], matchIndex: 0 },
+            { question: "Cyber networks register past break-ins at local storefront structures where property items were taken with no suspects remaining. What signal is used?", options: ["Signal 6B", "Signal 44B", "Signal 42B", "Code 6"], matchIndex: 0 },
+            { question: "A patrol officer locates an empty vehicle on an access shoulder that has been stripped and left abandoned. What code handles this?", options: ["Signal 1", "Signal 1R", "Signal 37", "Code 10"], matchIndex: 0 },
+            { question: "A specialized call is dispatched regarding a suspect looking through structural blinds into a private residential space. Identify the signal.", options: ["Signal 54", "Signal 70", "Signal 66", "Signal 71"], matchIndex: 2 },
+            { question: "An alarm company triggers tracking lines for a hidden, non-sounding monitoring breach layout inside a jewelry vault. What signal tracks this?", options: ["Signal 2A", "Signal 2S", "Signal 6B", "Code 14A"], matchIndex: 1 },
+            { question: "A vehicle collision occurs on an arterial road resulting in multiple passengers pinned inside the compressed wreckage. What signal applies?", options: ["Signal 41I", "Signal 41IT", "Signal 87", "Signal 92"], matchIndex: 1 },
+            { question: "A home invasion is called in by a resident hiding inside a closet while suspects break through a window. What signal applies?", options: ["Signal 6R", "Signal 42R", "Signal 36R", "Signal 44R"], matchIndex: 2 },
+            { question: "Command lines order all units on Sector 2 to immediately transition communication strings over to a tactical backup channel. What signal is used?", options: ["Signal 39", "Signal 62", "Signal 67", "Code 9"], matchIndex: 1 }
+        ];
+
+        officerMarathonQuestions.push(...additionalQuestions);
+
         let activeBlips = [];
         const maxBlips = 7;
         let sweepAngle = 0;
@@ -455,9 +586,9 @@
         const cy = canvas.height / 2;
         const maxRadius = canvas.width / 2;
 
-        let activeQuizCard = null;
-        let runningCorrect = 0;
-        let globalAttempts = 0;
+        let marathonPointer = 0;
+        let testScoreCorrect = 0;
+        let testModeActive = false;
 
         window.onload = function() {
             buildCodebookView();
@@ -466,15 +597,11 @@
         };
 
         function runRadarLoop(timestamp) {
-            // Smooth velocity calculation for the sonar sweeping beam
             sweepAngle = (sweepAngle + 0.025) % (Math.PI * 2);
-            
-            // Clear to professional crisp background tone
-            ctx.fillStyle = '#ffffff';
+            ctx.fillStyle = '#060913';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            // Soft gray radar mapping concentric ring constraints
-            ctx.strokeStyle = '#e2e8f0';
+            ctx.strokeStyle = 'rgba(59, 130, 246, 0.15)';
             ctx.lineWidth = 1;
             for(let r = maxRadius / 4; r <= maxRadius; r += maxRadius / 4) {
                 ctx.beginPath();
@@ -482,18 +609,15 @@
                 ctx.stroke();
             }
 
-            // Crosshair guidelines
             ctx.beginPath();
             ctx.moveTo(0, cy); ctx.lineTo(canvas.width, cy);
             ctx.moveTo(cx, 0); ctx.lineTo(cx, canvas.height);
             ctx.stroke();
 
-            // Intermittent item spawn generation
             if (Math.random() < 0.02 && activeBlips.length < maxBlips) {
                 generateProbabilisticTarget();
             }
 
-            // Update blip visibilities as sweep blade intersects coordinates
             activeBlips.forEach(blip => {
                 let angleToBlip = Math.atan2(blip.y - cy, blip.x - cx);
                 if (angleToBlip < 0) angleToBlip += Math.PI * 2;
@@ -501,33 +625,27 @@
                 let angleDiff = sweepAngle - angleToBlip;
                 if (angleDiff < 0) angleDiff += Math.PI * 2;
 
-                // When blade sweeps directly across, trigger pulse glow highlight
                 if (angleDiff < 0.08) { 
-                    blip.visible = true;
-                    blip.opacity = 1.0; 
+                    blip.pulseRadius = blip.radius;
+                    blip.pulseOpacity = 1.0;
                 } else {
-                    blip.opacity = Math.max(blip.opacity - 0.005, 0.0);
-                    if(blip.opacity <= 0.05) { blip.visible = false; }
+                    blip.pulseRadius += 0.25;
+                    blip.pulseOpacity = Math.max(blip.pulseOpacity - 0.01, 0.0);
                 }
 
-                if (blip.visible) {
-                    // Pulsing animation math
-                    blip.pulseRadius += 0.2;
-                    if(blip.pulseRadius > blip.radius + 8) blip.pulseRadius = blip.radius;
+                ctx.fillStyle = `rgba(59, 130, 246, 0.9)`;
+                ctx.beginPath();
+                ctx.arc(blip.x, blip.y, blip.radius, 0, Math.PI * 2);
+                ctx.fill();
 
-                    ctx.fillStyle = getTierColor(blip.tier, blip.opacity);
+                if (blip.pulseOpacity > 0) {
+                    ctx.strokeStyle = `rgba(59, 130, 246, ${blip.pulseOpacity * 0.5})`;
+                    ctx.lineWidth = 1.5;
                     ctx.beginPath();
-                    ctx.arc(blip.x, blip.y, blip.radius, 0, Math.PI * 2);
-                    ctx.fill();
-
-                    ctx.strokeStyle = getTierColor(blip.tier, blip.opacity * 0.4);
-                    ctx.beginPath();
-                    ctx.arc(blip.x, blip.y, blip.pulseRadius, 0, Math.PI * 2);
+                    ctx.arc(blip.x, blip.y, Math.min(blip.pulseRadius + 6, blip.radius + 14), 0, Math.PI * 2);
                     ctx.stroke();
                 }
             });
-
-            // Draw spinning sonar blade trail alpha mask gradients cleanly
             ctx.save();
             ctx.translate(cx, cy);
             ctx.rotate(sweepAngle);
@@ -539,7 +657,7 @@
             ctx.fillStyle = bladeGrad;
             ctx.beginPath();
             ctx.moveTo(0,0);
-            ctx.arc(0, 0, maxRadius, -0.2, 0, false);
+            ctx.arc(0, 0, maxRadius, -0.25, 0, false);
             ctx.lineTo(0,0);
             ctx.fill();
             ctx.restore();
@@ -548,39 +666,16 @@
             window.requestAnimationFrame(runRadarLoop);
         }
 
-        function getTierColor(tier, opacity) {
-            if (tier === 'easy') return `rgba(22, 163, 74, ${opacity})`;
-            if (tier === 'medium') return `rgba(202, 138, 4, ${opacity})`;
-            if (tier === 'hard') return `rgba(220, 38, 38, ${opacity})`;
-            return `rgba(37, 99, 235, ${opacity})`;
-        }
         function generateProbabilisticTarget() {
-            const tiers = ['easy', 'medium', 'hard', 'officer'];
-            const probabilities = tiers.map(t => parseFloat(document.getElementById(`rate-${t}`).value) || 0);
-            const totalProb = probabilities.reduce((a, b) => a + b, 0);
-            
-            if (totalProb === 0) return;
-            
-            let targetRand = Math.random() * totalProb;
-            let chosenTier = 'easy';
-            let cumulative = 0;
-            
-            for (let i = 0; i < tiers.length; i++) {
-                cumulative += probabilities[i];
-                if (targetRand <= cumulative) { chosenTier = tiers[i]; break; }
-            }
-
             let angle = Math.random() * Math.PI * 2;
             let distance = (Math.random() * (maxRadius - 40)) + 30;
-            
             activeBlips.push({
                 x: cx + Math.cos(angle) * distance,
                 y: cy + Math.sin(angle) * distance,
                 radius: 6,
                 pulseRadius: 6,
-                tier: chosenTier,
-                opacity: 0,
-                visible: false
+                pulseOpacity: 0,
+                tier: 'officer'
             });
         }
 
@@ -596,99 +691,116 @@
             }
 
             if (foundIdx !== -1) {
-                let blip = activeBlips[foundIdx];
                 activeBlips.splice(foundIdx, 1);
-                triggerAssessmentFromRadar(blip.tier);
+                if(!testModeActive) {
+                    startOfficerMarathon();
+                }
             }
         });
 
         function clearRadarTargets() { activeBlips = []; }
 
         function balanceProbabilities(changedTier) {
-            let sliders = ['easy', 'medium', 'hard', 'officer'];
-            let changedVal = parseFloat(document.getElementById(`rate-${changedTier}`).value) || 0;
-            document.getElementById(`val-${changedTier}`).innerText = `${changedVal}%`;
-
-            let remainder = 100 - changedVal;
-            let otherSliders = sliders.filter(s => s !== changedTier);
-            let sumOthers = otherSliders.reduce((sum, s) => sum + (parseFloat(document.getElementById(`rate-${s}`).value) || 0), 0);
-
-            if(sumOthers > 0) {
-                otherSliders.forEach(s => {
-                    let curVal = parseFloat(document.getElementById(`rate-${s}`).value) || 0;
-                    let scaled = Math.round((curVal / sumOthers) * remainder);
-                    document.getElementById(`rate-${s}`).value = scaled;
-                    document.getElementById(`val-${s}`).innerText = `${scaled}%`;
-                });
-            } else {
-                let split = Math.round(remainder / 3);
-                otherSliders.forEach(s => {
-                    document.getElementById(`rate-${s}`).value = split;
-                    document.getElementById(`val-${s}`).innerText = `${split}%`;
-                });
-            }
+            document.getElementById('rate-easy').value = 0;   document.getElementById('val-easy').innerText = "0%";
+            document.getElementById('rate-medium').value = 0; document.getElementById('val-medium').innerText = "0%";
+            document.getElementById('rate-hard').value = 0;   document.getElementById('val-hard').innerText = "0%";
+            document.getElementById('rate-officer').value = 100; document.getElementById('val-officer').innerText = "100%";
         }
 
-        function triggerAssessmentFromRadar(tier) {
+        function startOfficerMarathon() {
+            testModeActive = true;
+            marathonPointer = 0;
+            testScoreCorrect = 0;
+            
             document.querySelectorAll('.console-tab-item').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.view-content-block').forEach(v => v.classList.remove('active'));
             
-            document.querySelectorAll('.console-tab-item')[1].classList.add('active');
+            const tabs = document.querySelectorAll('.console-tab-item');
+            if(tabs[1]) tabs[1].classList.add('active');
             document.getElementById('assessment-deck').classList.add('active');
 
-            const collection = quizScenarios[tier];
-            activeQuizCard = collection[Math.floor(Math.random() * collection.length)];
-            
-            document.getElementById('stat-progress').innerText = `Active Task (${tier.toUpperCase()})`;
-            renderQuizChallenge();
+            document.getElementById('stat-progress').innerText = `1 / ${officerMarathonQuestions.length}`;
+            document.getElementById('stat-accuracy').innerText = "100%";
+            renderMarathonQuestion();
         }
 
-        function renderQuizChallenge() {
+        function renderMarathonQuestion() {
             document.getElementById('forward-btn').style.display = 'none';
-            if (!activeQuizCard) return;
+            
+            if (marathonPointer >= officerMarathonQuestions.length) {
+                renderFinalPercentageScore();
+                return;
+            }
 
-            document.getElementById('prompt-textbox').innerText = activeQuizCard.question;
+            let currentCard = officerMarathonQuestions[marathonPointer];
+            document.getElementById('prompt-textbox').innerText = `Question ${marathonPointer + 1} of 20 [OFFICER]: ${currentCard.question}`;
+            
             let targetBox = document.getElementById('options-stack');
             targetBox.innerHTML = "";
 
-            activeQuizCard.options.forEach((optText, optIdx) => {
+            currentCard.options.forEach((optText, optIdx) => {
                 let divNode = document.createElement('div');
                 divNode.className = "quiz-option-row";
                 divNode.innerText = optText;
-                divNode.onclick = () => checkQuizSubmission(divNode, optIdx, activeQuizCard.matchIndex);
+                divNode.onclick = () => evaluateMarathonAnswer(divNode, optIdx, currentCard.matchIndex);
                 targetBox.appendChild(divNode);
             });
         }
-
-        function checkQuizSubmission(selectedEl, userIdx, trueIdx) {
+        function evaluateMarathonAnswer(selectedEl, userIdx, trueIdx) {
             let rows = document.querySelectorAll('.quiz-option-row');
             rows.forEach(r => r.onclick = null);
-            globalAttempts++;
 
             if (userIdx === trueIdx) {
                 selectedEl.classList.add('matched-correct');
-                runningCorrect++;
+                testScoreCorrect++;
             } else {
                 selectedEl.classList.add('matched-error');
                 rows[trueIdx].classList.add('matched-correct');
             }
 
-            let rate = Math.round((runningCorrect / globalAttempts) * 100);
-            document.getElementById('stat-accuracy').innerText = `${rate}%`;
+            let runningPct = Math.round((testScoreCorrect / (marathonPointer + 1)) * 100);
+            document.getElementById('stat-accuracy').innerText = `${runningPct}%`;
             document.getElementById('forward-btn').style.display = 'inline-block';
         }
 
         function advanceQuizSession() {
-            document.getElementById('prompt-textbox').innerText = "Tactical challenge resolved. Click an active blip revealed by the spinning radar blade above to load another challenge scenario.";
+            marathonPointer++;
+            if (marathonPointer < officerMarathonQuestions.length) {
+                document.getElementById('stat-progress').innerText = `${marathonPointer + 1} / ${officerMarathonQuestions.length}`;
+                renderMarathonQuestion();
+            } else {
+                renderFinalPercentageScore();
+            }
+        }
+
+        function renderFinalPercentageScore() {
+            testModeActive = false;
+            let finalPercentage = Math.round((testScoreCorrect / officerMarathonQuestions.length) * 100);
+            document.getElementById('stat-progress').innerText = "Completed";
+            document.getElementById('stat-accuracy').innerText = `${finalPercentage}%`;
+
+            let ratingMessage = "Needs Review. Study the reference sheet more.";
+            if (finalPercentage >= 90) ratingMessage = "Excellent Work! Outstanding Officer Readiness.";
+            else if (finalPercentage >= 75) ratingMessage = "Passed. Solid situational awareness.";
+
+            document.getElementById('prompt-textbox').innerHTML = `
+                <div class="final-score-card">
+                    <h2>Marathon Assessment Complete</h2>
+                    <p>Atlanta Police Knowledge Diagnostic Result Profile</p>
+                    <div class="score-pct">${finalPercentage}%</div>
+                    <p><strong>Correct Responses:</strong> ${testScoreCorrect} out of ${officerMarathonQuestions.length}</p>
+                    <p style="margin-top: 10px; color: var(--accent-blue);">${ratingMessage}</p>
+                    <button class="next-stage-btn" style="margin-top:20px; float:none;" onclick="startOfficerMarathon()">Retake Assessment</button>
+                </div>
+            `;
             document.getElementById('options-stack').innerHTML = "";
             document.getElementById('forward-btn').style.display = 'none';
-            document.getElementById('stat-progress').innerText = "0 Idle";
         }
 
         function buildCodebookView() {
             let list = document.getElementById('codebook-list');
             list.innerHTML = "";
-            apdDatabase.forEach(item => {
+            masterDatabase.forEach(item => {
                 let div = document.createElement('div');
                 div.className = "extended-card";
                 div.innerHTML = `
@@ -716,6 +828,9 @@
             document.querySelectorAll('.view-content-block').forEach(v => v.classList.remove('active'));
             event.currentTarget.classList.add('active');
             document.getElementById(viewId).classList.add('active');
+            if(viewId === 'assessment-deck' && !testModeActive) {
+                startOfficerMarathon();
+            }
         }
     </script>
 </body>
