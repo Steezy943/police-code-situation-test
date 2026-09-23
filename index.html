@@ -3,18 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Atlanta Police Department - Dispatch Academy</title>
+    <title>Atlanta Police Department - Tactical Dispatch Academy</title>
     <style>
         :root {
-            --bg-dark: #0b141e;
+            --bg-dark: #070d14;
             --panel-bg: #ffffff;
-            --radar-bg: #101c2c;
+            --radar-bg: #0b131e;
             --primary-blue: #2563eb;
             --text-main: #1e293b;
             --text-muted: #64748b;
-            --accent-green: #22c55e;
-            --accent-red: #ef4444;
             --border-color: #e2e8f0;
+            --easy: #22c55e;
+            --medium: #eab308;
+            --hard: #ef4444;
+            --officer: #3b82f6;
         }
 
         * {
@@ -35,7 +37,7 @@
 
         .dashboard-container {
             width: 100%;
-            max-width: 820px;
+            max-width: 900px;
             background-color: var(--panel-bg);
             border-radius: 16px;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
@@ -43,7 +45,6 @@
             border: 1px solid var(--border-color);
         }
 
-        /* Top Header Styling matching image */
         .app-header {
             padding: 18px 24px;
             display: flex;
@@ -58,26 +59,18 @@
             gap: 14px;
         }
 
-        .site-logo-btn {
-            background-color: var(--primary-blue);
+        .fallback-logo {
+            background: var(--primary-blue);
             color: white;
-            padding: 6px 14px;
-            border-radius: 6px;
+            padding: 6px 12px;
             font-weight: 700;
             font-size: 11px;
-            letter-spacing: 0.5px;
+            border-radius: 4px;
             text-transform: uppercase;
-            border: none;
-        }
-
-        .logo-img {
-            height: 32px;
-            width: auto;
-            object-fit: contain;
         }
 
         .title-block h1 {
-            font-size: 15px;
+            font-size: 16px;
             font-weight: 700;
             color: #0f172a;
         }
@@ -87,174 +80,116 @@
             color: var(--text-muted);
         }
 
-        .header-right {
+        .status-value {
+            font-size: 13px;
+            color: var(--easy);
+            font-weight: 600;
             text-align: right;
         }
 
-        .status-title {
-            font-size: 11px;
-            color: var(--text-muted);
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-
-        .status-value {
-            font-size: 14px;
-            color: var(--accent-green);
-            font-weight: 600;
-        }
-        /* Dark Telemetry Area matching image */
-        .telemetry-display {
+        .radar-section {
             background-color: var(--radar-bg);
-            color: white;
-            padding: 24px;
+            padding: 20px;
             position: relative;
-            min-height: 320px;
             display: flex;
             flex-direction: column;
+            align-items: center;
+        }
+
+        .canvas-wrapper {
+            position: relative;
+            width: 320px;
+            height: 320px;
+        }
+
+        canvas {
+            background-color: #0c1520;
+            border-radius: 50%;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.6);
+            border: 2px solid #1e293b;
+        }
+        .radar-controls-overlay {
+            width: 100%;
+            max-width: 500px;
+            margin-top: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 5;
+        }
+
+        .clear-btn {
+            background-color: rgba(239, 68, 68, 0.2);
+            color: #f87171;
+            border: 1px solid rgba(239, 68, 68, 0.4);
+            padding: 6px 14px;
+            font-size: 12px;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .clear-btn:hover {
+            background-color: rgba(239, 68, 68, 0.4);
+            color: white;
+        }
+
+        .telemetry-readout {
+            color: #94a3b8;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .probability-matrix {
+            background-color: #f8fafc;
+            padding: 16px 24px;
+            border-bottom: 1px solid var(--border-color);
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 16px;
+        }
+
+        .slider-node {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .slider-node label {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            display: flex;
             justify-content: space-between;
         }
 
-        .radar-canvas-layer {
-            position: absolute;
-            top: 0;
-            left: 0;
+        .slider-node input {
             width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            pointer-events: none;
-            overflow: hidden;
-        }
-
-        .radar-circle {
-            border: 1px dashed rgba(255, 255, 255, 0.15);
-            border-radius: 50%;
-            position: absolute;
-        }
-        .rc-1 { width: 160px; height: 160px; }
-        .rc-2 { width: 320px; height: 320px; }
-        .rc-3 { width: 480px; height: 480px; }
-
-        .radar-crosshair-x {
-            position: absolute;
-            width: 100%;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05) 30%, rgba(255,255,255,0.05) 70%, transparent);
-        }
-        .radar-crosshair-y {
-            position: absolute;
-            height: 100%;
-            width: 1px;
-            background: linear-gradient(180deg, transparent, rgba(255,255,255,0.05) 30%, rgba(255,255,255,0.05) 70%, transparent);
-        }
-
-        .control-corner {
-            display: flex;
-            justify-content: flex-end;
-            z-index: 2;
-        }
-
-        .pause-btn {
-            background: rgba(255, 255, 255, 0.9);
-            border: none;
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
             cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
 
-        .pause-btn::before, .pause-btn::after {
-            content: '';
-            width: 3px;
-            height: 12px;
-            background-color: #0f172a;
-            display: inline-block;
-            margin: 0 2px;
-        }
-
-        .telemetry-info-panel {
-            z-index: 2;
-            max-width: 400px;
-        }
-
-        .telemetry-label {
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: var(--text-muted);
-            font-weight: 700;
-            margin-bottom: 4px;
-        }
-
-        .telemetry-code {
-            font-size: 16px;
-            font-weight: 700;
-            color: #38bdf8;
-            margin-bottom: 2px;
-        }
-
-        .telemetry-description {
-            font-size: 14px;
-            color: rgba(255, 255, 255, 0.9);
-            font-weight: 400;
-        }
-
-        /* Bottom Registry Analytics Strip */
         .analytics-strip {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             border-bottom: 1px solid var(--border-color);
             background-color: #f8fafc;
         }
+
         .analytics-node {
-            padding: 16px;
+            padding: 14px;
             text-align: center;
             border-right: 1px solid var(--border-color);
         }
 
-        .analytics-node:last-child {
-            border-right: none;
-        }
+        .analytics-node:last-child { border-right: none; }
+        .node-title { font-size: 11px; color: var(--text-muted); margin-bottom: 2px; }
+        .node-value { font-size: 15px; font-weight: 700; color: #0f172a; }
 
-        .node-title {
-            font-size: 12px;
-            color: var(--text-muted);
-            margin-bottom: 4px;
-        }
-
-        .node-value {
-            font-size: 16px;
-            font-weight: 700;
-            color: #0f172a;
-        }
-
-        /* Operations Console UI Controls */
-        .operations-panel {
-            padding: 24px;
-        }
-
-        .panel-heading {
-            font-size: 14px;
-            font-weight: 700;
-            color: var(--text-muted);
-            margin-bottom: 16px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .console-tabs {
-            display: flex;
-            gap: 8px;
-            border-bottom: 1px solid var(--border-color);
-            margin-bottom: 20px;
-        }
-
+        .operations-panel { padding: 24px; }
+        .console-tabs { display: flex; gap: 8px; border-bottom: 1px solid var(--border-color); margin-bottom: 20px; }
+        
         .console-tab-item {
             padding: 10px 16px;
             font-size: 13px;
@@ -271,49 +206,70 @@
             border-bottom-color: var(--primary-blue);
         }
 
-        .view-content-block {
-            display: none;
+        .view-content-block { display: none; }
+        .view-content-block.active { display: block; }
+        .search-filter {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 13px;
+            margin-bottom: 16px;
+            outline: none;
         }
 
-        .view-content-block.active {
-            display: block;
+        .search-filter:focus { border-color: var(--primary-blue); }
+
+        .list-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-height: 450px;
+            overflow-y: auto;
+            padding-right: 4px;
         }
 
-        .grid-layout {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-            gap: 12px;
-        }
-
-        .card-node {
+        .extended-card {
             background-color: #f8fafc;
             border: 1px solid var(--border-color);
-            padding: 12px 16px;
+            padding: 14px;
             border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .card-top-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            cursor: pointer;
-            transition: all 0.15s ease;
         }
 
-        .card-node:hover {
-            border-color: var(--primary-blue);
-            background-color: #f0f6ff;
-        }
-
-        .node-id {
+        .card-badge {
             font-weight: 700;
             color: var(--primary-blue);
-            font-size: 14px;
-        }
-        .node-desc {
             font-size: 13px;
-            color: var(--text-main);
-            font-weight: 500;
+            background-color: #eff6ff;
+            padding: 2px 8px;
+            border-radius: 4px;
         }
 
-        /* Quiz UI Module Components */
+        .card-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #0f172a;
+        }
+
+        .sentence-instruction {
+            font-size: 12px;
+            color: #475569;
+            background-color: #ffffff;
+            padding: 8px 12px;
+            border-radius: 6px;
+            border-left: 3px solid #cbd5e1;
+            font-style: italic;
+        }
+
         .interactive-quiz-space {
             background-color: #f8fafc;
             border: 1px dashed var(--border-color);
@@ -321,149 +277,101 @@
             padding: 20px;
         }
 
-        .quiz-prompt {
-            font-size: 15px;
-            font-weight: 600;
-            margin-bottom: 16px;
-            color: #0f172a;
-        }
-
-        .quiz-options-stack {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
+        .quiz-prompt { font-size: 14px; font-weight: 600; margin-bottom: 14px; color: #0f172a; }
+        .quiz-options-stack { display: flex; flex-direction: column; gap: 8px; }
+        
         .quiz-option-row {
             background: white;
             border: 1px solid var(--border-color);
-            padding: 12px 16px;
-            border-radius: 8px;
+            padding: 10px 14px;
+            border-radius: 6px;
             cursor: pointer;
             font-size: 13px;
-            font-weight: 500;
             transition: all 0.15s ease;
         }
 
-        .quiz-option-row:hover {
-            background-color: #f1f5f9;
-            border-color: #cbd5e1;
-        }
-
-        .quiz-option-row.matched-correct {
-            background-color: #dcfce7;
-            border-color: #bbf7d0;
-            color: #166534;
-            font-weight: 600;
-        }
-
-        .quiz-option-row.matched-error {
-            background-color: #fee2e2;
-            border-color: #fca5a5;
-            color: #991b1b;
-            font-weight: 600;
-        }
-
-        .action-footer {
-            margin-top: 16px;
-            display: flex;
-            justify-content: flex-end;
-        }
-
-        .next-stage-btn {
-            background-color: var(--primary-blue);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            font-size: 13px;
-            font-weight: 600;
-            border-radius: 6px;
-            cursor: pointer;
-        }
+        .quiz-option-row:hover { background-color: #f1f5f9; }
+        .quiz-option-row.matched-correct { background-color: #dcfce7; border-color: #bbf7d0; color: #166534; font-weight: 600; }
+        .quiz-option-row.matched-error { background-color: #fee2e2; border-color: #fca5a5; color: #991b1b; font-weight: 600; }
+        .action-footer { margin-top: 14px; display: flex; justify-content: flex-end; }
+        .next-stage-btn { background-color: var(--primary-blue); color: white; border: none; padding: 8px 16px; font-size: 12px; font-weight: 600; border-radius: 4px; cursor: pointer; }
     </style>
 </head>
 <body>
 
     <div class="dashboard-container">
-        <!-- Dashboard Header matching image blueprint -->
         <header class="app-header">
             <div class="header-left">
-                <img src="site-logo.png" alt="Site Logo" class="logo-img" onerror="this.style.display='none'; document.getElementById('fallback-logo').style.display='block';">
-                <button id="fallback-logo" class="site-logo-btn" style="display:none;">Site Logo</button>
+                <div class="fallback-logo">Site Logo</div>
                 <div class="title-block">
                     <h1>Atlanta Police Department</h1>
-                    <p>APD Dispatch & Codes Academy</p>
+                    <p>Tactical Dispatch & Codes Academy</p>
                 </div>
             </div>
-            <div class="header-right">
-                <div class="status-title">Zone Terminal Status</div>
-                <div class="status-value">Online / Transmitting</div>
-            </div>
+            <div class="status-value">Zone Terminal: Online</div>
         </header>
-        <!-- Telemetry Display Module with Background Radar Map Visualizer -->
-        <section class="telemetry-display">
-            <div class="radar-canvas-layer">
-                <div class="radar-crosshair-x"></div>
-                <div class="radar-crosshair-y"></div>
-                <div class="radar-circle rc-1"></div>
-                <div class="radar-circle rc-2"></div>
-                <div class="radar-circle rc-3"></div>
+        <!-- Sonar Radar Visualizer System Area -->
+        <section class="radar-section">
+            <div class="canvas-wrapper">
+                <canvas id="radarCanvas" width="320" height="320"></canvas>
             </div>
-
-            <div class="control-corner">
-                <button class="pause-btn" aria-label="Pause telemetry feed"></button>
-            </div>
-
-            <div class="telemetry-info-panel">
-                <div class="telemetry-label">Terminal Telemetry</div>
-                <div id="active-telemetry-code" class="telemetry-code">Code 3</div>
-                <div id="active-telemetry-desc" class="telemetry-description">Critical Emergency (Lights and sirens)</div>
+            <div class="radar-controls-overlay">
+                <button class="clear-btn" onclick="clearRadarTargets()">Clear Radar</button>
+                <div id="telemetryStatus" class="telemetry-readout">Active Targets: 0 / 7</div>
             </div>
         </section>
 
-        <!-- Metric Registry Strip matching metrics from context -->
+        <!-- Dynamic Frequency Matrix Sliders -->
+        <section class="probability-matrix">
+            <div class="slider-node">
+                <label>Easy (Green) <span id="val-easy">25%</span></label>
+                <input type="range" id="rate-easy" min="0" max="100" value="25" oninput="balanceProbabilities('easy')">
+            </div>
+            <div class="slider-node">
+                <label>Medium (Yellow) <span id="val-medium">25%</span></label>
+                <input type="range" id="rate-medium" min="0" max="100" value="25" oninput="balanceProbabilities('medium')">
+            </div>
+            <div class="slider-node">
+                <label>Hard (Red) <span id="val-hard">25%</span></label>
+                <input type="range" id="rate-hard" min="0" max="100" value="25" oninput="balanceProbabilities('hard')">
+            </div>
+            <div class="slider-node">
+                <label>Officer Level (Blue) <span id="val-officer">25%</span></label>
+                <input type="range" id="rate-officer" min="0" max="100" value="25" oninput="balanceProbabilities('officer')">
+            </div>
+        </section>
+
         <section class="analytics-strip">
             <div class="analytics-node">
                 <div class="node-title">Active Registry</div>
-                <div id="stat-registry-count" class="node-value">18 APD Codes</div>
+                <div class="node-value" id="registry-count">36 APD Records</div>
             </div>
             <div class="analytics-node">
                 <div class="node-title">Test Progress</div>
-                <div id="stat-progress" class="node-value">0 Active</div>
+                <div class="node-value" id="stat-progress">0 Active</div>
             </div>
             <div class="analytics-node">
                 <div class="node-title">Accuracy Rate</div>
-                <div id="stat-accuracy" class="node-value" style="color: var(--primary-blue);">100%</div>
+                <div class="node-value" id="stat-accuracy" style="color: var(--primary-blue);">100%</div>
             </div>
         </section>
 
-        <!-- Operations Console Interface Controls -->
         <section class="operations-panel">
-            <div class="panel-heading">Console Operations Mode</div>
-            
             <div class="console-tabs">
-                <button class="console-tab-item active" onclick="toggleConsoleView(event, 'practice-deck')">Practice Reference Sheet</button>
-                <button class="console-tab-item" onclick="toggleConsoleView(event, 'assessment-deck')">Start Knowledge Test</button>
+                <button class="console-tab-item active" onclick="toggleView(event, 'practice-deck')">Practice Reference Sheet</button>
+                <button class="console-tab-item" onclick="toggleView(event, 'assessment-deck')">Start Knowledge Test</button>
             </div>
 
-            <!-- View Block: Practice Reference Cards Grid -->
+            <!-- View Content Block: Exhaustive Atlanta Police Codebook Data Dictionary -->
             <div id="practice-deck" class="view-content-block active">
-                <div class="grid-layout">
-                    <div class="card-node" onclick="pushToTelemetry('Signal 7', 'Criminal Trespass')"><span class="node-id">Signal 7</span><span class="node-desc">Criminal Trespass</span></div>
-                    <div class="card-node" onclick="pushToTelemetry('Signal 25', 'Shots Fired')"><span class="node-id">Signal 25</span><span class="node-desc">Shots Fired</span></div>
-                    <div class="card-node" onclick="pushToTelemetry('Signal 29', 'Fight in Progress')"><span class="node-id">Signal 29</span><span class="node-desc">Fight in Progress</span></div>
-                    <div class="card-node" onclick="pushToTelemetry('Signal 42R', 'Residential Burglary')"><span class="node-id">Signal 42R</span><span class="node-desc">Residential Burglary</span></div>
-                    <div class="card-node" onclick="pushToTelemetry('Signal 45', 'Larceny / Theft')"><span class="node-id">Signal 45</span><span class="node-desc">Larceny / Theft</span></div>
-                    <div class="card-node" onclick="pushToTelemetry('Signal 58', 'Domestic Disturbance')"><span class="node-id">Signal 58</span><span class="node-desc">Domestic Disturbance</span></div>
-                    <div class="card-node" onclick="pushToTelemetry('Code 1', 'Routine / Non-Emergency')"><span class="node-id">Code 1</span><span class="node-desc">Routine / Non-Emergency</span></div>
-                    <div class="card-node" onclick="pushToTelemetry('Code 2', 'Urgent Response (No Sirens)')"><span class="node-id">Code 2</span><span class="node-desc">Urgent (No Sirens)</span></div>
-                    <div class="card-node" onclick="pushToTelemetry('Code 3', 'Critical Emergency (Lights and sirens)')"><span class="node-id">Code 3</span><span class="node-desc">Critical Emergency</span></div>
-                </div>
+                <input type="text" id="codeSearch" class="search-filter" placeholder="Search codes, descriptions, or sentence examples..." onkeyup="filterCodebook()">
+                <div class="list-container" id="codebook-list"></div>
             </div>
-            <!-- View Block: Tactical Interactive Assessment Portal -->
+
+            <!-- View Content Block: Active Interactive Scenario Engine -->
             <div id="assessment-deck" class="view-content-block">
                 <div class="interactive-quiz-space">
-                    <div id="prompt-textbox" class="quiz-prompt">A priority dispatch channel requests response units immediately to an ongoing domestic brawl with tactical hazards. What configuration applies?</div>
+                    <div id="prompt-textbox" class="quiz-prompt">Click a dot on the sweeping radar display to activate a tactical scenario challenge!</div>
                     <div id="options-stack" class="quiz-options-stack"></div>
                     <div class="action-footer">
                         <button id="forward-btn" class="next-stage-btn" style="display: none;" onclick="advanceQuizSession()">Next Scenario</button>
@@ -472,86 +380,263 @@
             </div>
         </section>
     </div>
+        let activeBlips = [];
+        const maxBlips = 7;
+        let sweepAngle = 0;
+        const canvas = document.getElementById('radarCanvas');
+        const ctx = canvas.getContext('2d');
+        const cx = canvas.width / 2;
+        const cy = canvas.height / 2;
+        const maxRadius = canvas.width / 2;
 
-    <script>
-        const quizRepo = [
-            { question: "Units are requested to respond immediately to an ongoing violent brawl outside a nightclub on Peachtree Road. Choose the code profile.", options: ["Signal 7", "Signal 29", "Signal 42R", "Code 1"], matchIndex: 1, tag: "Signal 29", context: "Fight in Progress" },
-            { question: "An emergency unit dispatch assignment dictates immediate execution utilizing all operational assets (Emergency Light Systems & Acoustic Sirens).", options: ["Code 1", "Code 2", "Code 3", "Code 4"], matchIndex: 2, tag: "Code 3", context: "Critical Emergency (Lights and sirens)" },
-            { question: "A property protection alarm indicates a localized structural intrusion event underway inside a locked downtown residence.", options: ["Signal 42R", "Signal 25", "Signal 58", "10-4"], matchIndex: 0, tag: "Signal 42R", context: "Residential Burglary" },
-            { question: "A 911 dispatch notification logs a dynamic family unit physical alteration requiring unit intervention inside Zone 4.", options: ["Signal 45", "Signal 7", "Signal 58", "10-20"], matchIndex: 2, tag: "Signal 58", context: "Domestic Disturbance" }
-        ];
-
-        let indexPointer = 0;
+        let activeQuizCard = null;
         let runningCorrect = 0;
         let globalAttempts = 0;
 
-        function toggleConsoleView(event, panelId) {
-            document.querySelectorAll('.console-tab-item').forEach(tab => tab.classList.remove('active'));
-            document.querySelectorAll('.view-content-block').forEach(view => view.classList.remove('active'));
-            event.currentTarget.classList.add('active');
-            document.getElementById(panelId).classList.add('active');
-            if (panelId === 'assessment-deck') { resetQuizSession(); }
-        }
+        // Initialize Application UI
+        window.onload = function() {
+            document.getElementById('registry-count').innerText = `${apdDatabase.length} APD Records`;
+            buildCodebookView();
+            setInterval(updateRadarEngine, 1000 / 30); // 30 FPS update loop
+        };
 
-        function pushToTelemetry(codeStr, descStr) {
-            document.getElementById('active-telemetry-code').innerText = codeStr;
-            document.getElementById('active-telemetry-desc').innerText = descStr;
-        }
+        function updateRadarEngine() {
+            // Sweep math tracking rotation over duration metrics
+            sweepAngle = (sweepAngle + 0.04) % (Math.PI * 2);
+            
+            // Draw baseline radar grid
+            ctx.fillStyle = '#0c1520';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        function resetQuizSession() {
-            indexPointer = 0;
-            runningCorrect = 0;
-            globalAttempts = 0;
-            document.getElementById('stat-progress').innerText = `1 / ${quizRepo.length}`;
-            document.getElementById('stat-accuracy').innerText = "100%";
-            renderQuizCard();
-        }
-
-        function renderQuizCard() {
-            document.getElementById('forward-btn').style.display = 'none';
-            if (indexPointer >= quizRepo.length) {
-                document.getElementById('prompt-textbox').innerText = "All active scenario diagnostics completed successfully.";
-                document.getElementById('options-stack').innerHTML = "";
-                document.getElementById('stat-progress').innerText = "Finished";
-                return;
+            // Ring layers drawing pass
+            ctx.strokeStyle = 'rgba(37, 99, 235, 0.15)';
+            ctx.lineWidth = 1;
+            for(let r = maxRadius / 3; r <= maxRadius; r += maxRadius / 3) {
+                ctx.beginPath();
+                ctx.arc(cx, cy, r, 0, Math.PI * 2);
+                ctx.stroke();
             }
-            let targetCard = quizRepo[indexPointer];
-            document.getElementById('prompt-textbox').innerText = targetCard.question;
-            let targetBox = document.getElementById('options-stack');
-            targetBox.innerHTML = "";
 
-            targetCard.options.forEach((optText, optIdx) => {
-                let divNode = document.createElement('div');
-                divNode.className = "quiz-option-row";
-                divNode.innerText = optText;
-                divNode.onclick = () => verifySelectedAnswer(divNode, optIdx, targetCard.matchIndex, targetCard.tag, targetCard.context);
-                targetBox.appendChild(divNode);
+            // Crosshair rendering
+            ctx.beginPath();
+            ctx.moveTo(0, cy); ctx.lineTo(canvas.width, cy);
+            ctx.moveTo(cx, 0); ctx.lineTo(cx, canvas.height);
+            ctx.stroke();
+
+            // Evaluate generating a target along trailing sweep path parameters
+            if (Math.random() < 0.04 && activeBlips.length < maxBlips) {
+                generateProbabilisticTarget();
+            }
+
+            // Draw active targets inside radar field
+            activeBlips.forEach(blip => {
+                let angleToBlip = Math.atan2(blip.y - cy, blip.x - cx);
+                if (angleToBlip < 0) angleToBlip += Math.PI * 2;
+                
+                let diff = sweepAngle - angleToBlip;
+                if (diff < 0) diff += Math.PI * 2;
+
+                if (diff < 0.1) { blip.opacity = 1.0; } 
+                else { blip.opacity = Math.max(blip.opacity - 0.008, 0.15); }
+
+                ctx.fillStyle = getTierColor(blip.tier, blip.opacity);
+                ctx.beginPath();
+                ctx.arc(blip.x, blip.y, blip.radius, 0, Math.PI * 2);
+                ctx.fill();
+
+                if (blip.opacity > 0.7) {
+                    ctx.strokeStyle = getTierColor(blip.tier, blip.opacity * 0.5);
+                    ctx.beginPath();
+                    ctx.arc(blip.x, blip.y, blip.radius + 5, 0, Math.PI * 2);
+                    ctx.stroke();
+                }
+            });
+
+            // Draw sweep gradient line shadow element
+            let gradient = ctx.createRadialGradient(cx, cy, 10, cx, cy, maxRadius);
+            ctx.strokeStyle = 'rgba(37, 99, 235, 0.4)';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(cx, cy);
+            ctx.lineTo(cx + Math.cos(sweepAngle) * maxRadius, cy + Math.sin(sweepAngle) * maxRadius);
+            ctx.stroke();
+
+            document.getElementById('telemetryStatus').innerText = `Active Targets: ${activeBlips.length} / ${maxBlips}`;
+        }
+
+        function getTierColor(tier, opacity) {
+            if (tier === 'easy') return `rgba(34, 197, 94, ${opacity})`;
+            if (tier === 'medium') return `rgba(234, 179, 8, ${opacity})`;
+            if (tier === 'hard') return `rgba(239, 68, 68, ${opacity})`;
+            return `rgba(59, 130, 246, ${opacity})`;
+        }
+        function generateProbabilisticTarget() {
+            const tiers = ['easy', 'medium', 'hard', 'officer'];
+            const probabilities = tiers.map(t => parseFloat(document.getElementById(`rate-${t}`).value) || 0);
+            const totalProb = probabilities.reduce((a, b) => a + b, 0);
+            
+            if (totalProb === 0) return;
+            
+            let targetRand = Math.random() * totalProb;
+            let chosenTier = 'easy';
+            let cumulative = 0;
+            
+            for (let i = 0; i < Tiers.length; i++) {
+                Cumulative += probabilities[i];
+                If (targetRand <= cumulative) {
+                    ChosenTier = tiers[i];
+                    Break;
+                }
+            }
+
+            let angle = Math.random() * Math.PI * 2;
+            let distance = (Math.random() * (maxRadius - 30)) + 20;
+            
+            activeBlips.push({
+                X: cx + Math.cos(angle) * distance,
+                Y: cy + Math.sin(angle) * distance,
+                Radius: 6,
+                Tier: chosenTier,
+                Opacity: 0.2
             });
         }
 
-        function verifySelectedAnswer(selectedEl, userIdx, trueIdx, tag, context) {
-            let optionsElements = document.querySelectorAll('.quiz-option-row');
-            optionsElements.forEach(item => item.onclick = null);
-            globalAttempts++;
-            if (userIdx === trueIdx) {
-                selectedEl.classList.add('matched-correct');
-                runningCorrect++;
-                pushToTelemetry(tag, context);
-            } else {
-                selectedEl.classList.add('matched-error');
-                optionsElements[trueIdx].classList.add('matched-correct');
+        // Handle structural canvas click intercept actions safely
+        canvas.addEventListener('click', function(e) {
+            const rect = canvas.getBoundingClientRect();
+            const clickX = e.clientX - rect.left;
+            const clickY = e.clientY - rect.top;
+
+            let foundIdx = -1;
+            for (let i = 0; i < activeBlips.length; i++) {
+                Let dist = Math.hypot(activeBlips[i].x - clickX, activeBlips[i].y - clickY);
+                If (dist <= 14) { foundIdx = i; break; }
             }
-            let evaluatedScore = Math.round((runningCorrect / globalAttempts) * 100);
-            document.getElementById('stat-accuracy').innerText = `${evaluatedScore}%`;
-            document.getElementById('forward-btn').style.display = 'inline-block';
+
+            if (foundIdx !== -1) {
+                Let blip = activeBlips[foundIdx];
+                ActiveBlips.splice(foundIdx, 1);
+                TriggerAssessmentFromRadar(blip.tier);
+            }
+        });
+
+        function clearRadarTargets() {
+            ActiveBlips = [];
+        }
+
+        function balanceProbabilities(changedTier) {
+            Let sliders = ['easy', 'medium', 'hard', 'officer'];
+            Let changedVal = parseFloat(document.getElementById(`rate-${changedTier}`).value) || 0;
+            document.getElementById(`val-${changedTier}`).innerText = `${changedVal}%`;
+
+            let remainder = 100 - changedVal;
+            let otherSliders = sliders.filter(s => s !== changedTier);
+            let sumOthers = otherSliders.reduce((sum, s) => sum + (parseFloat(document.getElementById(`rate-${s}`).value) || 0), 0);
+
+            if(sumOthers > 0) {
+                OtherSliders.forEach(s => {
+                    Let curVal = parseFloat(document.getElementById(`rate-${s}`).value) || 0;
+                    Let scaled = Math.round((curVal / sumOthers) * remainder);
+                    Document.getElementById(`rate-${s}`).value = scaled;
+                    Document.getElementById(`val-${s}`).innerText = `${scaled}%`;
+                });
+            } else {
+                Let split = Math.round(remainder / 3);
+                OtherSliders.forEach(s => {
+                    Document.getElementById(`rate-${s}`).value = split;
+                    Document.getElementById(`val-${s}`).innerText = `${split}%`;
+                });
+            }
+        }
+
+        function triggerAssessmentFromRadar(tier) {
+            // Activate structural testing deck interface view state
+            Document.querySelectorAll('.console-tab-item').forEach(t => t.classList.remove('active'));
+            Document.querySelectorAll('.view-content-block').forEach(v => v.classList.remove('active'));
+            
+            Const tabList = document.querySelectorAll('.console-tab-item');
+            TabList[1].classList.add('active');
+            Document.getElementById('assessment-deck').classList.add('active');
+
+            Const collection = quizScenarios[tier];
+            ActiveQuizCard = collection[Math.floor(Math.random() * collection.length)];
+            
+            Document.getElementById('stat-progress').innerText = `Active Task (${tier.toUpperCase()})`;
+            RenderQuizChallenge();
+        }
+        function renderQuizChallenge() {
+            Document.getElementById('forward-btn').style.display = 'none';
+            if (!activeQuizCard) return;
+
+            Document.getElementById('prompt-textbox').innerText = activeQuizCard.question;
+            let targetBox = document.getElementById('options-stack');
+            TargetBox.innerHTML = "";
+
+            ActiveQuizCard.options.forEach((optText, optIdx) => {
+                Let divNode = document.createElement('div');
+                DivNode.className = "quiz-option-row";
+                DivNode.innerText = optText;
+                DivNode.onclick = () => checkQuizSubmission(divNode, optIdx, activeQuizCard.matchIndex);
+                TargetBox.appendChild(divNode);
+            });
+        }
+
+        function checkQuizSubmission(selectedEl, userIdx, trueIdx) {
+            Let rows = document.querySelectorAll('.quiz-option-row');
+            Rows.forEach(r => r.onclick = null);
+            GlobalAttempts++;
+
+            If (userIdx === trueIdx) {
+                SelectedEl.classList.add('matched-correct');
+                RunningCorrect++;
+            } else {
+                SelectedEl.classList.add('matched-error');
+                Rows[trueIdx].classList.add('matched-correct');
+            }
+
+            Let rate = Math.round((runningCorrect / globalAttempts) * 100);
+            Document.getElementById('stat-accuracy').innerText = `${rate}%`;
+            Document.getElementById('forward-btn').style.display = 'inline-block';
         }
 
         function advanceQuizSession() {
-            indexPointer++;
-            if (indexPointer < quizRepo.length) {
-                document.getElementById('stat-progress').innerText = `${indexPointer + 1} / ${quizRepo.length}`;
-            }
-            renderQuizCard();
+            Document.getElementById('prompt-textbox').innerText = "Tactical challenge resolved. Click an active blip on the canvas radar array above to process another diagnostic task entry.";
+            Document.getElementById('options-stack').innerHTML = "";
+            Document.getElementById('forward-btn').style.display = 'none';
+            Document.getElementById('stat-progress').innerText = "0 Idle";
+        }
+
+        function buildCodebookView() {
+            Let list = document.getElementById('codebook-list');
+            List.innerHTML = "";
+            ApdDatabase.forEach(item => {
+                Let div = document.createElement('div');
+                Div.className = "extended-card";
+                Div.innerHTML = `
+                    <div class="card-top-row">
+                        <span class="card-badge">${item.id}</span>
+                        <span class="card-label">${item.desc}</span>
+                    </div>
+                    <div class="sentence-instruction">"${item.sentence}"</div>
+                `;
+                List.appendChild(div);
+            });
+        }
+
+        function filterCodebook() {
+            Let query = document.getElementById('codeSearch').value.toLowerCase();
+            Let cards = document.querySelectorAll('.extended-card');
+            Cards.forEach(card => {
+                Let bodyTxt = card.innerText.toLowerCase();
+                Card.style.display = bodyTxt.includes(query) ? 'flex' : 'none';
+            });
+        }
+
+        function toggleView(event, viewId) {
+            Document.querySelectorAll('.console-tab-item').forEach(t => t.classList.remove('active'));
+            Document.querySelectorAll('.view-content-block').forEach(v => v.classList.remove('active'));
+            Event.currentTarget.classList.add('active');
+            Document.getElementById(viewId).classList.add('active');
         }
     </script>
 </body>
