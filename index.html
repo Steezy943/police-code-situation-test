@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Atlanta Police Department - Tactical Dispatch Academy</title>
+    <!-- Favicon link pointing directly to your root file -->
+    <link rel="icon" type="image/png" href="favicon.png">
     <style>
         :root {
             --bg-dark: #0a0f1d;
@@ -346,7 +348,6 @@
         }
         .score-pct { font-size: 48px; font-weight: 800; color: var(--accent-blue); margin: 15px 0; }
 
-        /* Settings Dialog Screen Styles */
         .settings-modal-overlay {
             display: none;
             position: fixed;
@@ -386,6 +387,7 @@
     <div class="dashboard-container">
         <header class="app-header">
             <div class="header-left">
+                <!-- Dual image rendering lookups pointing directly to root workspace files -->
                 <img src="site-logo.png" alt="Logo" class="logo-img" onerror="this.style.display='none'; document.getElementById('fallback-hdr').style.display='block';">
                 <div id="fallback-hdr" class="fallback-logo" style="display:none;">Site Logo</div>
                 <div class="title-block">
@@ -444,6 +446,7 @@
         <section class="operations-panel">
             <div class="console-tabs">
                 <button class="console-tab-item active" onclick="toggleView(event, 'practice-deck')">
+                    <!-- Configured tab icon looking for your site-logo directly in root folder -->
                     <img src="site-logo.png" class="tab-logo-icon" onerror="this.style.display='none';">
                     Practice Reference Sheet
                 </button>
@@ -530,44 +533,106 @@
         const maxBlips = 7;
         let sweepAngle = 0;
         let understandingLevel = 2;
-        const canvas = document.getElementById('radarCanvas');
-        const ctx = canvas.getContext('2d');
-        const cx = canvas.width / 2;
-        const cy = canvas.height / 2;
-        const maxRadius = canvas.width / 2;
-
-        let marathonPointer = 0;
-        let testScoreCorrect = 0;
-        let testModeActive = false;
-
-        const officerMarathonQuestions = [
-            { question: "An emergency tone sounds. A unit under immediate threat requests backup near downtown.", options: ["Signal 29", "Signal 59", "Signal 63", "Code 21"], matchIndex: 2, layman: "Help request! An officer is trapped and requires immediate team backup assistance." },
-            { question: "A perimeter unit initiates an immediate tactical pursuit against a fleeing felony car down I-20.", options: ["Signal 72", "Signal 72P", "Code 3", "Signal 79"], matchIndex: 1, layman: "High-speed chase! Police are actively pursuing a fleeing criminal car down the highway." },
-            { question: "Units respond Code 3 to an ongoing armed hijacking of a commercial vehicle.", options: ["Signal 35C", "Signal 44C", "Signal 36B", "Signal 21"], matchIndex: 0, layman: "Carjacking in progress! A thief is stealing a car by gunpoint or physical force right now." },
-            { question: "Dispatch transmits an alert regarding an armed individual carrying an unholstered rifle near a transit station.", options: ["Signal 54", "Signal 69", "Signal 78", "Code 25"], matchIndex: 1, layman: "Armed person! An individual is walking near a public space carrying a weapon out in the open." },
-            { question: "A priority dispatch logs an active armed robbery inside a retail storefront right now.", options: ["Signal 44B", "Signal 36B", "Signal 36P", "Code 5B"], matchIndex: 1, layman: "Store hold-up in progress! An armed suspect is robbing a business right this second." },
-            { question: "A suspect violently rips a purse away from a pedestrian on a public pathway and runs.", options: ["Signal 45", "Signal 77", "Signal 44P", "Signal 36P"], matchIndex: 1, layman: "Snatch theft robbery! A criminal just ripped property away from a walking citizen and fled." },
-            { question: "A residential call involving a family unit domestic alteration is reported to dispatch.", options: ["Signal 29", "Signal 58", "Signal 23", "Code 5A"], matchIndex: 1, layman: "Domestic fight! Family structures are fighting violently inside a residential house block." },
-            { question: "Units handle a traffic stop and discover an active arrest warrant on the operator during verification.", options: ["Code 23", "Code 28A", "Code 28B", "Code 17"], matchIndex: 1, layman: "Wanted check hit! Computer lookups show this driver has a valid arrest warrant pending." },
-            { question: "A supervisor requests an emergency assignment execution utilizing full assets (Emergency lights and loud sound sirens).", options: ["Code 1", "Code 2", "Code 3", "Code 7"], matchIndex: 2, layman: "Maximum response mode! Rush to the crime scene immediately using flashing lights and emergency sirens." },
-            { question: "A major collision is verified on the highway where a split fuel line has caused the vehicle engine to fully ignite.", options: ["Signal 34", "Signal 41F", "Signal 41IT", "Signal 30"], matchIndex: 1, layman: "Car crash fire! A vehicle accident impact split open gas components and burst into large flames." },
-            { question: "Bomb detection squads locate an active improvised explosive artifact package under a municipal bridge.", options: ["Signal 73P", "Code 25", "Signal 73", "Code 30"], matchIndex: 1, layman: "Bomb found! Threat investigators discovered a confirmed explosive device layout left at a site." },
-            { question: "An emergency unit drops off the radio grid mid-call, and tracking operators verify a dynamic 911 drop loop.", options: ["Signal 16", "Signal 39", "Signal 55", "Code 22"], matchIndex: 2, layman: "Dropped emergency call line! A 911 call line disconnected instantly before details could be verified." },
-            { question: "A field unit deploys an oleoresin capsicum (pepper spray) canister to handle a combative, non-compliant subject.", options: ["Code 20", "Code 23", "Code 31", "Signal 47"], matchIndex: 0, layman: "Chemical control tool deployment! An officer used pepper spray on a fighting suspect." },
-            { question: "Detectives complete an investigation where stolen goods are recovered and handed back to the citizen.", options: ["Code 16", "Code 19", "Code 12", "Signal 52"], matchIndex: 0, layman: "Stolen property return! Returning recovered stolen items cleanly back to their original owner." },
-            { question: "A patrol officer locates an empty vehicle on an access shoulder that has been stripped and left abandoned.", options: ["Signal 1", "Signal 1R", "Signal 37", "Code 10"], matchIndex: 0, layman: "Deserted junk vehicle! An empty car has been left dumped on the public roadside permanently." },
-            { question: "A specialized call is dispatched regarding a suspect looking through structural blinds into a private residential space.", options: ["Signal 54", "Signal 70", "Signal 66", "Signal 71"], matchIndex: 2, layman: "Peeping tom prowler! Someone is spying on citizens illegally through their private home window glass panes." },
-            { question: "An alarm company triggers tracking lines for a hidden, non-sounding monitoring breach layout inside a jewelry vault.", options: ["Signal 2A", "Signal 2S", "Signal 6B", "Code 14A"], matchIndex: 1, layman: "Silent break-in alarm! A hidden commercial security sensor tripped without making any sound." },
-            { question: "A vehicle collision occurs on an arterial road resulting in multiple passengers pinned inside the compressed wreckage.", options: ["Signal 41I", "Signal 41IT", "Signal 87", "Signal 92"], matchIndex: 1, layman: "Trapped in crash! Wreckage compressed on impact, trapping passengers tightly inside." },
-            { question: "A home invasion is called in by a resident hiding inside a closet while suspects break through a window.", options: ["Signal 6R", "Signal 42R", "Signal 36R", "Signal 44R"], matchIndex: 2, layman: "Active break-in with occupants! Armed robbers forced their way inside a house while residents were home." },
-            { question: "Command lines order all units on Sector 2 to immediately transition communication strings over to a tactical backup channel.", options: ["Signal 39", "Signal 62", "Signal 67", "Code 9"], matchIndex: 1, layman: "Change radio channels! All responding police units switch their radios to a backup channel now." }
-        ];
-
-        window.onload = function() {
-            buildCodebookView();
-            document.getElementById('codeSearch').addEventListener('keyup', filterCodebook);
-            window.requestAnimationFrame(runRadarLoop);
-        };
+const apdCodes = [
+    { 
+        id: "Signal 35C", 
+        type: "Signal", 
+        desc: "Carjacking (In progress)", 
+        layman: "Active vehicular theft by threat of force", 
+        sentence: "Zone 1 units roll Code 3 to an active tracking Signal 35C line." 
+    },
+    { 
+        id: "Signal 37", 
+        type: "Signal", 
+        desc: "Illegal Parking", 
+        layman: "Vehicle blocking thoroughfares unlawfully", 
+        sentence: "Write a parking enforcement card for the Signal 37 left on the curb." 
+    },
+    { 
+        id: "Signal 38", 
+        type: "Signal", 
+        desc: "Illegal Drugs/Alcohol", 
+        layman: "Unlawful narcotics or alcohol substances reported", 
+        sentence: "Found contraband inside the trunk, logging a clear Signal 38 block." 
+    },
+    { 
+        id: "Signal 39", 
+        type: "Signal", 
+        desc: "Information to Officer", 
+        layman: "Updates or dispatch details sent to sector cars", 
+        sentence: "Standby for incoming tracking updates via a Signal 39 dispatch data node." 
+    },
+    { 
+        id: "Signal 40", 
+        type: "Signal", 
+        desc: "Animal Call", 
+        layman: "Dangerous or stray animals roaming the area", 
+        sentence: "Stray vicious guard breed blocking sidewalk access routes, call a Signal 40." 
+    },
+    { 
+        id: "Signal 41I", 
+        type: "Signal", 
+        desc: "Auto Accident/Injuries", 
+        layman: "Car crash where passengers are confirmed hurt", 
+        sentence: "Two cars collided with active driver injuries, route a Signal 41I." 
+    },
+    { 
+        id: "Signal 41IT", 
+        type: "Signal", 
+        desc: "Auto Accident/Trapped", 
+        layman: "Car crash where passengers cannot break free from wreckage", 
+        sentence: "Extrication machinery required on the roadway to clear a severe Signal 41IT." 
+    },
+    { 
+        id: "Signal 41F", 
+        type: "Signal", 
+        desc: "Auto Accident/Fire", 
+        layman: "Car crash that has ignited into active structural flames", 
+        sentence: "Impact split fuel infrastructure, engine area on fire, dispatch a Signal 41F." 
+    },
+    { 
+        id: "Signal 41P", 
+        type: "Signal", 
+        desc: "Auto Accident/Police", 
+        layman: "Precinct patrol vehicle involved in an auto crash", 
+        sentence: "A precinct patrol car was clipped at an intersection, note a Signal 41P." 
+    },
+    { 
+        id: "Signal 42B", 
+        type: "Signal", 
+        desc: "Commercial Burglary", 
+        layman: "Past break-in reported at a business storefront", 
+        sentence: "Past occurred safe break at a pharmacy vault, dispatch for a Signal 42B report." 
+    },
+    { 
+        id: "Signal 42R", 
+        type: "Signal", 
+        desc: "Residential Burglary", 
+        layman: "Past break-in reported at a private residence home", 
+        sentence: "Homeowners returned to find electronic packages missing, file a Signal 42R." 
+    },
+    { 
+        id: "Signal 43", 
+        type: "Signal", 
+        desc: "Hit and Run", 
+        layman: "Driver leaves the scene of a vehicle crash without stopping", 
+        sentence: "Fleeing vehicle left front bumper on scene, tracking a Signal 43 asset." 
+    },
+    { 
+        id: "Signal 44B", 
+        type: "Signal", 
+        desc: "Business Robbery", 
+        layman: "Past robbery accomplished by force at a store location", 
+        sentence: "Past robbery occurred at a check cashing counter, log a Signal 44B." 
+    },
+    { 
+        id: "Signal 44P", 
+        type: "Signal", 
+        desc: "Pedestrian Robbery", 
+        layman: "Past strongarm mugging of a walker on public pathways", 
+        sentence: "Victim approached on a transit path, wallet taken, register a Signal 44P." 
+    }
+];
         function runRadarLoop(timestamp) {
             sweepAngle = (sweepAngle + 0.025) % (Math.PI * 2);
             ctx.fillStyle = '#060913';
