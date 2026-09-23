@@ -386,7 +386,6 @@
     <div class="dashboard-container">
         <header class="app-header">
             <div class="header-left">
-                <!-- Dual logo processing for local repository tracking assets -->
                 <img src="site-logo.png" alt="Logo" class="logo-img" onerror="this.style.display='none'; document.getElementById('fallback-hdr').style.display='block';">
                 <div id="fallback-hdr" class="fallback-logo" style="display:none;">Site Logo</div>
                 <div class="title-block">
@@ -471,7 +470,6 @@
         </section>
     </div>
 
-    <!-- Interactive settings configuration overlay panel modal container -->
     <div id="settingsModal" class="settings-modal-overlay">
         <div class="settings-dialog-card">
             <h3>Terminal Operational Parameters</h3>
@@ -489,7 +487,6 @@
         </div>
     </div>
     <script>
-        // Full comprehensive data schema supporting multi-tiered layman language translations
         const apdDatabase = [
             { id: "Signal 1", type: "Signal", desc: "Abandon Auto", layman: "Car left empty on the side of the road or blocking lanes", sentence: "We have an unmonitored block on North Ave matching a Signal 1 log." },
             { id: "Signal 1R", type: "Signal", desc: "Recovered Auto", sentence: "Direct units to check the back lot for a verified Signal 1R tracking record.", layman: "A stolen car that was found and recovered by police officers" },
@@ -499,7 +496,7 @@
             { id: "Signal 4", type: "Signal", desc: "Carbon Monoxide", sentence: "Hazmat parameters initiated on scene following an environment Signal 4 breach.", layman: "Dangerous, toxic gas detected leaking inside a residence framework" },
             { id: "Signal 6B", type: "Signal", desc: "Burglary (business)", sentence: "Commercial security doors broken on scene, log as a Signal 6B dispatch.", layman: "Someone broke into a locked commercial store or business building" },
             { id: "Signal 6R", type: "Signal", desc: "Burglary (residence)", sentence: "En route to a residential perimeter check regarding a suspicious Signal 6R entry.", layman: "Someone broke into a private home or residential property location" },
-            { id: "Signal 7", type: "Signal", desc: "Criminal Trespass", sentence: "Individual refuses to leave the terminal footprint, dispatch for a Signal 7.", layman: "An unwanted person refusing to leave private property" },
+            { id: "Signal 7", type: "Signal", desc: "Criminal Trespass", sentence: "Property owner wants an individual removed for a verified Signal 7.", layman: "An unwanted person refusing to leave private property" },
             { id: "Signal 10", type: "Signal", desc: "Wash Down", sentence: "Send sanitation and engine support crews to handle a roadside Signal 10 clear.", layman: "Cleaning up fuel or hazardous fluid spills from a roadway crash site" },
             { id: "Signal 15", type: "Signal", desc: "Check Welfare", sentence: "Conduct a physical Signal 15 audit on an elderly individual missing check-ins.", layman: "Go check on a person's health and physical safety because no one has heard from them" },
             { id: "Signal 16", type: "Signal", desc: "Emergency Message", sentence: "Standby for a high-priority Signal 16 broadcast direct from Command.", layman: "A critical emergency message delivered directly to working sector units" },
@@ -532,7 +529,7 @@
         let activeBlips = [];
         const maxBlips = 7;
         let sweepAngle = 0;
-        let understandingLevel = 2; // Default is medium
+        let understandingLevel = 2;
         const canvas = document.getElementById('radarCanvas');
         const ctx = canvas.getContext('2d');
         const cx = canvas.width / 2;
@@ -543,7 +540,6 @@
         let testScoreCorrect = 0;
         let testModeActive = false;
 
-        // Intensive 20 Question Dynamic Evaluation Set Architecture
         const officerMarathonQuestions = [
             { question: "An emergency tone sounds. A unit under immediate threat requests backup near downtown.", options: ["Signal 29", "Signal 59", "Signal 63", "Code 21"], matchIndex: 2, layman: "Help request! An officer is trapped and requires immediate team backup assistance." },
             { question: "A perimeter unit initiates an immediate tactical pursuit against a fleeing felony car down I-20.", options: ["Signal 72", "Signal 72P", "Code 3", "Signal 79"], matchIndex: 1, layman: "High-speed chase! Police are actively pursuing a fleeing criminal car down the highway." },
@@ -590,7 +586,6 @@
             ctx.moveTo(cx, 0); ctx.lineTo(cx, canvas.height);
             ctx.stroke();
 
-            // Evaluate blip targets mapping across density probabilities
             let easyVal = parseFloat(document.getElementById('rate-easy').value) || 0;
             let medVal = parseFloat(document.getElementById('rate-medium').value) || 0;
             let hardVal = parseFloat(document.getElementById('rate-hard').value) || 0;
@@ -659,6 +654,7 @@
         function generateProbabilisticTarget(e, m, h, o, total) {
             let targetRand = Math.random() * total;
             let chosenTier = 'officer';
+            const tiers = ['easy', 'medium', 'hard', 'officer'];
             
             if (targetRand <= e) chosenTier = 'easy';
             else if (targetRand <= (e + m)) chosenTier = 'medium';
@@ -742,7 +738,7 @@
             document.querySelectorAll('.view-content-block').forEach(v => v.classList.remove('active'));
             
             const tabs = document.querySelectorAll('.console-tab-item');
-            if(tabs[1]) tabs[1].classList.add('active');
+            if(tabs && tabs[1]) tabs[1].classList.add('active');
             document.getElementById('assessment-deck').classList.add('active');
 
             document.getElementById('stat-progress').innerText = `1 / ${officerMarathonQuestions.length}`;
