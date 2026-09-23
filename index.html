@@ -22,7 +22,31 @@
             <div class="system-badge">System Status: Online</div>
         </header>
 
-        <!-- Dispatch Incident Queue Grid Panel (Replaces old radar canvas) -->
+        <!-- New Operational Parameters Control Panel (Replaces old sliders) -->
+        <section class="matrix-section">
+            <h3>Examination Generation Parameters</h3>
+            <div class="control-grid">
+                <div class="control-node">
+                    <label for="difficultySelect">Target Evaluation Difficulty</label>
+                    <select id="difficultySelect" class="settings-select-input" onchange="handleParameterChange()">
+                        <option value="random">Randomized Tier Selection (Mixed Distribution)</option>
+                        <option value="easy">Easy (Green Tiers Only)</option>
+                        <option value="medium">Medium (Yellow Tiers Only)</option>
+                        <option value="hard">Hard (Red Tiers Only)</option>
+                        <option value="officer">Officer (Blue Tiers Only)</option>
+                    </select>
+                </div>
+                <div class="control-node">
+                    <label for="situationSelect">Specific Scenario / Code Filter</label>
+                    <select id="situationSelect" class="settings-select-input" onchange="handleParameterChange()">
+                        <option value="random">Randomized Assignments Selection</option>
+                        <!-- Options dynamically loaded by app.js from master list -->
+                    </select>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dispatch Incident Queue Grid Panel -->
         <main class="queue-section">
             <h3>Active Incident Dispatch Log</h3>
             <p class="section-notice">Click on any active incident row below to initialize the examination interface for that specific log sector entry.</p>
@@ -47,29 +71,6 @@
                 <button class="action-btn-secondary" onclick="toggleSettingsModal(true)">Terminal Parameters Settings</button>
             </div>
         </main>
-
-        <!-- Generation Probability Factor Control Bars Matrix -->
-        <section class="matrix-section">
-            <h3>Incident Spawn Generation Multipliers</h3>
-            <div class="slider-grid">
-                <div class="slider-node">
-                    <label>Easy (Green) - Chance Factor: <span id="val-easy">25%</span></label>
-                    <input type="range" id="rate-easy" min="0" max="100" value="25" oninput="balanceProbabilities('easy')">
-                </div>
-                <div class="slider-node">
-                    <label>Medium (Yellow) - Chance Factor: <span id="val-medium">25%</span></label>
-                    <input type="range" id="rate-medium" min="0" max="100" value="25" oninput="balanceProbabilities('medium')">
-                </div>
-                <div class="slider-node">
-                    <label>Hard (Red) - Chance Factor: <span id="val-hard">25%</span></label>
-                    <input type="range" id="rate-hard" min="0" max="100" value="25" oninput="balanceProbabilities('hard')">
-                </div>
-                <div class="slider-node">
-                    <label>Officer (Blue) - Chance Factor: <span id="val-officer">25%</span></label>
-                    <input type="range" id="rate-officer" min="0" max="100" value="25" oninput="balanceProbabilities('officer')">
-                </div>
-            </div>
-        </section>
         <!-- Real-Time Metrics & Telemetry Reading Panels -->
         <section class="metrics-row">
             <div class="metric-box">
@@ -120,7 +121,7 @@
                 <label for="understandingLevelSelect">Translation Understanding Level</label>
                 <select id="understandingLevelSelect" class="settings-select-input" onchange="applySettingsParametersUpdate()">
                     <option value="1">Level 1 (Layman Mode - Simplified translations for beginners)</option>
-                    <option value="2" selected>Level 2 (Medium Mode - Standard municipal radio codes configuration)</option>
+                    <option value="2" selected>Level 2 (Medium Mode - Standard radio codes configuration)</option>
                     <option value="3">Level 3 (Officer Mode - Hardened technical police metrics)</option>
                 </select>
             </div>
