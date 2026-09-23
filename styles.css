@@ -153,28 +153,23 @@ body {
     color: var(--text-muted);
 }
 
-.slider-grid {
+.control-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 16px;
     padding: 8px 0;
 }
 
-.slider-node {
+.control-node {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 6px;
 }
 
-.slider-node label {
+.control-node label {
     font-size: 12px;
     font-weight: bold;
     color: var(--text-muted);
-}
-
-.slider-node input {
-    width: 100%;
-    cursor: pointer;
 }
 .metrics-row {
     display: grid;
