@@ -3,127 +3,134 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Atlanta Police Department - Tactical Dispatch Academy</title>
-    <!-- Favicon link pointing directly to your root file -->
+    <title>Atlanta Police Department - Examination Portal</title>
     <link rel="icon" type="image/png" href="favicon.png">
-    <!-- Clean link pulling all styles directly from styles.css -->
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-    <div class="dashboard-container">
-        <!-- Main Application Header Component Grid Layout -->
-        <header class="app-header">
-            <div class="header-left">
-                <!-- Dual-image tracking setup pointing to your root assets repository -->
-                <img src="site-logo.png" alt="Logo" class="logo-img" onerror="this.style.display='none'; document.getElementById('fallback-hdr').style.display='block';">
-                <div id="fallback-hdr" class="fallback-logo" style="display:none;">Site Logo</div>
+    <div class="portal-container">
+        <!-- Main Standard Municipal Administration Header -->
+        <header class="portal-header">
+            <div class="header-branding">
+                <img src="site-logo.png" alt="Logo" class="dept-logo" onerror="this.style.display='none';">
                 <div class="title-block">
                     <h1>Atlanta Police Department</h1>
-                    <p>Tactical Dispatch & Codes Academy</p>
+                    <h2>Communications & Tactical Dispatch Testing Portal</h2>
                 </div>
             </div>
-            <div class="status-value">Zone Terminal: Online</div>
+            <div class="system-badge">System Status: Online</div>
         </header>
 
-        <!-- Dark Sonar Radar Area Panel Visualizer Screen View -->
-        <section class="radar-section">
-            <div class="canvas-wrapper">
-                <canvas id="radarCanvas" width="312" height="312"></canvas>
+        <!-- Dispatch Incident Queue Grid Panel (Replaces old radar canvas) -->
+        <main class="queue-section">
+            <h3>Active Incident Dispatch Log</h3>
+            <p class="section-notice">Click on any active incident row below to initialize the examination interface for that specific log sector entry.</p>
+            
+            <table class="dispatch-table">
+                <thead>
+                    <tr>
+                        <th>Sector Target</th>
+                        <th>Classification Tier</th>
+                        <th>Designated Context Location</th>
+                        <th>Action Required</th>
+                    </tr>
+                </thead>
+                <tbody id="dispatchQueueBody">
+                    <!-- JavaScript dynamically injects current testing rows here -->
+                </tbody>
+            </table>
+            
+            <div class="queue-controls">
+                <button class="action-btn-secondary" onclick="clearRadarTargets()">Reset Dispatch Log</button>
+                <div id="telemetryStatus" class="log-readout">Active Log Records: 0 / 7</div>
+                <button class="action-btn-secondary" onclick="toggleSettingsModal(true)">Terminal Parameters Settings</button>
             </div>
-            <div class="radar-controls-overlay">
-                <button class="clear-btn" onclick="clearRadarTargets()">Clear Radar</button>
-                <div id="telemetryStatus" class="telemetry-readout">Active Targets: 0 / 7</div>
-                <button class="settings-trigger-btn" onclick="toggleSettingsModal(true)">⚙️ Terminal Settings</button>
+        </main>
+
+        <!-- Generation Probability Factor Control Bars Matrix -->
+        <section class="matrix-section">
+            <h3>Incident Spawn Generation Multipliers</h3>
+            <div class="slider-grid">
+                <div class="slider-node">
+                    <label>Easy (Green) - Chance Factor: <span id="val-easy">25%</span></label>
+                    <input type="range" id="rate-easy" min="0" max="100" value="25" oninput="balanceProbabilities('easy')">
+                </div>
+                <div class="slider-node">
+                    <label>Medium (Yellow) - Chance Factor: <span id="val-medium">25%</span></label>
+                    <input type="range" id="rate-medium" min="0" max="100" value="25" oninput="balanceProbabilities('medium')">
+                </div>
+                <div class="slider-node">
+                    <label>Hard (Red) - Chance Factor: <span id="val-hard">25%</span></label>
+                    <input type="range" id="rate-hard" min="0" max="100" value="25" oninput="balanceProbabilities('hard')">
+                </div>
+                <div class="slider-node">
+                    <label>Officer (Blue) - Chance Factor: <span id="val-officer">25%</span></label>
+                    <input type="range" id="rate-officer" min="0" max="100" value="25" oninput="balanceProbabilities('officer')">
+                </div>
+            </div>
+        </section>
+        <!-- Real-Time Metrics & Telemetry Reading Panels -->
+        <section class="metrics-row">
+            <div class="metric-box">
+                <span class="metric-title">Master Codebook Size</span>
+                <span class="metric-value" id="registry-count">0 APD Codes</span>
+            </div>
+            <div class="metric-box">
+                <span class="metric-title">Examination Progression</span>
+                <span class="metric-value" id="stat-progress">0 Active</span>
+            </div>
+            <div class="metric-box">
+                <span class="metric-title">Diagnostic Accuracy Rate</span>
+                <span class="metric-value" id="stat-accuracy">100%</span>
             </div>
         </section>
 
-        <!-- Dynamic Density Target Chance Matrix Configurator System Sliders -->
-        <section class="probability-matrix">
-            <div class="slider-node">
-                <label style="color:var(--easy);">Easy (Green) <span id="val-easy">25%</span></label>
-                <input type="range" id="rate-easy" min="0" max="100" value="25" oninput="balanceProbabilities('easy')">
-            </div>
-            <div class="slider-node">
-                <label style="color:var(--medium);">Medium (Yellow) <span id="val-medium">25%</span></label>
-                <input type="range" id="rate-medium" min="0" max="100" value="25" oninput="balanceProbabilities('medium')">
-            </div>
-            <div class="slider-node">
-                <label style="color:var(--hard);">Hard (Red) <span id="val-hard">25%</span></label>
-                <input type="range" id="rate-hard" min="0" max="100" value="25" oninput="balanceProbabilities('hard')">
-            </div>
-            <div class="slider-node">
-                <label style="color:var(--officer);">Officer (Blue) <span id="val-officer">25%</span></label>
-                <input type="range" id="rate-officer" min="0" max="100" value="25" oninput="balanceProbabilities('officer')">
-            </div>
-        </section>
-        <!-- Live Telemetry Status Tracking Row Modules -->
-        <section class="analytics-strip">
-            <div class="analytics-node">
-                <div class="node-title">Active Registry</div>
-                <div class="node-value" id="registry-count">0 APD Codes</div>
-            </div>
-            <div class="analytics-node">
-                <div class="node-title">Test Progress</div>
-                <div class="node-value" id="stat-progress">0 Active</div>
-            </div>
-            <div class="analytics-node">
-                <div class="node-title">Live Performance</div>
-                <div class="node-value" id="stat-accuracy" style="color: var(--accent-blue);">100%</div>
-            </div>
-        </section>
+        <!-- Workspace Tabs Sub-Navigation Layout -->
+        <nav class="portal-nav">
+            <button class="nav-tab active" onclick="toggleView(event, 'practice-deck')">Codebook Reference Directory</button>
+            <button class="nav-tab" onclick="toggleView(event, 'assessment-deck')">Active Evaluation Field Arena</button>
+        </nav>
 
-        <!-- Main Workspace Tabs & Navigation View Controls Block -->
-        <section class="operations-panel">
-            <div class="console-tabs">
-                <button class="console-tab-item active" onclick="toggleView(event, 'practice-deck')">
-                    <img src="site-logo.png" class="tab-logo-icon" onerror="this.style.display='none';">
-                    Practice Reference Sheet
-                </button>
-                <button class="console-tab-item" onclick="toggleView(event, 'assessment-deck')">
-                    <img src="site-logo.png" class="tab-logo-icon" onerror="this.style.display='none';">
-                    Start Officer Marathon Test
-                </button>
-            </div>
-
-            <!-- Panel Container Module: APD Textbook Search Deck -->
+        <section class="content-arena">
+            <!-- Reference Search Directory Card Deck -->
             <div id="practice-deck" class="view-content-block active">
-                <input type="text" id="codeSearch" class="search-filter" placeholder="Search codes, explanations, or sentence examples...">
+                <input type="text" id="codeSearch" class="search-filter" placeholder="Enter terms to filter code classifications, definitions, or sentence files...">
                 <div class="list-container" id="codebook-list"></div>
             </div>
 
-            <!-- Panel Container Module: 20 Scenario Officer Testing Field Arena -->
+            <!-- Testing Assessment Core Field Arena Frame -->
             <div id="assessment-deck" class="view-content-block">
-                <div class="interactive-quiz-space">
-                    <div id="prompt-textbox" class="quiz-prompt">Click an active blip on the spinning radar tracking system above to initialize your 20-question Officer Assessment!</div>
-                    <div id="options-stack" class="quiz-options-stack"></div>
+                <div class="examination-card-space">
+                    <div id="prompt-textbox" class="examination-prompt">Select and click an open row inside the Incident Dispatch Log above to prompt your 20-question evaluation challenge.</div>
+                    <div id="options-stack" class="examination-stack"></div>
                     <div class="action-footer">
-                        <button id="forward-btn" class="next-stage-btn" style="display: none;" onclick="advanceQuizSession()">Next Scenario</button>
+                        <button id="forward-btn" class="action-btn-primary" style="display: none;" onclick="advanceQuizSession()">Submit and Advance</button>
                     </div>
                 </div>
             </div>
         </section>
     </div>
 
-    <!-- Hidden Dialog Layout Backdrop Container Block Window Element Module -->
+    <!-- Configuration Parameter Options Settings Overlays Dialog Modal Box -->
     <div id="settingsModal" class="settings-modal-overlay">
         <div class="settings-dialog-card">
             <h3>Terminal Operational Parameters</h3>
             <div class="settings-option-group">
                 <label for="understandingLevelSelect">Translation Understanding Level</label>
                 <select id="understandingLevelSelect" class="settings-select-input" onchange="applySettingsParametersUpdate()">
-                    <option value="1">Level 1 (Layman Mode - Easy translations for beginners)</option>
-                    <option value="2" selected>Level 2 (Medium Mode - Standard radio codes configuration)</option>
+                    <option value="1">Level 1 (Layman Mode - Simplified translations for beginners)</option>
+                    <option value="2" selected>Level 2 (Medium Mode - Standard municipal radio codes configuration)</option>
                     <option value="3">Level 3 (Officer Mode - Hardened technical police metrics)</option>
                 </select>
             </div>
             <div class="action-footer">
-                <button class="next-stage-btn" onclick="toggleSettingsModal(false)">Apply Settings</button>
+                <button class="action-btn-primary" onclick="toggleSettingsModal(false)">Apply Settings</button>
             </div>
         </div>
     </div>
 
-    <!-- Framework Boot Loading Array Pipeline Protocol Execution Scripts -->
+    <!-- Modular Script Injection Initialization Pipelines -->
     <script src="codebook.js"></script>
     <script src="radar.js"></script>
     <script src="app.js"></script>
