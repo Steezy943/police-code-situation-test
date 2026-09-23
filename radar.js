@@ -1,18 +1,18 @@
-const radarConfig = {
+window.radarConfig = {
     easyRate: 25,
     mediumRate: 25,
     hardRate: 25,
     officerRate: 25
 };
 
-let activeBlips = [];
-const maxBlips = 7;
-let sweepAngle = 0;
-let hoveredBlip = null;
-let mouseX = -999;
-let mouseY = -999;
+window.activeBlips = [];
+window.sweepAngle = 0;
+window.hoveredBlip = null;
+window.mouseX = -999;
+window.mouseY = -999;
 
 let canvas, ctx, cx, cy, maxRadius;
+const maxBlips = 7;
 
 function initRadarEngine() {
     canvas = document.getElementById('radarCanvas');
@@ -23,15 +23,23 @@ function initRadarEngine() {
     cy = canvas.height / 2;
     maxRadius = canvas.width / 2;
 
-    canvas.addEventListener('mousemove', handleRadarMouseMove);
-    canvas.addEventListener('mouseout', handleRadarMouseLeave);
-    canvas.addEventListener('click', handleRadarClick);
+    canvas.addEventListener('mousemove', (e) => {
+        const rect = canvas.getBoundingClientRect();
+        window.mouseX = e.clientX - rect.left;
+        window.mouseY = e.clientY - rect.top;
+    });
 
+    canvas.addEventListener('mouseout', () => {
+        window.mouseX = -999;
+        window.mouseY = -999;
+        window.hoveredBlip = null;
+    });
+
+    canvas.addEventListener('click', handleRadarClick);
     window.requestAnimationFrame(runRadarLoop);
 }
-
-function runRadarLoop(timestamp) {
-    sweepAngle = (sweepAngle + 0.02) % (Math.PI * 2);
+function runRadarLoop() {
+    window.sweepAngle = (window.sweepAngle + 0.02) % (Math.PI * 2);
     ctx.fillStyle = '#060913';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -47,22 +55,20 @@ function runRadarLoop(timestamp) {
     ctx.moveTo(0, cy); ctx.lineTo(canvas.width, cy);
     ctx.moveTo(cx, 0); ctx.lineTo(cx, canvas.height);
     ctx.stroke();
-    let grandTotal = radarConfig.easyRate + radarConfig.mediumRate + radarConfig.hardRate + radarConfig.officerRate;
 
-    if (grandTotal > 0 && Math.random() < 0.015 && activeBlips.length < maxBlips) {
+    let grandTotal = window.radarConfig.easyRate + window.radarConfig.mediumRate + window.radarConfig.hardRate + window.radarConfig.officerRate;
+    if (grandTotal > 0 && Math.random() < 0.015 && window.activeBlips.length < maxBlips) {
         generateProbabilisticTarget(grandTotal);
     }
 
-    hoveredBlip = null;
-
-    activeBlips.forEach(blip => {
-        let distToMouse = Math.hypot(blip.x - mouseX, blip.y - mouseY);
-        if (distToMouse <= 14) { hoveredBlip = blip; }
+    window.hoveredBlip = null;
+    window.activeBlips.forEach(blip => {
+        let dist = Math.hypot(blip.x - window.mouseX, blip.y - window.mouseY);
+        if (dist <= 14) { window.hoveredBlip = blip; }
 
         let angleToBlip = Math.atan2(blip.y - cy, blip.x - cx);
         if (angleToBlip < 0) angleToBlip += Math.PI * 2;
-        
-        let angleDiff = sweepAngle - angleToBlip;
+        let angleDiff = window.sweepAngle - angleToBlip;
         if (angleDiff < 0) angleDiff += Math.PI * 2;
 
         if (angleDiff < 0.08) { 
@@ -86,14 +92,12 @@ function runRadarLoop(timestamp) {
             ctx.stroke();
         }
     });
-
     ctx.save();
     ctx.translate(cx, cy);
-    ctx.rotate(sweepAngle);
+    ctx.rotate(window.sweepAngle);
     let bladeGrad = ctx.createLinearGradient(0, 0, maxRadius, 0);
     bladeGrad.addColorStop(0, 'rgba(59, 130, 246, 0.4)');
     bladeGrad.addColorStop(1, 'rgba(59, 130, 246, 0.0)');
-    
     ctx.fillStyle = bladeGrad;
     ctx.beginPath();
     ctx.moveTo(0, 0);
@@ -102,11 +106,11 @@ function runRadarLoop(timestamp) {
     ctx.fill();
     ctx.restore();
 
-    if (hoveredBlip) { drawRadarTooltip(hoveredBlip); }
+    if (window.hoveredBlip) { drawRadarTooltip(window.hoveredBlip); }
 
     const telemetryElem = document.getElementById('telemetryStatus');
     if (telemetryElem) {
-        telemetryElem.innerText = `Active Targets: ${activeBlips.length} / ${maxBlips}`;
+        telemetryElem.innerText = `Active Targets: ${window.activeBlips.length} / ${maxBlips}`;
     }
     window.requestAnimationFrame(runRadarLoop);
 }
@@ -121,92 +125,19 @@ function getTierColor(tier, opacity) {
 function generateProbabilisticTarget(total) {
     let targetRand = Math.random() * total;
     let chosenTier = 'officer';
-    
-    if (targetRand <= radarConfig.easyRate) chosenTier = 'easy';
-    else if (targetRand <= (radarConfig.easyRate + radarConfig.mediumRate)) chosenTier = 'medium';
-    else if (targetRand <= (radarConfig.easyRate + radarConfig.mediumRate + radarConfig.hardRate)) chosenTier = 'hard';
+    if (targetRand <= window.radarConfig.easyRate) chosenTier = 'easy';
+    else if (targetRand <= (window.radarConfig.easyRate + window.radarConfig.mediumRate)) chosenTier = 'medium';
+    else if (targetRand <= (window.radarConfig.easyRate + window.radarConfig.mediumRate + window.radarConfig.hardRate)) chosenTier = 'hard';
 
-    if (typeof officerMarathonQuestions === 'undefined' || officerMarathonQuestions.length === 0) return;
-    let randomMeta = officerMarathonQuestions[Math.floor(Math.random() * officerMarathonQuestions.length)];
-
+    if (!window.masterDatabase || window.masterDatabase.length === 0) return;
+    let randomMeta = window.masterDatabase[Math.floor(Math.random() * window.masterDatabase.length)];
     let angle = Math.random() * Math.PI * 2;
     let distance = (Math.random() * (maxRadius - 50)) + 30;
-    activeBlips.push({
+
+    window.activeBlips.push({
         x: cx + Math.cos(angle) * distance,
         y: cy + Math.sin(angle) * distance,
-        radius: 6,
-        pulseRadius: 6,
-        pulseOpacity: 0,
-        tier: chosenTier,
-        metaData: randomMeta
+        radius: 6, pulseRadius: 6, pulseOpacity: 0,
+        tier: chosenTier, metaData: randomMeta
     });
-}
-function handleRadarMouseMove(e) {
-    const rect = canvas.getBoundingClientRect();
-    mouseX = e.clientX - rect.left;
-    mouseY = e.clientY - rect.top;
-}
-
-function handleRadarMouseLeave() {
-    mouseX = -999;
-    mouseY = -999;
-    hoveredBlip = null;
-}
-
-function handleRadarClick(e) {
-    const rect = canvas.getBoundingClientRect();
-    const clickX = e.clientX - rect.left;
-    const clickY = e.clientY - rect.top;
-
-    let foundIdx = -1;
-    for (let i = 0; i < activeBlips.length; i++) {
-        let dist = Math.hypot(activeBlips[i].x - clickX, activeBlips[i].y - clickY);
-        if (dist <= 16) { foundIdx = i; break; }
-    }
-
-    if (foundIdx !== -1) {
-        activeBlips.splice(foundIdx, 1);
-        hoveredBlip = null;
-        if (typeof startOfficerMarathon === 'function') { startOfficerMarathon(); }
-    }
-}
-
-function clearRadarTargets() {
-    activeBlips = [];
-    hoveredBlip = null;
-}
-
-function drawRadarTooltip(blip) {
-    ctx.save();
-    let txtCode = blip.metaData.id || "Code";
-    let txtDesc = blip.metaData.desc || blip.metaData.question.substring(0, 15) + "...";
-    let displayTxt = `${txtCode}: ${txtDesc}`;
-    let sceneStr = `Scene: ${blip.metaData.context || 'Atlanta Area'}`;
-
-    ctx.font = 'bold 11px sans-serif';
-    let w1 = ctx.measureText(displayTxt).width;
-    let w2 = ctx.measureText(sceneStr).width;
-    let width = Math.max(w1, w2) + 16;
-    let height = 38;
-    let tx = blip.x + 12;
-    let ty = blip.y - 12;
-
-    if (tx + width > canvas.width) tx = blip.x - width - 12;
-    if (ty + height > canvas.height) ty = canvas.height - height - 10;
-    if (ty < 0) ty = 10;
-
-    ctx.fillStyle = 'rgba(15, 23, 42, 0.95)';
-    ctx.strokeStyle = '#3b82f6';
-    ctx.lineWidth = 1;
-    
-    ctx.beginPath();
-    ctx.rect(tx, ty, width, height);
-    ctx.fill();
-    ctx.stroke();
-
-    ctx.fillStyle = '#f8fafc';
-    ctx.fillText(displayTxt, tx + 8, ty + 16);
-    ctx.fillStyle = '#94a3b8';
-    ctx.fillText(sceneStr, tx + 8, ty + 28);
-    ctx.restore();
 }
