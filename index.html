@@ -3,361 +3,555 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Atlanta Police Department Knowledge Test</title>
+    <title>Atlanta Police Department - Dispatch Academy</title>
     <style>
         :root {
-            --primary: #0A2342;
-            --secondary: #1D3557;
-            --accent: #E63946;
-            --light: #F8F9FA;
-            --dark: #212529;
-            --gray: #E9ECEF;
-            --success: #2A9D8F;
+            --bg-dark: #0b141e;
+            --panel-bg: #ffffff;
+            --radar-bg: #101c2c;
+            --primary-blue: #2563eb;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --accent-green: #22c55e;
+            --accent-red: #ef4444;
+            --border-color: #e2e8f0;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
 
         body {
-            background-color: var(--light);
-            color: var(--dark);
-            line-height: 1.6;
+            background-color: #f1f5f9;
+            color: var(--text-main);
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
         }
 
-        header {
-            background-color: var(--primary);
-            color: white;
-            padding: 1rem 2rem;
+        .dashboard-container {
+            width: 100%;
+            max-width: 820px;
+            background-color: var(--panel-bg);
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+
+        /* Top Header Styling matching image */
+        .app-header {
+            padding: 18px 24px;
             display: flex;
-            align-items: center;
             justify-content: space-between;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
         }
 
-        .logo-container {
+        .header-left {
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 14px;
         }
 
-        .logo-container img {
-            height: 60px;
+        .site-logo-btn {
+            background-color: var(--primary-blue);
+            color: white;
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 11px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            border: none;
+        }
+
+        .logo-img {
+            height: 32px;
             width: auto;
             object-fit: contain;
         }
 
-        .logo-fallback {
-            background: white;
-            color: var(--primary);
-            padding: 0.5rem 1rem;
-            font-weight: bold;
-            border-radius: 4px;
-            border: 2px solid #fff;
+        .title-block h1 {
+            font-size: 15px;
+            font-weight: 700;
+            color: #0f172a;
         }
 
-        main {
-            max-width: 1000px;
-            margin: 2rem auto;
-            padding: 0 1rem;
+        .title-block p {
+            font-size: 12px;
+            color: var(--text-muted);
         }
 
-        .menu-card {
-            background: white;
-            border-radius: 8px;
-            padding: 2rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            text-align: center;
-            margin-bottom: 2rem;
+        .header-right {
+            text-align: right;
         }
 
-        h1 {
-            color: var(--primary);
-            margin-bottom: 0.5rem;
-        }
-
-        .subtitle {
-            color: #6c757d;
-            margin-bottom: 2rem;
-        }
-
-        .button-group {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            padding: 0.75rem 1.5rem;
-            font-size: 1rem;
+        .status-title {
+            font-size: 11px;
+            color: var(--text-muted);
             font-weight: 600;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-        .btn:hover {
-            background-color: var(--secondary);
+            text-transform: uppercase;
         }
 
-        .btn-accent {
-            background-color: var(--accent);
+        .status-value {
+            font-size: 14px;
+            color: var(--accent-green);
+            font-weight: 600;
         }
-
-        .btn-accent:hover {
-            background-color: #c92a36;
-        }
-
-        .view-section {
-            display: none;
-            background: white;
-            border-radius: 8px;
-            padding: 2rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-        }
-
-        .view-section.active {
-            display: block;
-        }
-
-        .tabs {
+        /* Dark Telemetry Area matching image */
+        .telemetry-display {
+            background-color: var(--radar-bg);
+            color: white;
+            padding: 24px;
+            position: relative;
+            min-height: 320px;
             display: flex;
-            border-bottom: 2px solid var(--gray);
-            margin-bottom: 1.5rem;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
-        .tab-btn {
+        .radar-canvas-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .radar-circle {
+            border: 1px dashed rgba(255, 255, 255, 0.15);
+            border-radius: 50%;
+            position: absolute;
+        }
+        .rc-1 { width: 160px; height: 160px; }
+        .rc-2 { width: 320px; height: 320px; }
+        .rc-3 { width: 480px; height: 480px; }
+
+        .radar-crosshair-x {
+            position: absolute;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05) 30%, rgba(255,255,255,0.05) 70%, transparent);
+        }
+        .radar-crosshair-y {
+            position: absolute;
+            height: 100%;
+            width: 1px;
+            background: linear-gradient(180deg, transparent, rgba(255,255,255,0.05) 30%, rgba(255,255,255,0.05) 70%, transparent);
+        }
+
+        .control-corner {
+            display: flex;
+            justify-content: flex-end;
+            z-index: 2;
+        }
+
+        .pause-btn {
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .pause-btn::before, .pause-btn::after {
+            content: '';
+            width: 3px;
+            height: 12px;
+            background-color: #0f172a;
+            display: inline-block;
+            margin: 0 2px;
+        }
+
+        .telemetry-info-panel {
+            z-index: 2;
+            max-width: 400px;
+        }
+
+        .telemetry-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .telemetry-code {
+            font-size: 16px;
+            font-weight: 700;
+            color: #38bdf8;
+            margin-bottom: 2px;
+        }
+
+        .telemetry-description {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 400;
+        }
+
+        /* Bottom Registry Analytics Strip */
+        .analytics-strip {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            border-bottom: 1px solid var(--border-color);
+            background-color: #f8fafc;
+        }
+        .analytics-node {
+            padding: 16px;
+            text-align: center;
+            border-right: 1px solid var(--border-color);
+        }
+
+        .analytics-node:last-child {
+            border-right: none;
+        }
+
+        .node-title {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+        }
+
+        .node-value {
+            font-size: 16px;
+            font-weight: 700;
+            color: #0f172a;
+        }
+
+        /* Operations Console UI Controls */
+        .operations-panel {
+            padding: 24px;
+        }
+
+        .panel-heading {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .console-tabs {
+            display: flex;
+            gap: 8px;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 20px;
+        }
+
+        .console-tab-item {
+            padding: 10px 16px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-muted);
             background: none;
             border: none;
-            padding: 0.75rem 1.5rem;
-            font-size: 1rem;
-            font-weight: 600;
             cursor: pointer;
-            color: #6c757d;
-            border-bottom: 3px solid transparent;
-            margin-bottom: -2px;
+            border-bottom: 2px solid transparent;
         }
 
-        .tab-btn.active {
-            color: var(--primary);
-            border-bottom-color: var(--primary);
+        .console-tab-item.active {
+            color: var(--primary-blue);
+            border-bottom-color: var(--primary-blue);
         }
 
-        .tab-content {
+        .view-content-block {
             display: none;
         }
 
-        .tab-content.active {
+        .view-content-block.active {
             display: block;
         }
 
-        .code-grid {
+        .grid-layout {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 1rem;
+            grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+            gap: 12px;
         }
 
-        .code-item {
-            background: var(--light);
-            padding: 1rem;
-            border-radius: 6px;
-            border-left: 4px solid var(--primary);
+        .card-node {
+            background-color: #f8fafc;
+            border: 1px solid var(--border-color);
+            padding: 12px 16px;
+            border-radius: 8px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-        }
-
-        .code-num {
-            font-weight: bold;
-            color: var(--primary);
-        }
-
-        .code-desc {
-            text-align: right;
-            font-size: 0.95rem;
-        }
-
-        .quiz-container {
-            margin-top: 1rem;
-        }
-
-        .quiz-card {
-            background: var(--light);
-            padding: 1.5rem;
-            border-radius: 6px;
-            margin-bottom: 1rem;
-        }
-
-        .options-list {
-            list-style: none;
-            margin-top: 1rem;
-        }
-
-        .option-item {
-            background: white;
-            padding: 0.75rem 1rem;
-            margin-bottom: 0.5rem;
-            border: 1px solid var(--gray);
-            border-radius: 4px;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.15s ease;
         }
 
-        .option-item:hover {
-            border-color: var(--primary);
-            background: #f0f4f8;
+        .card-node:hover {
+            border-color: var(--primary-blue);
+            background-color: #f0f6ff;
         }
 
-        .option-item.correct {
-            background-color: #d4edda;
-            border-color: #c3e6cb;
-            color: #155724;
+        .node-id {
+            font-weight: 700;
+            color: var(--primary-blue);
+            font-size: 14px;
+        }
+        .node-desc {
+            font-size: 13px;
+            color: var(--text-main);
+            font-weight: 500;
         }
 
-        .option-item.wrong {
-            background-color: #f8d7da;
-            border-color: #f5c6cb;
-            color: #721c24;
+        /* Quiz UI Module Components */
+        .interactive-quiz-space {
+            background-color: #f8fafc;
+            border: 1px dashed var(--border-color);
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .quiz-prompt {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #0f172a;
+        }
+
+        .quiz-options-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .quiz-option-row {
+            background: white;
+            border: 1px solid var(--border-color);
+            padding: 12px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.15s ease;
+        }
+
+        .quiz-option-row:hover {
+            background-color: #f1f5f9;
+            border-color: #cbd5e1;
+        }
+
+        .quiz-option-row.matched-correct {
+            background-color: #dcfce7;
+            border-color: #bbf7d0;
+            color: #166534;
+            font-weight: 600;
+        }
+
+        .quiz-option-row.matched-error {
+            background-color: #fee2e2;
+            border-color: #fca5a5;
+            color: #991b1b;
+            font-weight: 600;
+        }
+
+        .action-footer {
+            margin-top: 16px;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .next-stage-btn {
+            background-color: var(--primary-blue);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 13px;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="logo-container">
-            <img src="site-logo.png" alt="Site Logo" onerror="this.style.display='none'; document.getElementById('fallback').style.display='block';">
-            <div id="fallback" class="logo-fallback" style="display:none;">Site Logo</div>
-            <h2>APD Study Portal</h2>
-        </div>
-    </header>
-    <main>
-        <section class="menu-card">
-            <h1>Atlanta Police Department Codes</h1>
-            <p class="subtitle">Select a mode below to study or test your knowledge on APD 10-Codes, Signals, and Response Types.</p>
-            <div class="button-group">
-                <button class="btn" onclick="switchView('practice-sheet')">Open Practice Sheet</button>
-                <button class="btn btn-accent" onclick="switchView('test-mode')">Start Knowledge Test</button>
+    <div class="dashboard-container">
+        <!-- Dashboard Header matching image blueprint -->
+        <header class="app-header">
+            <div class="header-left">
+                <img src="site-logo.png" alt="Site Logo" class="logo-img" onerror="this.style.display='none'; document.getElementById('fallback-logo').style.display='block';">
+                <button id="fallback-logo" class="site-logo-btn" style="display:none;">Site Logo</button>
+                <div class="title-block">
+                    <h1>Atlanta Police Department</h1>
+                    <p>APD Dispatch & Codes Academy</p>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="status-title">Zone Terminal Status</div>
+                <div class="status-value">Online / Transmitting</div>
+            </div>
+        </header>
+        <!-- Telemetry Display Module with Background Radar Map Visualizer -->
+        <section class="telemetry-display">
+            <div class="radar-canvas-layer">
+                <div class="radar-crosshair-x"></div>
+                <div class="radar-crosshair-y"></div>
+                <div class="radar-circle rc-1"></div>
+                <div class="radar-circle rc-2"></div>
+                <div class="radar-circle rc-3"></div>
+            </div>
+
+            <div class="control-corner">
+                <button class="pause-btn" aria-label="Pause telemetry feed"></button>
+            </div>
+
+            <div class="telemetry-info-panel">
+                <div class="telemetry-label">Terminal Telemetry</div>
+                <div id="active-telemetry-code" class="telemetry-code">Code 3</div>
+                <div id="active-telemetry-desc" class="telemetry-description">Critical Emergency (Lights and sirens)</div>
             </div>
         </section>
 
-        <section id="practice-sheet" class="view-section">
-            <h2>APD Quick Reference Practice Sheet</h2>
-            <p class="subtitle">Switch tabs below to review Atlanta specific police configurations.</p>
+        <!-- Metric Registry Strip matching metrics from context -->
+        <section class="analytics-strip">
+            <div class="analytics-node">
+                <div class="node-title">Active Registry</div>
+                <div id="stat-registry-count" class="node-value">18 APD Codes</div>
+            </div>
+            <div class="analytics-node">
+                <div class="node-title">Test Progress</div>
+                <div id="stat-progress" class="node-value">0 Active</div>
+            </div>
+            <div class="analytics-node">
+                <div class="node-title">Accuracy Rate</div>
+                <div id="stat-accuracy" class="node-value" style="color: var(--primary-blue);">100%</div>
+            </div>
+        </section>
+
+        <!-- Operations Console Interface Controls -->
+        <section class="operations-panel">
+            <div class="panel-heading">Console Operations Mode</div>
             
-            <div class="tabs">
-                <button class="tab-btn active" onclick="switchTab(event, 'signals')">APD Signals</button>
-                <button class="tab-btn" onclick="switchTab(event, 'responses')">Response Codes</button>
-                <button class="tab-btn" onclick="switchTab(event, 'codes')">Common 10-Codes</button>
+            <div class="console-tabs">
+                <button class="console-tab-item active" onclick="toggleConsoleView(event, 'practice-deck')">Practice Reference Sheet</button>
+                <button class="console-tab-item" onclick="toggleConsoleView(event, 'assessment-deck')">Start Knowledge Test</button>
             </div>
 
-            <div id="signals" class="tab-content active">
-                <div class="code-grid">
-                    <div class="code-item"><span class="code-num">Signal 7</span><span class="code-desc">Criminal Trespass</span></div>
-                    <div class="code-item"><span class="code-num">Signal 25</span><span class="code-desc">Shots Fired</span></div>
-                    <div class="code-item"><span class="code-num">Signal 29</span><span class="code-desc">Fight in Progress</span></div>
-                    <div class="code-item"><span class="code-num">Signal 33</span><span class="code-desc">Stolen Vehicle</span></div>
-                    <div class="code-item"><span class="code-num">Signal 42R</span><span class="code-desc">Residential Burglary</span></div>
-                    <div class="code-item"><span class="code-num">Signal 45</span><span class="code-desc">Larceny</span></div>
-                    <div class="code-item"><span class="code-num">Signal 58</span><span class="code-desc">Domestic Disturbance</span></div>
-                    <div class="code-item"><span class="code-num">Signal 66</span><span class="code-desc">Suspicious Person</span></div>
+            <!-- View Block: Practice Reference Cards Grid -->
+            <div id="practice-deck" class="view-content-block active">
+                <div class="grid-layout">
+                    <div class="card-node" onclick="pushToTelemetry('Signal 7', 'Criminal Trespass')"><span class="node-id">Signal 7</span><span class="node-desc">Criminal Trespass</span></div>
+                    <div class="card-node" onclick="pushToTelemetry('Signal 25', 'Shots Fired')"><span class="node-id">Signal 25</span><span class="node-desc">Shots Fired</span></div>
+                    <div class="card-node" onclick="pushToTelemetry('Signal 29', 'Fight in Progress')"><span class="node-id">Signal 29</span><span class="node-desc">Fight in Progress</span></div>
+                    <div class="card-node" onclick="pushToTelemetry('Signal 42R', 'Residential Burglary')"><span class="node-id">Signal 42R</span><span class="node-desc">Residential Burglary</span></div>
+                    <div class="card-node" onclick="pushToTelemetry('Signal 45', 'Larceny / Theft')"><span class="node-id">Signal 45</span><span class="node-desc">Larceny / Theft</span></div>
+                    <div class="card-node" onclick="pushToTelemetry('Signal 58', 'Domestic Disturbance')"><span class="node-id">Signal 58</span><span class="node-desc">Domestic Disturbance</span></div>
+                    <div class="card-node" onclick="pushToTelemetry('Code 1', 'Routine / Non-Emergency')"><span class="node-id">Code 1</span><span class="node-desc">Routine / Non-Emergency</span></div>
+                    <div class="card-node" onclick="pushToTelemetry('Code 2', 'Urgent Response (No Sirens)')"><span class="node-id">Code 2</span><span class="node-desc">Urgent (No Sirens)</span></div>
+                    <div class="card-node" onclick="pushToTelemetry('Code 3', 'Critical Emergency (Lights and sirens)')"><span class="node-id">Code 3</span><span class="node-desc">Critical Emergency</span></div>
                 </div>
             </div>
-
-            <div id="responses" class="tab-content">
-                <div class="code-grid">
-                    <div class="code-item"><span class="code-num">Code 1</span><span class="code-desc">Routine / Non-Emergency</span></div>
-                    <div class="code-item"><span class="code-num">Code 2</span><span class="code-desc">Urgent (No Lights/Siren)</span></div>
-                    <div class="code-item"><span class="code-num">Code 3</span><span class="code-desc">Emergency (Lights & Siren)</span></div>
-                    <div class="code-item"><span class="code-num">Code 4</span><span class="code-desc">Under Control / No Further Help Needed</span></div>
-                </div>
-            </div>
-
-            <div id="codes" class="tab-content">
-                <div class="code-grid">
-                    <div class="code-item"><span class="code-num">10-4</span><span class="code-desc">Acknowledgment (OK)</span></div>
-                    <div class="code-item"><span class="code-num">10-12</span><span class="code-desc">Officials / Visitors Present</span></div>
-                    <div class="code-item"><span class="code-num">10-20</span><span class="code-desc">Location</span></div>
-                    <div class="code-item"><span class="code-num">10-23</span><span class="code-desc">Arrived at Scene</span></div>
-                    <div class="code-item"><span class="code-num">10-50</span><span class="code-desc">Vehicle Accident</span></div>
-                    <div class="code-item"><span class="code-num">10-97</span><span class="code-desc">Arrived at Assignment</span></div>
+            <!-- View Block: Tactical Interactive Assessment Portal -->
+            <div id="assessment-deck" class="view-content-block">
+                <div class="interactive-quiz-space">
+                    <div id="prompt-textbox" class="quiz-prompt">A priority dispatch channel requests response units immediately to an ongoing domestic brawl with tactical hazards. What configuration applies?</div>
+                    <div id="options-stack" class="quiz-options-stack"></div>
+                    <div class="action-footer">
+                        <button id="forward-btn" class="next-stage-btn" style="display: none;" onclick="advanceQuizSession()">Next Scenario</button>
+                    </div>
                 </div>
             </div>
         </section>
+    </div>
 
-        <section id="test-mode" class="view-section">
-            <h2>APD Knowledge Test</h2>
-            <p class="subtitle">Read the scenario carefully and select the corresponding response or signal identifier.</p>
-            <div class="quiz-container">
-                <div class="quiz-card">
-                    <h3 id="question-text">Loading situation analysis data...</h3>
-                    <ul class="options-list" id="options-box"></ul>
-                </div>
-                <button class="btn" id="next-btn" style="display:none;" onclick="loadQuestion()">Next Scenario</button>
-            </div>
-        </section>
-    </main>
     <script>
-        const questions = [
-            { q: "Dispatch reports an active brawl outside a bar on Peachtree St. What event designation applies?", a: ["Signal 29 (Fight)", "Signal 7", "Signal 58", "Signal 25"], c: 0 },
-            { q: "You receive an assignment requiring immediate emergency travel parameters using full emergency assets (Lights & Sirens). What is the protocol?", a: ["Code 1", "Code 2", "Code 3", "Code 4"], c: 2 },
-            { q: "An alarm sounds at a private home in Zone 5 indicating an intrusive breach. What signal profile tracks this incident?", a: ["Signal 45", "Signal 42R (Residential Burglary)", "Signal 33", "Signal 66"], c: 1 },
-            { q: "A domestic dispute escalates to an active structural disturbance call. Dispatch tags this profile as:", a: ["Signal 58 (Domestic Disturbance)", "Signal 7", "Signal 29", "10-50"], c: 0 },
-            { q: "You arrive directly inside your assigned patrol coordinates. Which standard communication string indicates arrival?", a: ["10-4", "10-20", "10-97 (Arrived at Assignment)", "10-12"], c: 2 }
+        const quizRepo = [
+            { question: "Units are requested to respond immediately to an ongoing violent brawl outside a nightclub on Peachtree Road. Choose the code profile.", options: ["Signal 7", "Signal 29", "Signal 42R", "Code 1"], matchIndex: 1, tag: "Signal 29", context: "Fight in Progress" },
+            { question: "An emergency unit dispatch assignment dictates immediate execution utilizing all operational assets (Emergency Light Systems & Acoustic Sirens).", options: ["Code 1", "Code 2", "Code 3", "Code 4"], matchIndex: 2, tag: "Code 3", context: "Critical Emergency (Lights and sirens)" },
+            { question: "A property protection alarm indicates a localized structural intrusion event underway inside a locked downtown residence.", options: ["Signal 42R", "Signal 25", "Signal 58", "10-4"], matchIndex: 0, tag: "Signal 42R", context: "Residential Burglary" },
+            { question: "A 911 dispatch notification logs a dynamic family unit physical alteration requiring unit intervention inside Zone 4.", options: ["Signal 45", "Signal 7", "Signal 58", "10-20"], matchIndex: 2, tag: "Signal 58", context: "Domestic Disturbance" }
         ];
 
-        let currentQ = 0;
+        let indexPointer = 0;
+        let runningCorrect = 0;
+        let globalAttempts = 0;
 
-        function switchView(viewId) {
-            document.querySelectorAll('.view-section').forEach(view => view.classList.remove('active'));
-            document.getElementById(viewId).classList.add('active');
-            document.getElementById(viewId).scrollIntoView({ behavior: 'smooth' });
-            if(viewId === 'test-mode') { currentQ = 0; loadQuestion(); }
-        }
-
-        function switchTab(event, tabId) {
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+        function toggleConsoleView(event, panelId) {
+            document.querySelectorAll('.console-tab-item').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.view-content-block').forEach(view => view.classList.remove('active'));
             event.currentTarget.classList.add('active');
-            document.getElementById(tabId).classList.add('active');
+            document.getElementById(panelId).classList.add('active');
+            if (panelId === 'assessment-deck') { resetQuizSession(); }
         }
 
-        function loadQuestion() {
-            document.getElementById('next-btn').style.display = 'none';
-            if(currentQ >= questions.length) {
-                document.getElementById('question-text').innerText = "Testing completed! Refresh or re-enter to restart.";
-                document.getElementById('options-box').innerHTML = "";
+        function pushToTelemetry(codeStr, descStr) {
+            document.getElementById('active-telemetry-code').innerText = codeStr;
+            document.getElementById('active-telemetry-desc').innerText = descStr;
+        }
+
+        function resetQuizSession() {
+            indexPointer = 0;
+            runningCorrect = 0;
+            globalAttempts = 0;
+            document.getElementById('stat-progress').innerText = `1 / ${quizRepo.length}`;
+            document.getElementById('stat-accuracy').innerText = "100%";
+            renderQuizCard();
+        }
+
+        function renderQuizCard() {
+            document.getElementById('forward-btn').style.display = 'none';
+            if (indexPointer >= quizRepo.length) {
+                document.getElementById('prompt-textbox').innerText = "All active scenario diagnostics completed successfully.";
+                document.getElementById('options-stack').innerHTML = "";
+                document.getElementById('stat-progress').innerText = "Finished";
                 return;
             }
-            let data = questions[currentQ];
-            document.getElementById('question-text').innerText = `Scenario ${currentQ + 1}: ${data.q}`;
-            let box = document.getElementById('options-box');
-            box.innerHTML = "";
-            data.a.forEach((opt, idx) => {
-                let li = document.createElement('li');
-                li.className = "option-item";
-                li.innerText = opt;
-                li.onclick = () => checkAnswer(li, idx, data.c);
-                box.appendChild(li);
+            let targetCard = quizRepo[indexPointer];
+            document.getElementById('prompt-textbox').innerText = targetCard.question;
+            let targetBox = document.getElementById('options-stack');
+            targetBox.innerHTML = "";
+
+            targetCard.options.forEach((optText, optIdx) => {
+                let divNode = document.createElement('div');
+                divNode.className = "quiz-option-row";
+                divNode.innerText = optText;
+                divNode.onclick = () => verifySelectedAnswer(divNode, optIdx, targetCard.matchIndex, targetCard.tag, targetCard.context);
+                targetBox.appendChild(divNode);
             });
         }
 
-        function checkAnswer(el, selected, correct) {
-            let items = document.querySelectorAll('.option-item');
-            items.forEach(item => item.onclick = null); 
-            if(selected === correct) {
-                el.classList.add('correct');
+        function verifySelectedAnswer(selectedEl, userIdx, trueIdx, tag, context) {
+            let optionsElements = document.querySelectorAll('.quiz-option-row');
+            optionsElements.forEach(item => item.onclick = null);
+            globalAttempts++;
+            if (userIdx === trueIdx) {
+                selectedEl.classList.add('matched-correct');
+                runningCorrect++;
+                pushToTelemetry(tag, context);
             } else {
-                el.classList.add('wrong');
-                items[correct].classList.add('correct');
+                selectedEl.classList.add('matched-error');
+                optionsElements[trueIdx].classList.add('matched-correct');
             }
-            currentQ++;
-            document.getElementById('next-btn').style.display = 'inline-block';
+            let evaluatedScore = Math.round((runningCorrect / globalAttempts) * 100);
+            document.getElementById('stat-accuracy').innerText = `${evaluatedScore}%`;
+            document.getElementById('forward-btn').style.display = 'inline-block';
+        }
+
+        function advanceQuizSession() {
+            indexPointer++;
+            if (indexPointer < quizRepo.length) {
+                document.getElementById('stat-progress').innerText = `${indexPointer + 1} / ${quizRepo.length}`;
+            }
+            renderQuizCard();
         }
     </script>
 </body>
