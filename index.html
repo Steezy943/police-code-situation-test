@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Atlanta Police Department - Tactical Dispatch Academy</title>
-    <!-- Favicon link pointing directly to your root file -->
     <link rel="icon" type="image/png" href="favicon.png">
     <style>
         :root {
@@ -176,18 +175,18 @@
             gap: 6px;
         }
 
+        .slider-node input {
+            width: 100%;
+            cursor: pointer;
+            accent-color: var(--accent-blue);
+        }
+
         .slider-node label {
             font-size: 12px;
             font-weight: 600;
             color: var(--text-muted);
             display: flex;
             justify-content: space-between;
-        }
-
-        .slider-node input {
-            width: 100%;
-            cursor: pointer;
-            accent-color: var(--accent-blue);
         }
 
         .analytics-strip {
@@ -387,7 +386,6 @@
     <div class="dashboard-container">
         <header class="app-header">
             <div class="header-left">
-                <!-- Dual image rendering lookups pointing directly to root workspace files -->
                 <img src="site-logo.png" alt="Logo" class="logo-img" onerror="this.style.display='none'; document.getElementById('fallback-hdr').style.display='block';">
                 <div id="fallback-hdr" class="fallback-logo" style="display:none;">Site Logo</div>
                 <div class="title-block">
@@ -446,7 +444,6 @@
         <section class="operations-panel">
             <div class="console-tabs">
                 <button class="console-tab-item active" onclick="toggleView(event, 'practice-deck')">
-                    <!-- Configured tab icon looking for your site-logo directly in root folder -->
                     <img src="site-logo.png" class="tab-logo-icon" onerror="this.style.display='none';">
                     Practice Reference Sheet
                 </button>
@@ -533,134 +530,60 @@
         const maxBlips = 7;
         let sweepAngle = 0;
         let understandingLevel = 2;
-const apdCodes = [
-    { 
-        id: "Signal 35C", 
-        type: "Signal", 
-        desc: "Carjacking (In progress)", 
-        layman: "Active vehicular theft by threat of force", 
-        sentence: "Zone 1 units roll Code 3 to an active tracking Signal 35C line." 
-    },
-    { 
-        id: "Signal 37", 
-        type: "Signal", 
-        desc: "Illegal Parking", 
-        layman: "Vehicle blocking thoroughfares unlawfully", 
-        sentence: "Write a parking enforcement card for the Signal 37 left on the curb." 
-    },
-    { 
-        id: "Signal 38", 
-        type: "Signal", 
-        desc: "Illegal Drugs/Alcohol", 
-        layman: "Unlawful narcotics or alcohol substances reported", 
-        sentence: "Found contraband inside the trunk, logging a clear Signal 38 block." 
-    },
-    { 
-        id: "Signal 39", 
-        type: "Signal", 
-        desc: "Information to Officer", 
-        layman: "Updates or dispatch details sent to sector cars", 
-        sentence: "Standby for incoming tracking updates via a Signal 39 dispatch data node." 
-    },
-    { 
-        id: "Signal 40", 
-        type: "Signal", 
-        desc: "Animal Call", 
-        layman: "Dangerous or stray animals roaming the area", 
-        sentence: "Stray vicious guard breed blocking sidewalk access routes, call a Signal 40." 
-    },
-    { 
-        id: "Signal 41I", 
-        type: "Signal", 
-        desc: "Auto Accident/Injuries", 
-        layman: "Car crash where passengers are confirmed hurt", 
-        sentence: "Two cars collided with active driver injuries, route a Signal 41I." 
-    },
-    { 
-        id: "Signal 41IT", 
-        type: "Signal", 
-        desc: "Auto Accident/Trapped", 
-        layman: "Car crash where passengers cannot break free from wreckage", 
-        sentence: "Extrication machinery required on the roadway to clear a severe Signal 41IT." 
-    },
-    { 
-        id: "Signal 41F", 
-        type: "Signal", 
-        desc: "Auto Accident/Fire", 
-        layman: "Car crash that has ignited into active structural flames", 
-        sentence: "Impact split fuel infrastructure, engine area on fire, dispatch a Signal 41F." 
-    },
-    { 
-        id: "Signal 41P", 
-        type: "Signal", 
-        desc: "Auto Accident/Police", 
-        layman: "Precinct patrol vehicle involved in an auto crash", 
-        sentence: "A precinct patrol car was clipped at an intersection, note a Signal 41P." 
-    },
-    { 
-        id: "Signal 42B", 
-        type: "Signal", 
-        desc: "Commercial Burglary", 
-        layman: "Past break-in reported at a business storefront", 
-        sentence: "Past occurred safe break at a pharmacy vault, dispatch for a Signal 42B report." 
-    },
-    { 
-        id: "Signal 42R", 
-        type: "Signal", 
-        desc: "Residential Burglary", 
-        layman: "Past break-in reported at a private residence home", 
-        sentence: "Homeowners returned to find electronic packages missing, file a Signal 42R." 
-    },
-    { 
-        id: "Signal 43", 
-        type: "Signal", 
-        desc: "Hit and Run", 
-        layman: "Driver leaves the scene of a vehicle crash without stopping", 
-        sentence: "Fleeing vehicle left front bumper on scene, tracking a Signal 43 asset." 
-    },
-    { 
-        id: "Signal 44B", 
-        type: "Signal", 
-        desc: "Business Robbery", 
-        layman: "Past robbery accomplished by force at a store location", 
-        sentence: "Past robbery occurred at a check cashing counter, log a Signal 44B." 
-    },
-    { 
-        id: "Signal 44P", 
-        type: "Signal", 
-        desc: "Pedestrian Robbery", 
-        layman: "Past strongarm mugging of a walker on public pathways", 
-        sentence: "Victim approached on a transit path, wallet taken, register a Signal 44P." 
-    }
-];
-        function runRadarLoop(timestamp) {
-            sweepAngle = (sweepAngle + 0.025) % (Math.PI * 2);
-            ctx.fillStyle = '#060913';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
+        const apdCodes = [
+            { id: "Signal 35C", type: "Signal", desc: "Carjacking (In progress)", layman: "Active vehicular theft by threat of force", sentence: "Zone 1 units roll Code 3 to an active tracking Signal 35C line." },
+            { id: "Signal 37", type: "Signal", desc: "Illegal Parking", layman: "Vehicle blocking thoroughfares unlawfully", sentence: "Write a parking enforcement card for the Signal 37 left on the curb." },
+            { id: "Signal 38", type: "Signal", desc: "Illegal Drugs/Alcohol", layman: "Unlawful narcotics or alcohol substances reported", sentence: "Found contraband inside the trunk, logging a clear Signal 38 block." },
+            { id: "Signal 39", type: "Signal", desc: "Information to Officer", layman: "Updates or dispatch details sent to sector cars", sentence: "Standby for incoming tracking updates via a Signal 39 dispatch data node." },
+            { id: "Signal 40", type: "Signal", desc: "Animal Call", layman: "Dangerous or stray animals roaming the area", sentence: "Stray vicious guard breed blocking sidewalk access routes, call a Signal 40." },
+            { id: "Signal 41I", type: "Signal", desc: "Auto Accident/Injuries", layman: "Car crash where passengers are confirmed hurt", sentence: "Two cars collided with active driver injuries, route a Signal 41I." },
+            { id: "Signal 41IT", type: "Signal", desc: "Auto Accident/Trapped", layman: "Car crash where passengers cannot break free from wreckage", sentence: "Extrication machinery required on the roadway to clear a severe Signal 41IT." },
+            { id: "Signal 41F", type: "Signal", desc: "Auto Accident/Fire", layman: "Car crash that has ignited into active structural flames", sentence: "Impact split fuel infrastructure, engine area on fire, dispatch a Signal 41F." },
+            { id: "Signal 41P", type: "Signal", desc: "Auto Accident/Police", layman: "Precinct patrol vehicle involved in an auto crash", sentence: "A precinct patrol car was clipped at an intersection, note a Signal 41P." },
+            { id: "Signal 42B", type: "Signal", desc: "Commercial Burglary", layman: "Past break-in reported at a business storefront", sentence: "Past occurred safe break at a pharmacy vault, dispatch for a Signal 42B report." },
+            { id: "Signal 42R", type: "Signal", desc: "Residential Burglary", layman: "Past break-in reported at a private residence home", sentence: "Homeowners returned to find electronic packages missing, file a Signal 42R." },
+            { id: "Signal 43", type: "Signal", desc: "Hit and Run", layman: "Driver leaves the scene of a vehicle crash without stopping", sentence: "Fleeing vehicle left front bumper on scene, tracking a Signal 43 asset." },
+            { id: "Signal 44B", type: "Signal", desc: "Business Robbery", layman: "Past robbery accomplished by force at a store location", sentence: "Past robbery occurred at a check cashing counter, log a guided Signal 44B." },
+            { id: "Signal 44P", type: "Signal", desc: "Pedestrian Robbery", layman: "Past strongarm mugging of a walker on public pathways", sentence: "Victim approached on a transit path, wallet taken, register a Signal 44P." },
+            { id: "Signal 44R", type: "Signal", desc: "Residential Robbery", sentence: "Armed suspect entered garage area to take belongings, report a Signal 44R.", layman: "Past armed robbery committed inside a citizen's home coordinates" },
+            { id: "Signal 44C", type: "Signal", desc: "Carjacking", sentence: "Past occurred vehicle theft accomplished by dynamic threat, log a Signal 44C.", layman: "Past vehicle robbery completed through active weapons threats" },
+            { id: "Signal 45", type: "Signal", desc: "Larceny", sentence: "Shoplifter walked past register banks without clearing payments, a Signal 45.", layman: "Theft of physical goods without breaking into a structure" },
+            { id: "Signal 46", type: "Signal", desc: "Ped. Struck by Auto", sentence: "Pedestrian stepped into path of a vehicle, rolling medics to a Signal 46.", layman: "A person walking down the road was run over by a moving car" },
+            { id: "Signal 47", type: "Signal", desc: "Person Injured", sentence: "Industrial construction equipment error led to a bad fall, log a Signal 47.", layman: "A citizen is physically injured from an accident on assignment" },
+            { id: "Signal 48", type: "Signal", desc: "Person Dead", sentence: "Precinct coroner and detectives called out to confirm a Signal 48 case.", layman: "Deceased subject located on scene requiring investigations team processing" },
+            { id: "Signal 49", type: "Signal", desc: "Rape", sentence: "Specialized investigators take over primary processing on a Signal 49.", layman: "Sexual assault incident report handled by dedicated special crimes teams" },
+            { id: "Signal 50", type: "Signal", desc: "Person Shot", sentence: "Trauma assets requested immediate flight path cleared for a Signal 50.", layman: "A victim has been struck by active gunfire rounds on scene" },
+            { id: "Signal 51", type: "Signal", desc: "Person Stabbed", sentence: "Altercation led to severe puncture lacerations, mark a Signal 51 dispatch.", layman: "A victim has been wounded by a knife puncture edge on assignment" },
+            { id: "Signal 52", type: "Signal", desc: "Found Property", sentence: "Unclaimed dynamic luggage left at terminal desks processed under Signal 52.", layman: "Lost belongings recovered and logged into police evidence lockers safely" },
+            { id: "Signal 53", type: "Signal", desc: "Suicide", sentence: "Crisis negotiations hand off to scene command blocks on a Signal 53.", layman: "Self-harm emergency call line handled by intervention lines" },
+            { id: "Signal 54", type: "Signal", desc: "Suspicious Person", sentence: "Individual wearing dark gear inspecting backyard tree lines, code as Signal 54.", layman: "An unknown person acting weirdly or out of place around a property" },
+            { id: "Signal 55", type: "Signal", desc: "911 Hang-up", sentence: "Emergency lines drop mid-transmission, sector cars verify a Signal 55 loop.", layman: "An emergency phone line cut off abruptly before info was checked" },
+            { id: "Signal 56", type: "Signal", desc: "Missing Person", sentence: "Juvenile has failed to return from school grounds, activate a Signal 56 file.", layman: "An individual has vanished and their whereabouts are unknown" },
+            { id: "Signal 57", type: "Signal", desc: "Noise Complaint", sentence: "Peachtree apartments report loud audio output past midnight, log a Signal 57.", layman: "Loud music or disruptive structural party noises past neighborhood limits" },
+            { id: "Signal 58", type: "Signal", desc: "Domestic Disturbance", sentence: "Intense argument heard between residents across shared partitions, a Signal 58.", layman: "Intense argument heard between residents across shared partitions" },
+            { id: "Signal 59", type: "Signal", desc: "Meet Officer", sentence: "Unit 301, make your way to the district station to Signal 59 with the Captain.", layman: "Instruction to physically meet up with an officer at a location" },
+            { id: "Signal 60", type: "Signal", desc: "Molesting woman/child", sentence: "Priority investigative protocols initiated following a dynamic Signal 60 alert.", layman: "Abuse patterns intercepted requiring immediate physical separations" },
+            { id: "Signal 60A", type: "Signal", desc: "Child Abuse", sentence: "Child services teams coordinate scene containment for a severe Signal 60A.", layman: "Physical child abuse reports tracked to a specific address point" },
+            { id: "Signal 61", type: "Signal", desc: "Non Police Help Call", sentence: "Public assistance request outside standard operational mandates, a Signal 61.", layman: "A general citizen help request that does not involve active criminal law breaks" },
+            { id: "Signal 62", type: "Signal", desc: "Switch Radio Channel", sentence: "Tactical teams command all sector tracking units to Signal 62 to Channel B.", layman: "Instruction for all sector radio terminals to change over to channel grids" },
+            { id: "Signal 63", type: "Signal", desc: "OFFICER NEEDS HELP", sentence: "Emergency tones activate! Signal 63 broadcasted near the zone boundary!", layman: "Absolute highest priority alert indicating an officer is in danger" },
+            { id: "Signal 64", type: "Signal", desc: "Person Soliciting Sex", sentence: "Plainclothes monitoring initiatives result in a localized Signal 64 sweep.", layman: "Illegal solicitation operations tracked by undercover street vice lines" },
+            { id: "Signal 65", type: "Signal", desc: "Gambling", sentence: "Unlawful card tracking operations busted at an empty business, Signal 65.", layman: "Illegal betting or casino ring operations running behind closed doors" },
+            { id: "Signal 66", type: "Signal", desc: "Peeping Tom", sentence: "Subject standing outside bedroom blinds caught on video, log a Signal 66.", layman: "An individual caught spying on citizens unlawfully through windows" },
+            { id: "Signal 67", type: "Signal", desc: "Hold Radio Traffic", sentence: "Emergency air protocol active, all standard stations hold for a Signal 67.", layman: "Radio silence order enforced on air for critical tactical alerts" },
+            { id: "Signal 68", type: "Signal", desc: "Person Screaming", sentence: "Neighbors report loud structural vocal duress calls, verify a Signal 68 line.", layman: "Loud screams of distress heard coming from an address frame area" },
+            { id: "Signal 69", type: "Signal", desc: "Person Armed", sentence: "Individual walking near train terminals carrying an unholstered rifle, Signal 69.", layman: "An individual walking around in public holding a visible weapon" },
+            { id: "Signal 70", type: "Signal", desc: "Prowler", sentence: "Footsteps heard along side driveway areas, monitor for an active Signal 70.", layman: "A trespasser creeping around the exterior walls of a private home at night" },
+            { id: "Signal 71", type: "Signal", desc: "Public Indecency", sentence: "Exhibitionist behavior tracking underway inside public parks, a Signal 71.", layman: "An individual exposes themselves indecently inside public view constraints" },
+            { id: "Signal 72", type: "Signal", desc: "Traffic Stop", sentence: "Unit 305 out on a Signal 72 with a red motorcycle missing tag items.", layman: "An officer pulling over a vehicle driver for a traffic law violation" },
+            { id: "Signal 72B", type: "Signal", desc: "Checkpoint", sentence: "Dynamic roadblock systems initialized for an evening security Signal 72B sweep.", layman: "A deliberate police roadblock setup to verify driver status items" },
+            { id: "Signal 72P", type: "Signal", desc: "Pursuit", sentence: "High speed flight tracking initiated on a felony car, signal a Signal 72P.", layman: "High speed chase of a fleeing vehicle happening on road systems" },
+            { id: "Signal 73", type: "Signal", desc: "Bomb Threat", sentence: "Threat protocols execute, clear the target building under Signal 73 codes.", layman: "A dangerous call threatening that an explosive package is inside a building" },
+            { id: "Signal 74", type: "Signal", desc: "Terrorist Incident", sentence: "Federal interface networks override sector frequencies for a Signal 74 event.", layman: "A severe international scale threat action overriding all local nets" },
+            { id: "Signal 75", type: "Signal", desc: "Air Rifle", sentence: "Complainant reports window damaged by a projectile projectile, log Signal 75.", layman: "Property damage caused by a pellet gun weapon line click" }
+        ];
 
-            ctx.strokeStyle = 'rgba(59, 130, 246, 0.15)';
-            ctx.lineWidth = 1;
-            for(let r = maxRadius / 4; r <= maxRadius; r += maxRadius / 4) {
-                ctx.beginPath();
-                ctx.arc(cx, cy, r, 0, Math.PI * 2);
-                ctx.stroke();
-            }
-
-            ctx.beginPath();
-            ctx.moveTo(0, cy); ctx.lineTo(canvas.width, cy);
-            ctx.moveTo(cx, 0); ctx.lineTo(cx, canvas.height);
-            ctx.stroke();
-
-            let easyVal = parseFloat(document.getElementById('rate-easy').value) || 0;
-            let medVal = parseFloat(document.getElementById('rate-medium').value) || 0;
-            let hardVal = parseFloat(document.getElementById('rate-hard').value) || 0;
-            let offVal = parseFloat(document.getElementById('rate-officer').value) || 0;
-            let grandTotal = easyVal + medVal + hardVal + offVal;
-
-            if (grandTotal > 0 && Math.random() < 0.02 && activeBlips.length < maxBlips) {
-                generateProbabilisticTarget(easyVal, medVal, hardVal, offVal, grandTotal);
-            }
-
+        const masterDatabase = [...apdDatabase, ...apdCodes];
             activeBlips.forEach(blip => {
                 let angleToBlip = Math.atan2(blip.y - cy, blip.x - cx);
                 if (angleToBlip < 0) angleToBlip += Math.PI * 2;
@@ -710,20 +633,14 @@ const apdCodes = [
             window.requestAnimationFrame(runRadarLoop);
         }
 
-        function getTierColor(tier, opacity) {
-            if (tier === 'easy') return `rgba(34, 197, 94, ${opacity})`;
-            if (tier === 'medium') return `rgba(234, 179, 8, ${opacity})`;
-            if (tier === 'hard') return `rgba(220, 38, 38, ${opacity})`;
-            return `rgba(59, 130, 246, ${opacity})`;
-        }
-        function generateProbabilisticTarget(e, m, h, o, total) {
+        function generateProbabilisticTarget(total) {
             let targetRand = Math.random() * total;
             let chosenTier = 'officer';
             const tiers = ['easy', 'medium', 'hard', 'officer'];
             
-            if (targetRand <= e) chosenTier = 'easy';
-            else if (targetRand <= (e + m)) chosenTier = 'medium';
-            else if (targetRand <= (e + m + h)) chosenTier = 'hard';
+            if (targetRand <= radarConfig.easyRate) chosenTier = 'easy';
+            else if (targetRand <= (radarConfig.easyRate + radarConfig.mediumRate)) chosenTier = 'medium';
+            else if (targetRand <= (radarConfig.easyRate + radarConfig.mediumRate + radarConfig.hardRate)) chosenTier = 'hard';
 
             let angle = Math.random() * Math.PI * 2;
             let distance = (Math.random() * (maxRadius - 40)) + 30;
@@ -753,7 +670,6 @@ const apdCodes = [
                 if(!testModeActive) { startOfficerMarathon(); }
             }
         });
-
         function clearRadarTargets() { activeBlips = []; }
 
         function balanceProbabilities(changedTier) {
@@ -779,6 +695,12 @@ const apdCodes = [
                     document.getElementById(`val-${s}`).innerText = `${split}%`;
                 });
             }
+
+            // Flush configuration states safely into config mappings
+            radarConfig.easyRate = parseFloat(document.getElementById('rate-easy').value) || 0;
+            radarConfig.mediumRate = parseFloat(document.getElementById('rate-medium').value) || 0;
+            radarConfig.hardRate = parseFloat(document.getElementById('rate-hard').value) || 0;
+            radarConfig.officerRate = parseFloat(document.getElementById('rate-officer').value) || 0;
         }
 
         function toggleSettingsModal(open) {
@@ -810,6 +732,7 @@ const apdCodes = [
             document.getElementById('stat-accuracy').innerText = "100%";
             renderMarathonQuestion();
         }
+
         function renderMarathonQuestion() {
             document.getElementById('forward-btn').style.display = 'none';
             if (marathonPointer >= officerMarathonQuestions.length) {
@@ -823,7 +746,6 @@ const apdCodes = [
             if(understandingLevel === 1 && currentCard.layman) {
                 questionHeading = `Question ${marathonPointer + 1} of 20 [Translated Breakdown]: ${currentCard.layman}`;
             }
-            
             document.getElementById('prompt-textbox').innerText = questionHeading;
             let targetBox = document.getElementById('options-stack');
             targetBox.innerHTML = "";
