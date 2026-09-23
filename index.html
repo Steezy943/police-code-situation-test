@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atlanta Police Department Knowledge Test</title>
+    <style>
+        :root {
+            --primary: #0A2342;
+            --secondary: #1D3557;
+            --accent: #E63946;
+            --light: #F8F9FA;
+            --dark: #212529;
+            --gray: #E9ECEF;
+            --success: #2A9D8F;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-container img {
+            height: 60px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .logo-fallback {
+            background: white;
+            color: var(--primary);
+            padding: 0.5rem 1rem;
+            font-weight: bold;
+            border-radius: 4px;
+            border: 2px solid #fff;
+        }
+
+        main {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .menu-card {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            color: #6c757d;
+            margin-bottom: 2rem;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn:hover {
+            background-color: var(--secondary);
+        }
+
+        .btn-accent {
+            background-color: var(--accent);
+        }
+
+        .btn-accent:hover {
+            background-color: #c92a36;
+        }
+
+        .view-section {
+            display: none;
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .view-section.active {
+            display: block;
+        }
+
+        .tabs {
+            display: flex;
+            border-bottom: 2px solid var(--gray);
+            margin-bottom: 1.5rem;
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            color: #6c757d;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -2px;
+        }
+
+        .tab-btn.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .code-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1rem;
+        }
+
+        .code-item {
+            background: var(--light);
+            padding: 1rem;
+            border-radius: 6px;
+            border-left: 4px solid var(--primary);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .code-num {
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .code-desc {
+            text-align: right;
+            font-size: 0.95rem;
+        }
+
+        .quiz-container {
+            margin-top: 1rem;
+        }
+
+        .quiz-card {
+            background: var(--light);
+            padding: 1.5rem;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+        }
+
+        .options-list {
+            list-style: none;
+            margin-top: 1rem;
+        }
+
+        .option-item {
+            background: white;
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.5rem;
+            border: 1px solid var(--gray);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .option-item:hover {
+            border-color: var(--primary);
+            background: #f0f4f8;
+        }
+
+        .option-item.correct {
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+            color: #155724;
+        }
+
+        .option-item.wrong {
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-container">
+            <img src="site-logo.png" alt="Site Logo" onerror="this.style.display='none'; document.getElementById('fallback').style.display='block';">
+            <div id="fallback" class="logo-fallback" style="display:none;">Site Logo</div>
+            <h2>APD Study Portal</h2>
+        </div>
+    </header>
+    <main>
+        <section class="menu-card">
+            <h1>Atlanta Police Department Codes</h1>
+            <p class="subtitle">Select a mode below to study or test your knowledge on APD 10-Codes, Signals, and Response Types.</p>
+            <div class="button-group">
+                <button class="btn" onclick="switchView('practice-sheet')">Open Practice Sheet</button>
+                <button class="btn btn-accent" onclick="switchView('test-mode')">Start Knowledge Test</button>
+            </div>
+        </section>
+
+        <section id="practice-sheet" class="view-section">
+            <h2>APD Quick Reference Practice Sheet</h2>
+            <p class="subtitle">Switch tabs below to review Atlanta specific police configurations.</p>
+            
+            <div class="tabs">
+                <button class="tab-btn active" onclick="switchTab(event, 'signals')">APD Signals</button>
+                <button class="tab-btn" onclick="switchTab(event, 'responses')">Response Codes</button>
+                <button class="tab-btn" onclick="switchTab(event, 'codes')">Common 10-Codes</button>
+            </div>
+
+            <div id="signals" class="tab-content active">
+                <div class="code-grid">
+                    <div class="code-item"><span class="code-num">Signal 7</span><span class="code-desc">Criminal Trespass</span></div>
+                    <div class="code-item"><span class="code-num">Signal 25</span><span class="code-desc">Shots Fired</span></div>
+                    <div class="code-item"><span class="code-num">Signal 29</span><span class="code-desc">Fight in Progress</span></div>
+                    <div class="code-item"><span class="code-num">Signal 33</span><span class="code-desc">Stolen Vehicle</span></div>
+                    <div class="code-item"><span class="code-num">Signal 42R</span><span class="code-desc">Residential Burglary</span></div>
+                    <div class="code-item"><span class="code-num">Signal 45</span><span class="code-desc">Larceny</span></div>
+                    <div class="code-item"><span class="code-num">Signal 58</span><span class="code-desc">Domestic Disturbance</span></div>
+                    <div class="code-item"><span class="code-num">Signal 66</span><span class="code-desc">Suspicious Person</span></div>
+                </div>
+            </div>
+
+            <div id="responses" class="tab-content">
+                <div class="code-grid">
+                    <div class="code-item"><span class="code-num">Code 1</span><span class="code-desc">Routine / Non-Emergency</span></div>
+                    <div class="code-item"><span class="code-num">Code 2</span><span class="code-desc">Urgent (No Lights/Siren)</span></div>
+                    <div class="code-item"><span class="code-num">Code 3</span><span class="code-desc">Emergency (Lights & Siren)</span></div>
+                    <div class="code-item"><span class="code-num">Code 4</span><span class="code-desc">Under Control / No Further Help Needed</span></div>
+                </div>
+            </div>
+
+            <div id="codes" class="tab-content">
+                <div class="code-grid">
+                    <div class="code-item"><span class="code-num">10-4</span><span class="code-desc">Acknowledgment (OK)</span></div>
+                    <div class="code-item"><span class="code-num">10-12</span><span class="code-desc">Officials / Visitors Present</span></div>
+                    <div class="code-item"><span class="code-num">10-20</span><span class="code-desc">Location</span></div>
+                    <div class="code-item"><span class="code-num">10-23</span><span class="code-desc">Arrived at Scene</span></div>
+                    <div class="code-item"><span class="code-num">10-50</span><span class="code-desc">Vehicle Accident</span></div>
+                    <div class="code-item"><span class="code-num">10-97</span><span class="code-desc">Arrived at Assignment</span></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="test-mode" class="view-section">
+            <h2>APD Knowledge Test</h2>
+            <p class="subtitle">Read the scenario carefully and select the corresponding response or signal identifier.</p>
+            <div class="quiz-container">
+                <div class="quiz-card">
+                    <h3 id="question-text">Loading situation analysis data...</h3>
+                    <ul class="options-list" id="options-box"></ul>
+                </div>
+                <button class="btn" id="next-btn" style="display:none;" onclick="loadQuestion()">Next Scenario</button>
+            </div>
+        </section>
+    </main>
+    <script>
+        const questions = [
+            { q: "Dispatch reports an active brawl outside a bar on Peachtree St. What event designation applies?", a: ["Signal 29 (Fight)", "Signal 7", "Signal 58", "Signal 25"], c: 0 },
+            { q: "You receive an assignment requiring immediate emergency travel parameters using full emergency assets (Lights & Sirens). What is the protocol?", a: ["Code 1", "Code 2", "Code 3", "Code 4"], c: 2 },
+            { q: "An alarm sounds at a private home in Zone 5 indicating an intrusive breach. What signal profile tracks this incident?", a: ["Signal 45", "Signal 42R (Residential Burglary)", "Signal 33", "Signal 66"], c: 1 },
+            { q: "A domestic dispute escalates to an active structural disturbance call. Dispatch tags this profile as:", a: ["Signal 58 (Domestic Disturbance)", "Signal 7", "Signal 29", "10-50"], c: 0 },
+            { q: "You arrive directly inside your assigned patrol coordinates. Which standard communication string indicates arrival?", a: ["10-4", "10-20", "10-97 (Arrived at Assignment)", "10-12"], c: 2 }
+        ];
+
+        let currentQ = 0;
+
+        function switchView(viewId) {
+            document.querySelectorAll('.view-section').forEach(view => view.classList.remove('active'));
+            document.getElementById(viewId).classList.add('active');
+            document.getElementById(viewId).scrollIntoView({ behavior: 'smooth' });
+            if(viewId === 'test-mode') { currentQ = 0; loadQuestion(); }
+        }
+
+        function switchTab(event, tabId) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        function loadQuestion() {
+            document.getElementById('next-btn').style.display = 'none';
+            if(currentQ >= questions.length) {
+                document.getElementById('question-text').innerText = "Testing completed! Refresh or re-enter to restart.";
+                document.getElementById('options-box').innerHTML = "";
+                return;
+            }
+            let data = questions[currentQ];
+            document.getElementById('question-text').innerText = `Scenario ${currentQ + 1}: ${data.q}`;
+            let box = document.getElementById('options-box');
+            box.innerHTML = "";
+            data.a.forEach((opt, idx) => {
+                let li = document.createElement('li');
+                li.className = "option-item";
+                li.innerText = opt;
+                li.onclick = () => checkAnswer(li, idx, data.c);
+                box.appendChild(li);
+            });
+        }
+
+        function checkAnswer(el, selected, correct) {
+            let items = document.querySelectorAll('.option-item');
+            items.forEach(item => item.onclick = null); 
+            if(selected === correct) {
+                el.classList.add('correct');
+            } else {
+                el.classList.add('wrong');
+                items[correct].classList.add('correct');
+            }
+            currentQ++;
+            document.getElementById('next-btn').style.display = 'inline-block';
+        }
+    </script>
+</body>
+</html>
