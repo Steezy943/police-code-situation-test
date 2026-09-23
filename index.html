@@ -380,6 +380,66 @@
             </div>
         </section>
     </div>
+    <script>
+        // Full Atlanta Police Department Database Map Structure
+        const apdDatabase = [
+            { id: "Signal 1", type: "Signal", desc: "Abandoned Auto", sentence: "Zone 1, we have a Signal 1 blocking the dynamic lane on North Avenue." },
+            { id: "Signal 2A", type: "Signal", desc: "Audible Alarm", sentence: "Dispatch to Sector 2, handle a Signal 2A hitting at the local bank storefront." },
+            { id: "Signal 2S", type: "Signal", desc: "Silent Alarm", sentence: "Units clear the frequency, a Signal 2S tripped at the commercial registry." },
+            { id: "Signal 6R", type: "Signal", desc: "Burglary (Residence)", sentence: "En route to a Signal 6R on Cascade Road, backdoor forced open." },
+            { id: "Signal 6B", type: "Signal", desc: "Burglary (Business)", sentence: "Respond to a Signal 6B at the convenience depot on Piedmont." },
+            { id: "Signal 7", type: "Signal", desc: "Criminal Trespass", sentence: "Property owner wants an individual removed for a verified Signal 7." },
+            { id: "Signal 15", type: "Signal", desc: "Welfare Check", sentence: "Check the area of Peachtree St for a welfare safety Signal 15 check." },
+            { id: "Signal 21", type: "Signal", desc: "Kidnapping", sentence: "All units stand by for critical amber tracking info on a Signal 21 call." },
+            { id: "Signal 25", type: "Signal", desc: "Shots Fired", sentence: "Complainant reports multiple rounds heard, register a Signal 25 near the park." },
+            { id: "Signal 27", type: "Signal", desc: "Intoxicated Driver", sentence: "Be on the lookout for a chaotic vehicle driving pattern, suspected Signal 27." },
+            { id: "Signal 29", type: "Signal", desc: "Fight in Progress", sentence: "Units step up your response, a large Signal 29 reported in the parking structure." },
+            { id: "Signal 33", type: "Signal", desc: "Structure Fire", sentence: "Assisting Atlanta Fire Department rescue teams with a Signal 33 incident." },
+            { id: "Signal 36B", type: "Signal", desc: "Robbery (In-Progress Business)", sentence: "Code 3 units respond to a Signal 36B at the retail junction." },
+            { id: "Signal 41I", type: "Signal", desc: "Auto Accident-Injuries", sentence: "Dispatched to a 10-50 vehicle collision confirmed as a Signal 41I." },
+            { id: "Signal 42R", type: "Signal", desc: "Residential Burglary", sentence: "Perimeter units established on a Signal 42R sweep inside Zone 6." },
+            { id: "Signal 43", type: "Signal", desc: "Hit and Run", sentence: "Looking for a fleeing black sedan following a severe Signal 43 accident." },
+            { id: "Signal 44B", type: "Signal", desc: "Business Robbery", sentence: "Investigating a past-occurred Signal 44B at the fuel terminal." },
+            { id: "Signal 45", type: "Signal", desc: "Larceny / Theft", sentence: "Shoplifter detained on scene, we have a minor Signal 45 incident handled." },
+            { id: "Signal 48", type: "Signal", desc: "Person Dead", sentence: "Supervisor requested on scene to confirm coordinates for a Signal 48 tracking call." },
+            { id: "Signal 50", type: "Signal", desc: "Person Shot", sentence: "Emergency units rolling Code 3 to an active Signal 50 trauma notification." },
+            { id: "Signal 51", type: "Signal", desc: "Person Stabbed", sentence: "Medics cleared to enter for a confirmed Signal 51 wound victim." },
+            { id: "Signal 54", type: "Signal", desc: "Suspicious Person", sentence: "Caller states an unknown individual is checking door handles, clear a Signal 54." },
+            { id: "Signal 58", type: "Signal", desc: "Domestic Disturbance", sentence: "Dispatched verbal argument between family structures, logged as Signal 58." },
+            { id: "Signal 59", type: "Signal", desc: "Meet Officer", sentence: "Unit 301, make your way to the district station to Signal 59 with the Captain." },
+            { id: "Signal 63", type: "Signal", desc: "Officer Needs Help", sentence: "Signal 63! Tone alert on all local tactical monitoring configurations!" },
+            { id: "Signal 66", type: "Signal", desc: "Peeping Tom", sentence: "Suspicious suspect looking through glass panes, logged as a Signal 66." },
+            { id: "Signal 69", type: "Signal", desc: "Person Armed", sentence: "Be advised, individual matching the lookout is holding a weapon, Signal 69." },
+            { id: "Signal 72", type: "Signal", desc: "Traffic Stop", sentence: "Unit 402 out on a Signal 72 with a temporary vehicle registration tag." },
+            { id: "Signal 72P", type: "Signal", desc: "Vehicle Pursuit", sentence: "We are actively engaging in a Signal 72P moving northbound on the interstate." },
+            { id: "Code 1", type: "Response", desc: "Routine Response", sentence: "Handle that minor parking complaint as a standard Code 1 response configuration." },
+            { id: "Code 2", type: "Response", desc: "Urgent Response (No Siren)", sentence: "Proceed Code 2 to the dynamic property tracking assignment." },
+            { id: "Code 3", type: "Response", desc: "Critical Emergency (Lights/Siren)", sentence: "All units step up Code 3 to the location of the threat notification." },
+            { id: "Code 4", type: "Response", desc: "Scene Secure / Under Control", sentence: "The situation on Peachtree is Code 4, cancel all secondary units." },
+            { id: "10-4", type: "10-Code", desc: "Acknowledgment (OK)", sentence: "10-4 copy that transmission, changing my tracking zone pattern now." },
+            { id: "10-20", type: "10-Code", desc: "Current Location", sentence: "Dispatch, request your current 10-20 for a priority support assignment." },
+            { id: "10-97", type: "10-Code", desc: "Arrived at Assignment", sentence: "Unit 205 is 10-97 at the location, executing immediate foot patrol." }
+        ];
+
+        // Scenario Banks grouped by distinct technical difficulty tiers
+        const quizScenarios = {
+            easy: [
+                { question: "A property owner calls to report a vehicle parked on their private lot without authorization. What code applies?", options: ["Signal 7", "Signal 1", "Signal 45", "10-97"], matchIndex: 1, tag: "Signal 1" },
+                { question: "You are acknowledging a routine message from dispatch safely. What standard string applies?", options: ["10-20", "Code 3", "10-4", "Signal 59"], matchIndex: 2, tag: "10-4" }
+            ],
+            medium: [
+                { question: "An individual is spotted jumping over a fence into a storage lot after hours. What tracking metric fits?", options: ["Signal 7", "Signal 2A", "Signal 45", "Code 4"], matchIndex: 0, tag: "Signal 7" },
+                { question: "A retail department store reports a suspect has filled a bag with merchandise and run out the back exit.", options: ["Signal 6B", "Signal 45", "Signal 43", "Signal 21"], matchIndex: 1, tag: "Signal 45" }
+            ],
+            hard: [
+                { question: "Dispatch contacts you regarding a family verbal dispute turning physical inside a residence. What code applies?", options: ["Signal 29", "Signal 58", "Signal 6R", "10-4"], matchIndex: 1, tag: "Signal 58" },
+                { question: "Witnesses report hearing five consecutive discharge bursts near an alleyway. What signal profiles the incident?", options: ["Signal 50", "Signal 25", "Signal 69", "Signal 33"], matchIndex: 1, tag: "Signal 25" }
+            ],
+            officer: [
+                { question: "A perimeter unit initiates an emergency pursuit of an armed carjacking vehicle traveling northbound.", options: ["Signal 72P", "Signal 72", "Code 2", "Signal 36B"], matchIndex: 0, tag: "Signal 72P" },
+                { question: "An active distress transmission broadcast across the dispatch net calls for immediate aid to a cornered team.", options: ["Signal 29", "Signal 59", "Signal 63", "Code 3"], matchIndex: 2, tag: "Signal 63" }
+            ]
+        };
         let activeBlips = [];
         const maxBlips = 7;
         let sweepAngle = 0;
