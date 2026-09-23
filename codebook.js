@@ -1,4 +1,4 @@
-const apdDatabase = [
+window.masterDatabase = [
     { id: "Signal 1", type: "Signal", desc: "Abandon Auto", layman: "Car left empty on the side of the road or blocking lanes", sentence: "We have an unmonitored block on North Ave matching a Signal 1 log." },
     { id: "Signal 1R", type: "Signal", desc: "Recovered Auto", layman: "A stolen car that was found and recovered by police officers", sentence: "Direct units to check the back lot for a verified Signal 1R tracking record." },
     { id: "Signal 2S", type: "Signal", desc: "Silent Alarm", layman: "A silent security alarm tripped at a store without any noise", sentence: "Tripped monitoring relays at the jeweler storefront report a Signal 2S line." },
@@ -13,11 +13,10 @@ const apdDatabase = [
     { id: "Signal 16", type: "Signal", desc: "Emergency Message", layman: "A critical emergency message delivered directly to working sector units", sentence: "Standby for a high-priority Signal 16 broadcast direct from Command." },
     { id: "Signal 17", type: "Signal", desc: "Lockout", layman: "Keys locked inside a running vehicle or home causing immediate safety issues", sentence: "Vehicle running with minor child inside, units assist on a priority Signal 17." },
     { id: "Signal 18", type: "Signal", desc: "Tree Down", layman: "A fallen tree trunk blocking a public street partition or sidewalk path", sentence: "Peachtree road blocked completely by power lines and a Signal 18 incident." },
-    { id: "Signal 19", type: "Signal", desc: "Water Problem", layman: "A broken city water pipe line flooding properties or public streets", sentence: "Main valve rupture causing structural shifts, tag as an absolute Signal 19." }
-];
-    { id: "Signal 20A", type: "Signal", desc: "Cont. Disease-HIV", layman: "Warning flag to use high caution due to dynamic fluid infectious disease profile", sentence: "Medical dispatch updates unit parameters to observe Signal 20A guidelines." },
-    { id: "Signal 20H", type: "Signal", desc: "Cont. Disease-Hep", layman: "Warning flag indicating hepatitis exposure risk parameters on scene", sentence: "Exercise contact clean mechanics under specialized Signal 20H conditions." },
-    { id: "Signal 20T", type: "Signal", desc: "Cont. Disease-TB", layman: "Warning flag indicating airborne tuberculosis bacteria safety risk on assignment", sentence: "Airborn containment protection systems verified for a known Signal 20T." },
+    { id: "Signal 19", type: "Signal", desc: "Water Problem", layman: "A broken city water pipe line flooding properties or public streets", sentence: "Main valve rupture causing structural shifts, tag as an absolute Signal 19." },
+    { id: "Signal 20A", type: "Signal", desc: "Cont. Disease-HIV", layman: "Caution flag due to fluid infectious disease profile", sentence: "Medical dispatch updates unit parameters to observe Signal 20A guidelines." },
+    { id: "Signal 20H", type: "Signal", desc: "Cont. Disease-Hep", layman: "Hepatitis exposure risk parameters active on scene", sentence: "Exercise contact clean mechanics under specialized Signal 20H conditions." },
+    { id: "Signal 20T", type: "Signal", desc: "Cont. Disease-TB", layman: "Airborne tuberculosis bacteria safety risk active", sentence: "Airborn containment protection systems verified for a known Signal 20T." },
     { id: "Signal 21", type: "Signal", desc: "Kidnapping", layman: "Abducting a citizen by physical force against their legal rights", sentence: "Initiate interstate roadblocks immediately to isolate a suspect Signal 21 vehicle." },
     { id: "Signal 22", type: "Signal", desc: "Against Dept. Policy", layman: "An action that strictly breaks official police department employee guidelines", sentence: "Actions monitored on channel 2 are flagged under standard Signal 22 review." },
     { id: "Signal 23", type: "Signal", desc: "Disorderly Children", layman: "A rowdy group of kids or juveniles causing disruptions in public spaces", sentence: "Large juvenile group causing business terminal disruption, clear a Signal 23." },
@@ -25,14 +24,13 @@ const apdDatabase = [
     { id: "Signal 25", type: "Signal", desc: "Shots Fired", layman: "Gunfire bursts heard or reported inside a target coordinate area", sentence: "Ballistic acoustic locators detect three discharges, dispatch a Signal 25." },
     { id: "Signal 26", type: "Signal", desc: "Fireworks", layman: "Exploding holiday fireworks creating loud noises in the sky area", sentence: "Holiday celebration crowds causing localized sound reports, verified Signal 26." },
     { id: "Signal 27", type: "Signal", desc: "Intoxicated Driver", layman: "A drunk driver swerving all over the road lanes dangerously", sentence: "Vehicle swerving aggressively across highway partitions, call a Signal 27." },
-    { id: "Signal 28", type: "Signal", desc: "Intoxicated Person", layman: "A heavily drunk person causing public problems or unable to walk safely", sentence: "Unresponsive citizen resting on public stairs, handle under a routine Signal 28." },
-    { id: "Signal 29", type: "Signal", desc: "Fight in Progress", layman: "People actively trading punches or beating each other up right now", sentence: "Active physical combat involving multiple subjects, roll units Code 3 for a Signal 29." },
+    { id: "Signal 28", type: "Signal", desc: "Intoxicated Person", layman: "A heavily drunk person causing public problems or unable to walk safely", sentence: "Unresponsive citizen resting on public stairs, handle under a routine Signal 28." }
+];
+window.masterDatabase.push(
+    { id: "Signal 29", type: "Signal", desc: "Fight in Progress", layman: "People actively fighting each other right now", sentence: "Active physical combat involving multiple subjects, roll units Code 3 for a Signal 29." },
     { id: "Signal 30", type: "Signal", desc: "Explosion (any type)", layman: "A powerful structural explosion blast that shattered nearby glass windows", sentence: "Structural failure reports matching a violent shockwave, clear a Signal 30." },
     { id: "Signal 31", type: "Signal", desc: "Wire Down/Electrical Short", layman: "A broken power line sparking on the ground or sidewalk trail", sentence: "Live components throwing active arcs onto sidewalks, mark a Signal 31." },
-    { id: "Signal 32", type: "Signal", desc: "Open door/window", layman: "An unlocked commercial door or open building window found at night", sentence: "Night patrol finds a commercial entry unlatched after hours, log a Signal 32." }
-];
-
-const apdCodes = [
+    { id: "Signal 32", type: "Signal", desc: "Open door/window", layman: "An unlocked commercial door or open building window found at night", sentence: "Night patrol finds a commercial entry unlatched after hours, log a Signal 32." },
     { id: "Signal 33", type: "Signal", desc: "Structure Fire", layman: "An entire building or physical house structural facility caught on fire", sentence: "Engaging secondary defensive barriers alongside fire teams on a Signal 33." },
     { id: "Signal 34", type: "Signal", desc: "Vehicle Fire", layman: "A vehicle engine bay completely on fire blocking roadway lanes", sentence: "Engine block fully engulfed on the expressway shoulder, dispatch a Signal 34." },
     { id: "Signal 35", type: "Signal", desc: "Wood/grass Fire", layman: "Wild grass brush fire burning open territory areas uncontrollably", sentence: "Brush fire threatening perimeter fences along transit paths, mark as a Signal 35." },
@@ -47,121 +45,14 @@ const apdCodes = [
     { id: "Signal 41I", type: "Signal", desc: "Auto Accident/Injuries", layman: "Car crash where passengers are confirmed hurt", sentence: "Two cars collided with active driver injuries, route a Signal 41I." },
     { id: "Signal 41IT", type: "Signal", desc: "Auto Accident/Trapped", layman: "Car crash where passengers cannot break free from wreckage", sentence: "Extrication machinery required on the roadway to clear a severe Signal 41IT." },
     { id: "Signal 41F", type: "Signal", desc: "Auto Accident/Fire", layman: "Car crash that has ignited into active structural flames", sentence: "Impact split fuel infrastructure, engine area on fire, dispatch a Signal 41F." },
-    { id: "Signal 41P", type: "Signal", desc: "Auto Accident/Police", layman: "Precinct patrol vehicle involved in an auto crash", sentence: "A precinct patrol car was clipped at an intersection, note a Signal 41P." }
-];
-const apdExtendedCodes = [
+    { id: "Signal 41P", type: "Signal", desc: "Auto Accident/Police", layman: "Precinct patrol vehicle involved in an auto crash", sentence: "A precinct patrol car was clipped at an intersection, note a Signal 41P." },
     { id: "Signal 42B", type: "Signal", desc: "Commercial Burglary", layman: "Past break-in reported at a business storefront", sentence: "Past occurred safe break at a pharmacy vault, dispatch for a Signal 42B report." },
     { id: "Signal 42R", type: "Signal", desc: "Residential Burglary", layman: "Past break-in reported at a private residence home", sentence: "Homeowners returned to find electronic packages missing, file a Signal 42R." },
     { id: "Signal 43", type: "Signal", desc: "Hit and Run", layman: "Driver leaves the scene of a vehicle crash without stopping", sentence: "Fleeing vehicle left front bumper on scene, tracking a Signal 43 asset." },
     { id: "Signal 44B", type: "Signal", desc: "Business Robbery", layman: "Past robbery accomplished by force at a store location", sentence: "Past robbery occurred at a check cashing counter, log a guided Signal 44B." },
     { id: "Signal 44P", type: "Signal", desc: "Pedestrian Robbery", layman: "Past strongarm mugging of a walker on public pathways", sentence: "Victim approached on a transit path, wallet taken, register a Signal 44P." },
-    { id: "Signal 44R", type: "Signal", desc: "Residential Robbery", layman: "Past armed robbery committed inside a citizen's home coordinates", sentence: "Armed suspect entered garage area to take belongings, report a Signal 44R." },
-    { id: "Signal 44C", type: "Signal", desc: "Carjacking", layman: "Past vehicle robbery completed through active weapons threats", sentence: "Past occurred vehicle theft accomplished by dynamic threat, log a Signal 44C." },
-    { id: "Signal 45", type: "Signal", desc: "Larceny", layman: "Theft of physical goods without breaking into a structure", sentence: "Shoplifter walked past register banks without clearing payments, a Signal 45." },
-    { id: "Signal 46", type: "Signal", desc: "Ped. Struck by Auto", layman: "A person walking down the road was run over by a moving car", sentence: "Pedestrian stepped into path of a vehicle, rolling medics to a Signal 46." },
-    { id: "Signal 47", type: "Signal", desc: "Person Injured", layman: "A citizen is physically injured from an accident on assignment", sentence: "Industrial construction equipment error led to a bad fall, log a Signal 47." },
-    { id: "Signal 48", type: "Signal", desc: "Person Dead", layman: "Deceased subject located on scene requiring investigations team processing", sentence: "Precinct coroner and detectives called out to confirm a Signal 48 case." },
-    { id: "Signal 49", type: "Signal", desc: "Rape", layman: "Sexual assault incident report handled by dedicated special crimes teams", sentence: "Specialized investigators take over primary processing on a Signal 49." },
-    { id: "Signal 50", type: "Signal", desc: "Person Shot", layman: "A victim has been struck by active gunfire rounds on scene", sentence: "Trauma assets requested immediate flight path cleared for a Signal 50." },
-    { id: "Signal 51", type: "Signal", desc: "Person Stabbed", layman: "A victim has been wounded by a knife puncture edge on assignment", sentence: "Altercation led to severe puncture lacerations, mark a Signal 51 dispatch." },
-    { id: "Signal 52", type: "Signal", desc: "Found Property", layman: "Lost belongings recovered and logged into police evidence lockers safely", sentence: "Unclaimed dynamic luggage left at terminal desks processed under Signal 52." }
-];
-const apdSignalsFinal = [
-    { id: "Signal 53", type: "Signal", desc: "Suicide", layman: "Self-harm emergency call line handled by intervention lines", sentence: "Crisis negotiations hand off to scene command blocks on a Signal 53." },
-    { id: "Signal 54", type: "Signal", desc: "Suspicious Person", layman: "An unknown person acting weirdly or out of place around a property", sentence: "Individual wearing dark gear inspecting backyard tree lines, code as Signal 54." },
-    { id: "Signal 55", type: "Signal", desc: "911 Hang-up", layman: "An emergency phone line cut off abruptly before info was checked", sentence: "Emergency lines drop mid-transmission, sector cars verify a Signal 55 loop." },
-    { id: "Signal 56", type: "Signal", desc: "Missing Person", layman: "An individual has vanished and their whereabouts are unknown", sentence: "Juvenile has failed to return from school grounds, activate a Signal 56 file." },
-    { id: "Signal 57", type: "Signal", desc: "Noise Complaint", layman: "Loud music or disruptive structural party noises past neighborhood limits", sentence: "Peachtree apartments report loud audio output past midnight, log a Signal 57." },
-    { id: "Signal 58", type: "Signal", desc: "Domestic Disturbance", layman: "Intense argument heard between residents across shared partitions", sentence: "Intense argument heard between residents across shared partitions, a Signal 58." },
-    { id: "Signal 59", type: "Signal", desc: "Meet Officer", layman: "Instruction to physically meet up with an officer at a location", sentence: "Unit 301, make your way to the district station to Signal 59 with the Captain." },
-    { id: "Signal 60", type: "Signal", desc: "Molesting woman/child", layman: "Abuse patterns intercepted requiring immediate physical separations", sentence: "Priority investigative protocols initiated following a dynamic Signal 60 alert." },
-    { id: "Signal 60A", type: "Signal", desc: "Child Abuse", layman: "Physical child abuse reports tracked to a specific address point", sentence: "Child services teams coordinate scene containment for a severe Signal 60A." },
-    { id: "Signal 61", type: "Signal", desc: "Non Police Help Call", layman: "A general citizen help request that does not involve active criminal law breaks", sentence: "Public assistance request outside standard operational mandates, a Signal 61." },
-    { id: "Signal 62", type: "Signal", desc: "Switch Radio Channel", layman: "Instruction for all sector radio terminals to change over to channel grids", sentence: "Tactical teams command all sector tracking units to Signal 62 to Channel B." },
-    { id: "Signal 63", type: "Signal", desc: "OFFICER NEEDS HELP", layman: "Absolute highest priority alert indicating an officer is in danger", sentence: "Emergency tones activate! Signal 63 broadcasted near the zone boundary!" },
-    { id: "Signal 64", type: "Signal", desc: "Person Soliciting Sex", layman: "Illegal solicitation operations tracked by undercover street vice lines", sentence: "Plainclothes monitoring initiatives result in a localized Signal 64 sweep." },
-    { id: "Signal 65", type: "Signal", desc: "Gambling", layman: "Illegal betting or casino ring operations running behind closed doors", sentence: "Unlawful card tracking operations busted at an empty business, Signal 65." },
-    { id: "Signal 66", type: "Signal", desc: "Peeping Tom", layman: "An individual caught spying on citizens unlawfully through windows", sentence: "Subject standing outside bedroom blinds caught on video, log a Signal 66." }
-];
-const apdSignalsTerminal = [
-    { id: "Signal 67", type: "Signal", desc: "Hold Radio Traffic", layman: "Radio silence order enforced on air for critical tactical alerts", sentence: "Emergency air protocol active, all standard stations hold for a Signal 67." },
-    { id: "Signal 68", type: "Signal", desc: "Person Screaming", layman: "Loud screams of distress heard coming from an address frame area", sentence: "Neighbors report loud structural vocal duress calls, verify a Signal 68 line." },
-    { id: "Signal 69", type: "Signal", desc: "Person Armed", layman: "An individual walking around in public holding a visible weapon", sentence: "Individual walking near train terminals carrying an unholstered rifle, Signal 69." },
-    { id: "Signal 70", type: "Signal", desc: "Prowler", layman: "A trespasser creeping around the exterior walls of a private home at night", sentence: "Footsteps heard along side driveway areas, monitor for an active Signal 70." },
-    { id: "Signal 71", type: "Signal", desc: "Public Indecency", layman: "An individual exposing themselves indecently inside public view constraints", sentence: "Exhibitionist behavior tracking underway inside public parks, a Signal 71." },
-    { id: "Signal 72", type: "Signal", desc: "Traffic Stop", layman: "An officer pulling over a vehicle driver for a traffic law violation", sentence: "Unit 305 out on a Signal 72 with a red motorcycle missing tag items." },
-    { id: "Signal 72B", type: "Signal", desc: "Checkpoint", layman: "A deliberate police roadblock setup to verify driver status items", sentence: "Dynamic roadblock systems initialized for an evening security Signal 72B sweep." },
-    { id: "Signal 72P", type: "Signal", desc: "Pursuit", layman: "High speed chase of a fleeing vehicle happening on road systems", sentence: "High speed flight tracking initiated on a felony car, signal a Signal 72P." },
-    { id: "Signal 73", type: "Signal", desc: "Bomb Threat", layman: "A dangerous call threatening that an explosive package is inside a building", sentence: "Threat protocols execute, clear the target building under Signal 73 codes." },
-    { id: "Signal 74", type: "Signal", desc: "Terrorist Incident", layman: "A severe international scale threat action overriding all local nets", sentence: "Federal interface networks override sector frequencies for a Signal 74 event." },
-    { id: "Signal 75", type: "Signal", desc: "Air Rifle", layman: "Property damage caused by a pellet gun weapon line click", sentence: "Complainant reports window damaged by a projectile projectile, log Signal 75." },
-    { id: "Signal 76", type: "Signal", desc: "Abandoned Children", layman: "Young kids left unsupervised inside a vacant structural building floor", sentence: "Juveniles found alone inside an empty apartment property, start a Signal 76." },
-    { id: "Signal 78", type: "Signal", desc: "Lookout", layman: "A formal description alert broadcasted to help units spot a suspect", sentence: "Copy that broadcast, updating dispatch lookup records for a Signal 78 match." },
-    { id: "Signal 79", type: "Signal", desc: "Stolen Vehicle - In Progress", layman: "An ongoing theft of an auto happening right now before lines clear", sentence: "LoJack tracking equipment marks an active moving Signal 79 vehicle target." },
-    { id: "Signal 80", type: "Signal", desc: "Gas Leak", layman: "A gas pipeline burst flooding a baseline room with fumes", sentence: "Pungent aromatic pressure signatures track back to a basement Signal 80 fault." }
-];
-const apdCodesFinal = [
-    { id: "Signal 81", type: "Signal", desc: "Street Hazard", layman: "Large pieces of trash or objects blocking lanes dangerously", sentence: "Debris scattered across middle highway boundaries creates a serious Signal 81." },
-    { id: "Signal 81W", type: "Signal", desc: "Weather Hazard", layman: "Severe local storm weather patterns making roads or pathways unsafe", sentence: "Flash floods making low bridges unsafe, activate localized Signal 81W notes." },
-    { id: "Signal 82", type: "Signal", desc: "Prisoner Transport", layman: "Moving an arrested suspect from the scene to jail in a transport vehicle", sentence: "Unit 102 transport unit moving two suspects under a secure Signal 82 card." },
-    { id: "Signal 83", type: "Signal", desc: "Escaped Person", layman: "An inmate or prisoner who has broken out of custody and fled", sentence: "Correctional facility breakout parameters alert area units for a Signal 83 search." },
-    { id: "Signal 84", type: "Signal", desc: "Aircraft Incident", layman: "An emergency involving a plane or helicopter crash landing", sentence: "Emergency runway systems track a private plane showing system failure, Signal 84." },
-    { id: "Signal 85", type: "Signal", desc: "Wrecker Request", layman: "Calling a tow truck to clear an undriveable vehicle away", sentence: "Immobilized vehicle requires mechanical lift removal, submit a Signal 85 format." },
-    { id: "Signal 86", type: "Signal", desc: "Vandalism", layman: "Property destruction like graffiti tags painted on infrastructure without permission", sentence: "Graffiti tagging crew caught painting brick infrastructure, file a Signal 86." },
-    { id: "Signal 87", type: "Signal", desc: "Person Trapped", layman: "A citizen locked tightly inside an elevator or enclosed structural space", sentence: "Freight elevator failure has multiple citizens locked inside, log a Signal 87." },
-    { id: "Signal 88", type: "Signal", desc: "Extra Job", layman: "An approved off-duty security contract registry assignment for officers", sentence: "Off duty security coordination registry items cataloged under Signal 88 terms." },
-    { id: "Signal 89", type: "Signal", desc: "Direct Patrol", layman: "High visibility patrol sweeps executed around high risk spots", sentence: "Sector cars maintain visible presence along high risk storefronts for a Signal 89." },
-    { id: "Signal 90", type: "Signal", desc: "Obscene Phone Calls", layman: "Harassing or threatening telephone calls logged systematically", sentence: "Harassing digital communication patterns logged as an official Signal 90 file." },
-    { id: "Signal 91", type: "Signal", desc: "Community Policing", layman: "Outreach assembly configurations to build local resident trust", sentence: "Interactive public outreach assemblies managed under standard Signal 91 targets." },
-    { id: "Signal 92", type: "Signal", desc: "Rescue Person(s)", layman: "Emergency swift extraction operation for an endangered citizen", sentence: "Swift water current extraction profiles underway for a dynamic Signal 92 mission." },
-    { id: "Signal 93", type: "Signal", desc: "Odor of Smoke", layman: "A vague smell of smoke reported without visible open fire layers", sentence: "Vague structural haze detected inside air ventilation channels, register a Signal 93." },
-    { id: "Signal 95", type: "Signal", desc: "Check and Advise", layman: "Go investigate a minor scene profile and radio back the status update", sentence: "Verify parking validation status at the courthouse lot, check and advise, Signal 95." }
-];
-const apdDispositionCodes = [
-    { id: "Code 1", type: "Code", desc: "Non-Emergency", layman: "A completely routine dispatch call with no flashing lights needed", sentence: "Handle that missing property checklist document on a standard Code 1 track." },
-    { id: "Code 2", type: "Code", desc: "Emergency Lights/Siren NOT Required", layman: "An urgent response call where lights and sirens are turned off", sentence: "Respond to the minor domestic dispute under a priority Code 2 response." },
-    { id: "Code 3", type: "Code", desc: "Emergency Lights & Siren Required", layman: "Maximum speed response emergency using flashing overhead bars and sirens", sentence: "Roll emergency assets immediately Code 3 to the location of the violent threat." },
-    { id: "Code 4", type: "Code", desc: "Cancel Call", layman: "The issue resolved itself or was canceled; stop responding", sentence: "Threat resolved before arrival, Code 4 the dispatch request." },
-    { id: "Code 5A", type: "Code", desc: "Domestic - Report Needed", layman: "A home dispute where a written police report must be submitted", sentence: "File comprehensive field cards following a Code 5A incident trace." },
-    { id: "Code 5B", type: "Code", desc: "Domestic - Report/Arrest", layman: "A home dispute that results in a suspect getting arrested on scene", sentence: "Suspect taken into physical custody on a confirmed Code 5B assault resolution." },
-    { id: "Code 6", type: "Code", desc: "False Alarm", layman: "The security alarm tripped by mistake; no crime occurred", sentence: "Commercial sensor triggered by system tests, log a clear Code 6." },
-    { id: "Code 7", type: "Code", desc: "Available For Service", layman: "The call is finished and the officer is ready for new dispatch cards", sentence: "Unit 204 has resolved all prior processing, mark us Code 7 on air." },
-    { id: "Code 8", type: "Code", desc: "Person Gone", layman: "The suspect left the scene completely before officers arrived", sentence: "Suspect cleared the area before units established a line, tag a Code 8." },
-    { id: "Code 9", type: "Code", desc: "Transfer Responsibility", layman: "Handing structural control of a secure layout over to another team", sentence: "Passing structural command blocks to arriving field support, clear Code 9." },
-    { id: "Code 10", type: "Code", desc: "Vehicle Impound", layman: "Towing and seizing an illegally parked or abandoned vehicle", sentence: "Towing a vehicle abandoned inside intersection lanes, file a Code 10 log." },
-    { id: "Code 11", type: "Code", desc: "Information", layman: "General baseline informational note added to case logs", sentence: "Updating database indexes to capture dynamic local Code 11 material." },
-    { id: "Code 12", type: "Code", desc: "No Arrest/Report", layman: "Call settled cleanly without needing an arrest or a written report", sentence: "Field resolution completed cleanly, closing out the card as a Code 12." },
-    { id: "Code 13", type: "Code", desc: "No Valid Address", layman: "The incident location cannot be found or doesn't exist", sentence: "Complainant tracking information cannot be localized, mark as Code 13." },
-    { id: "Code 14A", type: "Code", desc: "Alarm Refused - Alarm Out", layman: "Store manager refuses to turn off or service a broken alarm system", sentence: "Commercial business profile marked under Code 14A status records." }
-];
-const apdDispositionsFinal = [
-    { id: "Code 14B", type: "Code", desc: "Alarm Refused - Alarm Reset", layman: "An unverified security alarm was remotely reset by control teams", sentence: "Alarm reset executed during monitoring tracking operations, close as Code 14B." },
-    { id: "Code 15A", type: "Code", desc: "Alarm Owner On Way - Alarm Out", layman: "The property keyholder is driving to the location right now", sentence: "Keyholder responding to site location under active Code 15A metrics." },
-    { id: "Code 15B", type: "Code", desc: "Alarm Owner On Way - Alarm Reset", layman: "The arriving store owner reset the tripped console box on site", sentence: "System reset completed by arriving management, close clear as Code 15B." },
-    { id: "Code 16", type: "Code", desc: "Release Stolen Property To Owner", layman: "Giving found stolen property items directly back to the citizen", sentence: "Recovered electronics handed directly back to citizens under Code 16 logs." },
-    { id: "Code 17", type: "Code", desc: "Report Made", layman: "An official incident file was typed and stored in the database", sentence: "Field documentation files pushed to digital repositories, mark a Code 17." },
-    { id: "Code 19", type: "Code", desc: "Stolen Article", layman: "A trackable stolen item description registered to data maps", sentence: "Securing inventory tracking parameters for a recovered Code 19 item." },
-    { id: "Code 20", type: "Code", desc: "O.C. Used", layman: "The officer deployed tactical pepper spray to control a fight", sentence: "Pepper spray deployed during subject non-compliance, enter a Code 20 log." },
-    { id: "Code 21", type: "Code", desc: "Kidnapping - Officer", layman: "High-alert tactical rescue alarm meaning a police officer was abducted", sentence: "High priority rescue alarms activate for an abducted team under Code 21." },
-    { id: "Code 22", type: "Code", desc: "Can't Locate Address", layman: "The house or business location does not match the physical world", sentence: "Physical building designations do not match the environment, clear Code 22." },
-    { id: "Code 23", type: "Code", desc: "Arrest/Copy of Charges", layman: "Suspect taken into custody with a copy of their jail charges", sentence: "Paperwork copies delivered to booking desks under clear Code 23 parameters." },
-    { id: "Code 24", type: "Code", desc: "Nothing To Call", layman: "The area was searched fully and no emergency patterns were found", sentence: "Area inspection reveals regular structural patterns, register a Code 24." },
-    { id: "Code 25", type: "Code", desc: "Located/Suspected Explosive Device", layman: "Bomb disposal experts confirmed an active explosive item on scene", sentence: "Bomb crews confirm an explosive artifact footprint, flag a Code 25." },
-    { id: "Code 26", type: "Code", desc: "Arrive On Call", layman: "The precise timestamp marking when an officer reached the destination", sentence: "Units log immediate environmental timestamps marking their Code 26 arrival." },
-    { id: "Code 28A", type: "Code", desc: "Wanted Check - Wanted", layman: "The background database check hit on an active criminal arrest warrant", sentence: "System check returns an active felony arrest block, confirm a Code 28A." },
-    { id: "Code 28B", type: "Code", desc: "Wanted Check - No Wants", layman: "The citizen is completely clean with no active legal warrants listed", sentence: "Individual cleared across all regional lookup networks, logged as Code 28B." },
-    { id: "Code 30", type: "Code", desc: "Mayor or Mayor's Family Injured", layman: "Critical notification alert meaning city leadership family members are hurt", sentence: "High level priority notice sounds across the command layer, alert Code 30." },
-    { id: "Code 31", type: "Code", desc: "Remove Shotgun", layman: "Locking larger tactical weapons back into secure cruiser storage clips", sentence: "Securing heavier tactical hardware components back into cruiser racks, Code 31." },
-    { id: "Code 32", type: "Code", desc: "Alarm Out Of Service", layman: "A broken facility alarm has been taken completely off the grid", sentence: "Malfunctioning sensor array taken offline at the facility, mark Code 32." }
-];
-
-const masterDatabase = [
-    ...apdDatabase,
-    ...apdCodes,
-    ...apdExtendedCodes,
-    ...apdSignalsFinal,
-    ...apdSignalsTerminal,
-    ...apdCodesFinal,
-    ...apdDispositionCodes,
-    ...apdDispositionsFinal
-];
+    { id: "Code 1", type: "Code", desc: "Non-Emergency", layman: "Routine dispatch call with no flashing lights needed", sentence: "Handle that missing property checklist document on a standard Code 1 track." },
+    { id: "Code 2", type: "Code", desc: "Emergency Lights/Siren NOT Required", layman: "Urgent response call where lights and sirens are turned off", sentence: "Respond to the minor domestic dispute under a priority Code 2 response." },
+    { id: "Code 3", type: "Code", desc: "Emergency Lights & Siren Required", layman: "Emergency rush call using active flashing lights and sound sirens", sentence: "Roll emergency assets immediately Code 3 to the location of the violent threat." },
+    { id: "Code 4", type: "Code", desc: "Cancel Call", layman: "Threat resolved before unit arrival; response canceled", sentence: "Threat resolved before arrival, Code 4 the dispatch request." }
+);
