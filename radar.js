@@ -1,55 +1,48 @@
-window.radarConfig = {
-    easyRate: 25,
-    mediumRate: 25,
-    hardRate: 25,
-    officerRate: 25
-};
-
+window.selectedDifficulty = "random";
+window.selectedSituation = "random";
 window.activeBlips = [];
 const maxBlips = 7;
 
 function initRadarEngine() {
-    // Generate initial traditional mock testing table records queue
+    populateSituationDropdown();
+    generateFullTableQueue();
+}
+
+function generateFullTableQueue() {
+    window.activeBlips = [];
     for (let i = 0; i < maxBlips; i++) {
         generateLogRecord();
     }
     renderDispatchTable();
-    
-    // Cycle log processing update triggers periodic generation loops
-    setInterval(() => {
-        let grandTotal = window.radarConfig.easyRate + window.radarConfig.mediumRate + window.radarConfig.hardRate + window.radarConfig.officerRate;
-        if (grandTotal > 0 && Math.random() < 0.3 && window.activeBlips.length < maxBlips) {
-            generateLogRecord();
-            renderDispatchTable();
-        }
-    }, 4000);
 }
 
 function generateLogRecord() {
-    let easyVal = window.radarConfig.easyRate;
-    let medVal = window.radarConfig.mediumRate;
-    let hardVal = window.radarConfig.hardRate;
-    let offVal = window.radarConfig.officerRate;
-    let total = easyVal + medVal + hardVal + offVal;
-    
-    if (total === 0) return;
-    
-    let targetRand = Math.random() * total;
-    let chosenTier = 'officer';
-    if (targetRand <= easyVal) chosenTier = 'easy';
-    else if (targetRand <= (easyVal + medVal)) chosenTier = 'medium';
-    else if (targetRand <= (easyVal + medVal + hardVal)) chosenTier = 'hard';
-
     if (!window.masterDatabase || window.masterDatabase.length === 0) return;
-    let randomMeta = window.masterDatabase[Math.floor(Math.random() * window.masterDatabase.length)];
     
-    // Assign uniform standard city street log identifiers
+    // Process filtering selection matrices parameters
+    let filteredPool = window.masterDatabase;
+    
+    if (window.selectedDifficulty !== "random") {
+        filteredPool = filteredPool.filter(item => item.tier === window.selectedDifficulty || (window.selectedDifficulty === 'officer' && item.type === 'Code'));
+    }
+    
+    if (window.selectedSituation !== "random") {
+        filteredPool = filteredPool.filter(item => item.id === window.selectedSituation);
+    }
+    
+    if (filteredPool.length === 0) {
+        filteredPool = window.masterDatabase; // Fail safe backup context
+    }
+    
+    let randomMeta = filteredPool[Math.floor(Math.random() * filteredPool.length)];
+    let tierLabel = randomMeta.tier || (randomMeta.type === 'Code' ? 'officer' : 'easy');
+    
     let genericLocations = ["Peachtree Street Corridor", "Interstate 20 Westbound", "Moreland Avenue Route", "Northside Drive Junction", "Cascade Road Sector", "Buckhead District Plaza", "Piedmont Park Boundary"];
     let randomLoc = genericLocations[Math.floor(Math.random() * genericLocations.length)];
 
     window.activeBlips.push({
         id: "REC-" + Math.floor(1000 + Math.random() * 9000),
-        tier: chosenTier,
+        tier: tierLabel,
         location: randomLoc,
         metaData: randomMeta
     });
@@ -86,6 +79,11 @@ function renderDispatchTable() {
 }
 
 function clearRadarTargets() {
-    window.activeBlips = [];
-    renderDispatchTable();
+    generateFullTableQueue();
+}
+
+function handleParameterChange() {
+    window.selectedDifficulty = document.getElementById('difficultySelect').value;
+    window.selectedSituation = document.getElementById('situationSelect').value;
+    generateFullTableQueue();
 }
