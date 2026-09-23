@@ -6,17 +6,18 @@
     <title>Atlanta Police Department - Tactical Dispatch Academy</title>
     <style>
         :root {
-            --bg-dark: #070d14;
+            --bg-light: #f4f6f9;
             --panel-bg: #ffffff;
-            --radar-bg: #0b131e;
-            --primary-blue: #2563eb;
-            --text-main: #1e293b;
-            --text-muted: #64748b;
-            --border-color: #e2e8f0;
-            --easy: #22c55e;
-            --medium: #eab308;
-            --hard: #ef4444;
-            --officer: #3b82f6;
+            --radar-grid-bg: #f8fafc;
+            --primary-blue: #1e3a8a;
+            --accent-blue: #3b82f6;
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --border-color: #cbd5e1;
+            --easy: #16a34a;
+            --medium: #ca8a04;
+            --hard: #dc2626;
+            --officer: #2563eb;
         }
 
         * {
@@ -27,7 +28,7 @@
         }
 
         body {
-            background-color: #f1f5f9;
+            background-color: var(--bg-light);
             color: var(--text-main);
             padding: 20px;
             display: flex;
@@ -40,17 +41,18 @@
             max-width: 900px;
             background-color: var(--panel-bg);
             border-radius: 16px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
             overflow: hidden;
             border: 1px solid var(--border-color);
         }
 
         .app-header {
-            padding: 18px 24px;
+            padding: 20px 24px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid var(--border-color);
+            border-bottom: 2px solid var(--border-color);
+            background-color: var(--panel-bg);
         }
 
         .header-left {
@@ -67,30 +69,35 @@
             font-size: 11px;
             border-radius: 4px;
             text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .title-block h1 {
-            font-size: 16px;
+            font-size: 18px;
             font-weight: 700;
-            color: #0f172a;
+            color: var(--primary-blue);
         }
 
         .title-block p {
             font-size: 12px;
             color: var(--text-muted);
+            font-weight: 500;
         }
 
         .status-value {
             font-size: 13px;
             color: var(--easy);
             font-weight: 600;
-            text-align: right;
+            background-color: #f0fdf4;
+            padding: 4px 10px;
+            border-radius: 20px;
+            border: 1px solid #bbf7d0;
         }
 
         .radar-section {
-            background-color: var(--radar-bg);
-            padding: 20px;
-            position: relative;
+            background-color: #f8fafc;
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -100,49 +107,51 @@
             position: relative;
             width: 320px;
             height: 320px;
+            background-color: #ffffff;
+            border-radius: 50%;
+            padding: 4px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            border: 1px solid var(--border-color);
         }
 
         canvas {
-            background-color: #0c1520;
+            display: block;
             border-radius: 50%;
-            box-shadow: inset 0 0 20px rgba(0,0,0,0.6);
-            border: 2px solid #1e293b;
         }
         .radar-controls-overlay {
             width: 100%;
             max-width: 500px;
-            margin-top: 15px;
+            margin-top: 16px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            z-index: 5;
         }
 
         .clear-btn {
-            background-color: rgba(239, 68, 68, 0.2);
-            color: #f87171;
-            border: 1px solid rgba(239, 68, 68, 0.4);
-            padding: 6px 14px;
+            background-color: #ffffff;
+            color: #b91c1c;
+            border: 1px solid #fca5a5;
+            padding: 6px 16px;
             font-size: 12px;
             font-weight: 600;
             border-radius: 6px;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.15s ease-in-out;
         }
 
         .clear-btn:hover {
-            background-color: rgba(239, 68, 68, 0.4);
-            color: white;
+            background-color: #fef2f2;
+            border-color: #ef4444;
         }
 
         .telemetry-readout {
-            color: #94a3b8;
-            font-size: 12px;
-            font-weight: 500;
+            color: var(--text-muted);
+            font-size: 13px;
+            font-weight: 600;
         }
 
         .probability-matrix {
-            background-color: #f8fafc;
+            background-color: #ffffff;
             padding: 16px 24px;
             border-bottom: 1px solid var(--border-color);
             display: grid;
@@ -153,13 +162,12 @@
         .slider-node {
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            gap: 6px;
         }
 
         .slider-node label {
-            font-size: 11px;
-            font-weight: 700;
-            text-transform: uppercase;
+            font-size: 12px;
+            font-weight: 600;
             color: var(--text-muted);
             display: flex;
             justify-content: space-between;
@@ -168,6 +176,7 @@
         .slider-node input {
             width: 100%;
             cursor: pointer;
+            accent-color: var(--accent-blue);
         }
 
         .analytics-strip {
@@ -184,8 +193,8 @@
         }
 
         .analytics-node:last-child { border-right: none; }
-        .node-title { font-size: 11px; color: var(--text-muted); margin-bottom: 2px; }
-        .node-value { font-size: 15px; font-weight: 700; color: #0f172a; }
+        .node-title { font-size: 11px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; margin-bottom: 2px; }
+        .node-value { font-size: 16px; font-weight: 700; color: var(--text-main); }
 
         .operations-panel { padding: 24px; }
         .console-tabs { display: flex; gap: 8px; border-bottom: 1px solid var(--border-color); margin-bottom: 20px; }
@@ -202,8 +211,8 @@
         }
 
         .console-tab-item.active {
-            color: var(--primary-blue);
-            border-bottom-color: var(--primary-blue);
+            color: var(--accent-blue);
+            border-bottom-color: var(--accent-blue);
         }
 
         .view-content-block { display: none; }
@@ -218,7 +227,7 @@
             outline: none;
         }
 
-        .search-filter:focus { border-color: var(--primary-blue); }
+        .search-filter:focus { border-color: var(--accent-blue); box-shadow: 0 0 0 2px rgba(59,130,246,0.1); }
 
         .list-container {
             display: flex;
@@ -230,7 +239,7 @@
         }
 
         .extended-card {
-            background-color: #f8fafc;
+            background-color: #ffffff;
             border: 1px solid var(--border-color);
             padding: 14px;
             border-radius: 8px;
@@ -257,16 +266,16 @@
         .card-label {
             font-size: 13px;
             font-weight: 600;
-            color: #0f172a;
+            color: var(--text-main);
         }
 
         .sentence-instruction {
             font-size: 12px;
-            color: #475569;
-            background-color: #ffffff;
+            color: #334155;
+            background-color: #f8fafc;
             padding: 8px 12px;
             border-radius: 6px;
-            border-left: 3px solid #cbd5e1;
+            border-left: 3px solid #64748b;
             font-style: italic;
         }
 
@@ -277,7 +286,7 @@
             padding: 20px;
         }
 
-        .quiz-prompt { font-size: 14px; font-weight: 600; margin-bottom: 14px; color: #0f172a; }
+        .quiz-prompt { font-size: 14px; font-weight: 600; margin-bottom: 14px; color: var(--text-main); }
         .quiz-options-stack { display: flex; flex-direction: column; gap: 8px; }
         
         .quiz-option-row {
@@ -290,7 +299,7 @@
             transition: all 0.15s ease;
         }
 
-        .quiz-option-row:hover { background-color: #f1f5f9; }
+        .quiz-option-row:hover { background-color: #f1f5f9; border-color: var(--border-color); }
         .quiz-option-row.matched-correct { background-color: #dcfce7; border-color: #bbf7d0; color: #166534; font-weight: 600; }
         .quiz-option-row.matched-error { background-color: #fee2e2; border-color: #fca5a5; color: #991b1b; font-weight: 600; }
         .action-footer { margin-top: 14px; display: flex; justify-content: flex-end; }
@@ -310,10 +319,10 @@
             </div>
             <div class="status-value">Zone Terminal: Online</div>
         </header>
-        <!-- Sonar Radar Visualizer System Area -->
+        <!-- Refreshed Non-Eye Hurting Clean White Sonar Radar Setup -->
         <section class="radar-section">
             <div class="canvas-wrapper">
-                <canvas id="radarCanvas" width="320" height="320"></canvas>
+                <canvas id="radarCanvas" width="312" height="312"></canvas>
             </div>
             <div class="radar-controls-overlay">
                 <button class="clear-btn" onclick="clearRadarTargets()">Clear Radar</button>
@@ -321,22 +330,22 @@
             </div>
         </section>
 
-        <!-- Dynamic Frequency Matrix Sliders -->
+        <!-- Balance Density Setting Sliders -->
         <section class="probability-matrix">
             <div class="slider-node">
-                <label>Easy (Green) <span id="val-easy">25%</span></label>
+                <label style="color:var(--easy);">Easy (Green) <span id="val-easy">25%</span></label>
                 <input type="range" id="rate-easy" min="0" max="100" value="25" oninput="balanceProbabilities('easy')">
             </div>
             <div class="slider-node">
-                <label>Medium (Yellow) <span id="val-medium">25%</span></label>
+                <label style="color:var(--medium);">Medium (Yellow) <span id="val-medium">25%</span></label>
                 <input type="range" id="rate-medium" min="0" max="100" value="25" oninput="balanceProbabilities('medium')">
             </div>
             <div class="slider-node">
-                <label>Hard (Red) <span id="val-hard">25%</span></label>
+                <label style="color:var(--hard);">Hard (Red) <span id="val-hard">25%</span></label>
                 <input type="range" id="rate-hard" min="0" max="100" value="25" oninput="balanceProbabilities('hard')">
             </div>
             <div class="slider-node">
-                <label>Officer Level (Blue) <span id="val-officer">25%</span></label>
+                <label style="color:var(--officer);">Officer (Blue) <span id="val-officer">25%</span></label>
                 <input type="range" id="rate-officer" min="0" max="100" value="25" oninput="balanceProbabilities('officer')">
             </div>
         </section>
@@ -352,7 +361,7 @@
             </div>
             <div class="analytics-node">
                 <div class="node-title">Accuracy Rate</div>
-                <div class="node-value" id="stat-accuracy" style="color: var(--primary-blue);">100%</div>
+                <div class="node-value" id="stat-accuracy" style="color: var(--accent-blue);">100%</div>
             </div>
         </section>
 
@@ -362,16 +371,14 @@
                 <button class="console-tab-item" onclick="toggleView(event, 'assessment-deck')">Start Knowledge Test</button>
             </div>
 
-            <!-- View Content Block: Exhaustive Atlanta Police Codebook Data Dictionary -->
             <div id="practice-deck" class="view-content-block active">
-                <input type="text" id="codeSearch" class="search-filter" placeholder="Search codes, descriptions, or sentence examples..." onkeyup="filterCodebook()">
+                <input type="text" id="codeSearch" class="search-filter" placeholder="Search codes, descriptions, or sentence examples...">
                 <div class="list-container" id="codebook-list"></div>
             </div>
 
-            <!-- View Content Block: Active Interactive Scenario Engine -->
             <div id="assessment-deck" class="view-content-block">
                 <div class="interactive-quiz-space">
-                    <div id="prompt-textbox" class="quiz-prompt">Click a dot on the sweeping radar display to activate a tactical scenario challenge!</div>
+                    <div id="prompt-textbox" class="quiz-prompt">Click an active blip revealed by the spinning sonar sweep to begin a localized incident evaluation.</div>
                     <div id="options-stack" class="quiz-options-stack"></div>
                     <div class="action-footer">
                         <button id="forward-btn" class="next-stage-btn" style="display: none;" onclick="advanceQuizSession()">Next Scenario</button>
@@ -381,7 +388,6 @@
         </section>
     </div>
     <script>
-        // Full Atlanta Police Department Database Map Structure
         const apdDatabase = [
             { id: "Signal 1", type: "Signal", desc: "Abandoned Auto", sentence: "Zone 1, we have a Signal 1 blocking the dynamic lane on North Avenue." },
             { id: "Signal 2A", type: "Signal", desc: "Audible Alarm", sentence: "Dispatch to Sector 2, handle a Signal 2A hitting at the local bank storefront." },
@@ -421,28 +427,28 @@
             { id: "10-97", type: "10-Code", desc: "Arrived at Assignment", sentence: "Unit 205 is 10-97 at the location, executing immediate foot patrol." }
         ];
 
-        // Scenario Banks grouped by distinct technical difficulty tiers
         const quizScenarios = {
             easy: [
-                { question: "A property owner calls to report a vehicle parked on their private lot without authorization. What code applies?", options: ["Signal 7", "Signal 1", "Signal 45", "10-97"], matchIndex: 1, tag: "Signal 1" },
-                { question: "You are acknowledging a routine message from dispatch safely. What standard string applies?", options: ["10-20", "Code 3", "10-4", "Signal 59"], matchIndex: 2, tag: "10-4" }
+                { question: "A property owner calls to report a vehicle parked on their private lot without authorization. What code applies?", options: ["Signal 7", "Signal 1", "Signal 45", "10-97"], matchIndex: 1 },
+                { question: "You are acknowledging a routine message from dispatch safely. What standard string applies?", options: ["10-20", "Code 3", "10-4", "Signal 59"], matchIndex: 2 }
             ],
             medium: [
-                { question: "An individual is spotted jumping over a fence into a storage lot after hours. What tracking metric fits?", options: ["Signal 7", "Signal 2A", "Signal 45", "Code 4"], matchIndex: 0, tag: "Signal 7" },
-                { question: "A retail department store reports a suspect has filled a bag with merchandise and run out the back exit.", options: ["Signal 6B", "Signal 45", "Signal 43", "Signal 21"], matchIndex: 1, tag: "Signal 45" }
+                { question: "An individual is spotted jumping over a fence into a storage lot after hours. What tracking metric fits?", options: ["Signal 7", "Signal 2A", "Signal 45", "Code 4"], matchIndex: 0 },
+                { question: "A retail department store reports a suspect has filled a bag with merchandise and run out the back exit.", options: ["Signal 6B", "Signal 45", "Signal 43", "Signal 21"], matchIndex: 1 }
             ],
             hard: [
-                { question: "Dispatch contacts you regarding a family verbal dispute turning physical inside a residence. What code applies?", options: ["Signal 29", "Signal 58", "Signal 6R", "10-4"], matchIndex: 1, tag: "Signal 58" },
-                { question: "Witnesses report hearing five consecutive discharge bursts near an alleyway. What signal profiles the incident?", options: ["Signal 50", "Signal 25", "Signal 69", "Signal 33"], matchIndex: 1, tag: "Signal 25" }
+                { question: "Dispatch contacts you regarding a family verbal dispute turning physical inside a residence. What code applies?", options: ["Signal 29", "Signal 58", "Signal 6R", "10-4"], matchIndex: 1 },
+                { question: "Witnesses report hearing five consecutive discharge bursts near an alleyway. What signal profiles the incident?", options: ["Signal 50", "Signal 25", "Signal 69", "Signal 33"], matchIndex: 1 }
             ],
             officer: [
-                { question: "A perimeter unit initiates an emergency pursuit of an armed carjacking vehicle traveling northbound.", options: ["Signal 72P", "Signal 72", "Code 2", "Signal 36B"], matchIndex: 0, tag: "Signal 72P" },
-                { question: "An active distress transmission broadcast across the dispatch net calls for immediate aid to a cornered team.", options: ["Signal 29", "Signal 59", "Signal 63", "Code 3"], matchIndex: 2, tag: "Signal 63" }
+                { question: "A perimeter unit initiates an emergency pursuit of an armed carjacking vehicle traveling northbound.", options: ["Signal 72P", "Signal 72", "Code 2", "Signal 36B"], matchIndex: 0 },
+                { question: "An active distress transmission broadcast across the dispatch net calls for immediate aid to a cornered team.", options: ["Signal 29", "Signal 59", "Signal 63", "Code 3"], matchIndex: 2 }
             ]
         };
         let activeBlips = [];
         const maxBlips = 7;
         let sweepAngle = 0;
+        
         const canvas = document.getElementById('radarCanvas');
         const ctx = canvas.getContext('2d');
         const cx = canvas.width / 2;
@@ -453,82 +459,100 @@
         let runningCorrect = 0;
         let globalAttempts = 0;
 
-        // Initialize Application UI
         window.onload = function() {
-            document.getElementById('registry-count').innerText = `${apdDatabase.length} APD Records`;
             buildCodebookView();
-            setInterval(updateRadarEngine, 1000 / 30); // 30 FPS update loop
+            document.getElementById('codeSearch').addEventListener('keyup', filterCodebook);
+            window.requestAnimationFrame(runRadarLoop);
         };
 
-        function updateRadarEngine() {
-            // Sweep math tracking rotation over duration metrics
-            sweepAngle = (sweepAngle + 0.04) % (Math.PI * 2);
+        function runRadarLoop(timestamp) {
+            // Smooth velocity calculation for the sonar sweeping beam
+            sweepAngle = (sweepAngle + 0.025) % (Math.PI * 2);
             
-            // Draw baseline radar grid
-            ctx.fillStyle = '#0c1520';
+            // Clear to professional crisp background tone
+            ctx.fillStyle = '#ffffff';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            // Ring layers drawing pass
-            ctx.strokeStyle = 'rgba(37, 99, 235, 0.15)';
+            // Soft gray radar mapping concentric ring constraints
+            ctx.strokeStyle = '#e2e8f0';
             ctx.lineWidth = 1;
-            for(let r = maxRadius / 3; r <= maxRadius; r += maxRadius / 3) {
+            for(let r = maxRadius / 4; r <= maxRadius; r += maxRadius / 4) {
                 ctx.beginPath();
                 ctx.arc(cx, cy, r, 0, Math.PI * 2);
                 ctx.stroke();
             }
 
-            // Crosshair rendering
+            // Crosshair guidelines
             ctx.beginPath();
             ctx.moveTo(0, cy); ctx.lineTo(canvas.width, cy);
             ctx.moveTo(cx, 0); ctx.lineTo(cx, canvas.height);
             ctx.stroke();
 
-            // Evaluate generating a target along trailing sweep path parameters
-            if (Math.random() < 0.04 && activeBlips.length < maxBlips) {
+            // Intermittent item spawn generation
+            if (Math.random() < 0.02 && activeBlips.length < maxBlips) {
                 generateProbabilisticTarget();
             }
 
-            // Draw active targets inside radar field
+            // Update blip visibilities as sweep blade intersects coordinates
             activeBlips.forEach(blip => {
                 let angleToBlip = Math.atan2(blip.y - cy, blip.x - cx);
                 if (angleToBlip < 0) angleToBlip += Math.PI * 2;
                 
-                let diff = sweepAngle - angleToBlip;
-                if (diff < 0) diff += Math.PI * 2;
+                let angleDiff = sweepAngle - angleToBlip;
+                if (angleDiff < 0) angleDiff += Math.PI * 2;
 
-                if (diff < 0.1) { blip.opacity = 1.0; } 
-                else { blip.opacity = Math.max(blip.opacity - 0.008, 0.15); }
+                // When blade sweeps directly across, trigger pulse glow highlight
+                if (angleDiff < 0.08) { 
+                    blip.visible = true;
+                    blip.opacity = 1.0; 
+                } else {
+                    blip.opacity = Math.max(blip.opacity - 0.005, 0.0);
+                    if(blip.opacity <= 0.05) { blip.visible = false; }
+                }
 
-                ctx.fillStyle = getTierColor(blip.tier, blip.opacity);
-                ctx.beginPath();
-                ctx.arc(blip.x, blip.y, blip.radius, 0, Math.PI * 2);
-                ctx.fill();
+                if (blip.visible) {
+                    // Pulsing animation math
+                    blip.pulseRadius += 0.2;
+                    if(blip.pulseRadius > blip.radius + 8) blip.pulseRadius = blip.radius;
 
-                if (blip.opacity > 0.7) {
-                    ctx.strokeStyle = getTierColor(blip.tier, blip.opacity * 0.5);
+                    ctx.fillStyle = getTierColor(blip.tier, blip.opacity);
                     ctx.beginPath();
-                    ctx.arc(blip.x, blip.y, blip.radius + 5, 0, Math.PI * 2);
+                    ctx.arc(blip.x, blip.y, blip.radius, 0, Math.PI * 2);
+                    ctx.fill();
+
+                    ctx.strokeStyle = getTierColor(blip.tier, blip.opacity * 0.4);
+                    ctx.beginPath();
+                    ctx.arc(blip.x, blip.y, blip.pulseRadius, 0, Math.PI * 2);
                     ctx.stroke();
                 }
             });
 
-            // Draw sweep gradient line shadow element
-            let gradient = ctx.createRadialGradient(cx, cy, 10, cx, cy, maxRadius);
-            ctx.strokeStyle = 'rgba(37, 99, 235, 0.4)';
-            ctx.lineWidth = 2;
+            // Draw spinning sonar blade trail alpha mask gradients cleanly
+            ctx.save();
+            ctx.translate(cx, cy);
+            ctx.rotate(sweepAngle);
+            
+            let bladeGrad = ctx.createLinearGradient(0, 0, maxRadius, 0);
+            bladeGrad.addColorStop(0, 'rgba(59, 130, 246, 0.4)');
+            bladeGrad.addColorStop(1, 'rgba(59, 130, 246, 0.0)');
+            
+            ctx.fillStyle = bladeGrad;
             ctx.beginPath();
-            ctx.moveTo(cx, cy);
-            ctx.lineTo(cx + Math.cos(sweepAngle) * maxRadius, cy + Math.sin(sweepAngle) * maxRadius);
-            ctx.stroke();
+            ctx.moveTo(0,0);
+            ctx.arc(0, 0, maxRadius, -0.2, 0, false);
+            ctx.lineTo(0,0);
+            ctx.fill();
+            ctx.restore();
 
             document.getElementById('telemetryStatus').innerText = `Active Targets: ${activeBlips.length} / ${maxBlips}`;
+            window.requestAnimationFrame(runRadarLoop);
         }
 
         function getTierColor(tier, opacity) {
-            if (tier === 'easy') return `rgba(34, 197, 94, ${opacity})`;
-            if (tier === 'medium') return `rgba(234, 179, 8, ${opacity})`;
-            if (tier === 'hard') return `rgba(239, 68, 68, ${opacity})`;
-            return `rgba(59, 130, 246, ${opacity})`;
+            if (tier === 'easy') return `rgba(22, 163, 74, ${opacity})`;
+            if (tier === 'medium') return `rgba(202, 138, 4, ${opacity})`;
+            if (tier === 'hard') return `rgba(220, 38, 38, ${opacity})`;
+            return `rgba(37, 99, 235, ${opacity})`;
         }
         function generateProbabilisticTarget() {
             const tiers = ['easy', 'medium', 'hard', 'officer'];
@@ -541,27 +565,25 @@
             let chosenTier = 'easy';
             let cumulative = 0;
             
-            for (let i = 0; i < Tiers.length; i++) {
-                Cumulative += probabilities[i];
-                If (targetRand <= cumulative) {
-                    ChosenTier = tiers[i];
-                    Break;
-                }
+            for (let i = 0; i < tiers.length; i++) {
+                cumulative += probabilities[i];
+                if (targetRand <= cumulative) { chosenTier = tiers[i]; break; }
             }
 
             let angle = Math.random() * Math.PI * 2;
-            let distance = (Math.random() * (maxRadius - 30)) + 20;
+            let distance = (Math.random() * (maxRadius - 40)) + 30;
             
             activeBlips.push({
-                X: cx + Math.cos(angle) * distance,
-                Y: cy + Math.sin(angle) * distance,
-                Radius: 6,
-                Tier: chosenTier,
-                Opacity: 0.2
+                x: cx + Math.cos(angle) * distance,
+                y: cy + Math.sin(angle) * distance,
+                radius: 6,
+                pulseRadius: 6,
+                tier: chosenTier,
+                opacity: 0,
+                visible: false
             });
         }
 
-        // Handle structural canvas click intercept actions safely
         canvas.addEventListener('click', function(e) {
             const rect = canvas.getBoundingClientRect();
             const clickX = e.clientX - rect.left;
@@ -569,24 +591,22 @@
 
             let foundIdx = -1;
             for (let i = 0; i < activeBlips.length; i++) {
-                Let dist = Math.hypot(activeBlips[i].x - clickX, activeBlips[i].y - clickY);
-                If (dist <= 14) { foundIdx = i; break; }
+                let dist = Math.hypot(activeBlips[i].x - clickX, activeBlips[i].y - clickY);
+                if (dist <= 16) { foundIdx = i; break; }
             }
 
             if (foundIdx !== -1) {
-                Let blip = activeBlips[foundIdx];
-                ActiveBlips.splice(foundIdx, 1);
-                TriggerAssessmentFromRadar(blip.tier);
+                let blip = activeBlips[foundIdx];
+                activeBlips.splice(foundIdx, 1);
+                triggerAssessmentFromRadar(blip.tier);
             }
         });
 
-        function clearRadarTargets() {
-            ActiveBlips = [];
-        }
+        function clearRadarTargets() { activeBlips = []; }
 
         function balanceProbabilities(changedTier) {
-            Let sliders = ['easy', 'medium', 'hard', 'officer'];
-            Let changedVal = parseFloat(document.getElementById(`rate-${changedTier}`).value) || 0;
+            let sliders = ['easy', 'medium', 'hard', 'officer'];
+            let changedVal = parseFloat(document.getElementById(`rate-${changedTier}`).value) || 0;
             document.getElementById(`val-${changedTier}`).innerText = `${changedVal}%`;
 
             let remainder = 100 - changedVal;
@@ -594,109 +614,108 @@
             let sumOthers = otherSliders.reduce((sum, s) => sum + (parseFloat(document.getElementById(`rate-${s}`).value) || 0), 0);
 
             if(sumOthers > 0) {
-                OtherSliders.forEach(s => {
-                    Let curVal = parseFloat(document.getElementById(`rate-${s}`).value) || 0;
-                    Let scaled = Math.round((curVal / sumOthers) * remainder);
-                    Document.getElementById(`rate-${s}`).value = scaled;
-                    Document.getElementById(`val-${s}`).innerText = `${scaled}%`;
+                otherSliders.forEach(s => {
+                    let curVal = parseFloat(document.getElementById(`rate-${s}`).value) || 0;
+                    let scaled = Math.round((curVal / sumOthers) * remainder);
+                    document.getElementById(`rate-${s}`).value = scaled;
+                    document.getElementById(`val-${s}`).innerText = `${scaled}%`;
                 });
             } else {
-                Let split = Math.round(remainder / 3);
-                OtherSliders.forEach(s => {
-                    Document.getElementById(`rate-${s}`).value = split;
-                    Document.getElementById(`val-${s}`).innerText = `${split}%`;
+                let split = Math.round(remainder / 3);
+                otherSliders.forEach(s => {
+                    document.getElementById(`rate-${s}`).value = split;
+                    document.getElementById(`val-${s}`).innerText = `${split}%`;
                 });
             }
         }
 
         function triggerAssessmentFromRadar(tier) {
-            // Activate structural testing deck interface view state
-            Document.querySelectorAll('.console-tab-item').forEach(t => t.classList.remove('active'));
-            Document.querySelectorAll('.view-content-block').forEach(v => v.classList.remove('active'));
+            document.querySelectorAll('.console-tab-item').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.view-content-block').forEach(v => v.classList.remove('active'));
             
-            Const tabList = document.querySelectorAll('.console-tab-item');
-            TabList[1].classList.add('active');
-            Document.getElementById('assessment-deck').classList.add('active');
+            document.querySelectorAll('.console-tab-item')[1].classList.add('active');
+            document.getElementById('assessment-deck').classList.add('active');
 
-            Const collection = quizScenarios[tier];
-            ActiveQuizCard = collection[Math.floor(Math.random() * collection.length)];
+            const collection = quizScenarios[tier];
+            activeQuizCard = collection[Math.floor(Math.random() * collection.length)];
             
-            Document.getElementById('stat-progress').innerText = `Active Task (${tier.toUpperCase()})`;
-            RenderQuizChallenge();
+            document.getElementById('stat-progress').innerText = `Active Task (${tier.toUpperCase()})`;
+            renderQuizChallenge();
         }
+
         function renderQuizChallenge() {
-            Document.getElementById('forward-btn').style.display = 'none';
+            document.getElementById('forward-btn').style.display = 'none';
             if (!activeQuizCard) return;
 
-            Document.getElementById('prompt-textbox').innerText = activeQuizCard.question;
+            document.getElementById('prompt-textbox').innerText = activeQuizCard.question;
             let targetBox = document.getElementById('options-stack');
-            TargetBox.innerHTML = "";
+            targetBox.innerHTML = "";
 
-            ActiveQuizCard.options.forEach((optText, optIdx) => {
-                Let divNode = document.createElement('div');
-                DivNode.className = "quiz-option-row";
-                DivNode.innerText = optText;
-                DivNode.onclick = () => checkQuizSubmission(divNode, optIdx, activeQuizCard.matchIndex);
-                TargetBox.appendChild(divNode);
+            activeQuizCard.options.forEach((optText, optIdx) => {
+                let divNode = document.createElement('div');
+                divNode.className = "quiz-option-row";
+                divNode.innerText = optText;
+                divNode.onclick = () => checkQuizSubmission(divNode, optIdx, activeQuizCard.matchIndex);
+                targetBox.appendChild(divNode);
             });
         }
 
         function checkQuizSubmission(selectedEl, userIdx, trueIdx) {
-            Let rows = document.querySelectorAll('.quiz-option-row');
-            Rows.forEach(r => r.onclick = null);
-            GlobalAttempts++;
+            let rows = document.querySelectorAll('.quiz-option-row');
+            rows.forEach(r => r.onclick = null);
+            globalAttempts++;
 
-            If (userIdx === trueIdx) {
-                SelectedEl.classList.add('matched-correct');
-                RunningCorrect++;
+            if (userIdx === trueIdx) {
+                selectedEl.classList.add('matched-correct');
+                runningCorrect++;
             } else {
-                SelectedEl.classList.add('matched-error');
-                Rows[trueIdx].classList.add('matched-correct');
+                selectedEl.classList.add('matched-error');
+                rows[trueIdx].classList.add('matched-correct');
             }
 
-            Let rate = Math.round((runningCorrect / globalAttempts) * 100);
-            Document.getElementById('stat-accuracy').innerText = `${rate}%`;
-            Document.getElementById('forward-btn').style.display = 'inline-block';
+            let rate = Math.round((runningCorrect / globalAttempts) * 100);
+            document.getElementById('stat-accuracy').innerText = `${rate}%`;
+            document.getElementById('forward-btn').style.display = 'inline-block';
         }
 
         function advanceQuizSession() {
-            Document.getElementById('prompt-textbox').innerText = "Tactical challenge resolved. Click an active blip on the canvas radar array above to process another diagnostic task entry.";
-            Document.getElementById('options-stack').innerHTML = "";
-            Document.getElementById('forward-btn').style.display = 'none';
-            Document.getElementById('stat-progress').innerText = "0 Idle";
+            document.getElementById('prompt-textbox').innerText = "Tactical challenge resolved. Click an active blip revealed by the spinning radar blade above to load another challenge scenario.";
+            document.getElementById('options-stack').innerHTML = "";
+            document.getElementById('forward-btn').style.display = 'none';
+            document.getElementById('stat-progress').innerText = "0 Idle";
         }
 
         function buildCodebookView() {
-            Let list = document.getElementById('codebook-list');
-            List.innerHTML = "";
-            ApdDatabase.forEach(item => {
-                Let div = document.createElement('div');
-                Div.className = "extended-card";
-                Div.innerHTML = `
+            let list = document.getElementById('codebook-list');
+            list.innerHTML = "";
+            apdDatabase.forEach(item => {
+                let div = document.createElement('div');
+                div.className = "extended-card";
+                div.innerHTML = `
                     <div class="card-top-row">
                         <span class="card-badge">${item.id}</span>
                         <span class="card-label">${item.desc}</span>
                     </div>
                     <div class="sentence-instruction">"${item.sentence}"</div>
                 `;
-                List.appendChild(div);
+                list.appendChild(div);
             });
         }
 
         function filterCodebook() {
-            Let query = document.getElementById('codeSearch').value.toLowerCase();
-            Let cards = document.querySelectorAll('.extended-card');
-            Cards.forEach(card => {
-                Let bodyTxt = card.innerText.toLowerCase();
-                Card.style.display = bodyTxt.includes(query) ? 'flex' : 'none';
+            let query = document.getElementById('codeSearch').value.toLowerCase();
+            let cards = document.querySelectorAll('.extended-card');
+            cards.forEach(card => {
+                let bodyTxt = card.innerText.toLowerCase();
+                card.style.display = bodyTxt.includes(query) ? 'flex' : 'none';
             });
         }
 
         function toggleView(event, viewId) {
-            Document.querySelectorAll('.console-tab-item').forEach(t => t.classList.remove('active'));
-            Document.querySelectorAll('.view-content-block').forEach(v => v.classList.remove('active'));
-            Event.currentTarget.classList.add('active');
-            Document.getElementById(viewId).classList.add('active');
+            document.querySelectorAll('.console-tab-item').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.view-content-block').forEach(v => v.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+            document.getElementById(viewId).classList.add('active');
         }
     </script>
 </body>
